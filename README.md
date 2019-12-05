@@ -7,7 +7,7 @@ Um pequeno sistema de vendas de livros.
 
 ## Dependencies
 
-* Django == 2.2.7
+* Django == 2.2.8
 * djangorestframework == 3.10.3
 * django-rest-swagger == 2.2.0
 * django-filter == 2.2.0
@@ -36,7 +36,7 @@ $ python manage.py runserver
 
 ## Diagram project
 
-![bookstore-api](https://user-images.githubusercontent.com/40550247/70068594-0d133e80-15cf-11ea-8118-da23cbaca8b4.png)
+![bookstore-api](https://user-images.githubusercontent.com/40550247/70279430-3f6e9880-1795-11ea-8ac2-7cee757dab7a.png)
 
 ``` json
 Address {

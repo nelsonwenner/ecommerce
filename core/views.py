@@ -1,10 +1,12 @@
 from django.contrib.auth import get_user_model
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import serializers
 from rest_framework import permissions
 from rest_framework.generics import *
 from .permissions import *
 from .serializers import *
+
 
 User = get_user_model()
 
@@ -285,6 +287,9 @@ class ReportEmployee(APIView):
     def get(self, request, format=None):
         employees = Employee.objects.all()
         
+        if not len(employees):
+            raise serializers.ValidationError([])
+            
         _list = []
         
         for employee in employees:
@@ -361,6 +366,9 @@ class ReportClient(APIView):
     def get(self, request, format=None):
         sales = Sale.objects.all()
 
+        if not len(sales):
+            raise serializers.ValidationError([])
+        
         _list = []
 
         for sale in sales:
