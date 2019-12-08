@@ -18,6 +18,9 @@ Um pequeno sistema de vendas de livros.
 Para preparar o ambiente de execução do projeto, teremos que usar o ```virtualenv```, para comportar todas as nossas dependências.
 
 ``` bash
+# Instalando vitualenv
+$ pip install virtualenv
+
 # Criando o venv do projeto.
 $ virtualenv venv
 
@@ -31,6 +34,10 @@ $ pip install -r requirements.txt
 ## Starting project
 
 ``` bash
+# Criando um user admin
+$ python manage.py createsuperuser
+
+# Iniciando projeto
 $ python manage.py runserver
 ```
 
