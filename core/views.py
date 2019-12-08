@@ -143,7 +143,7 @@ class GenreListView(ListCreateAPIView):
     queryset = Genre.objects.get_queryset().order_by('id')
     serializer_class = GenreSerializer
 
-    permission_classes = [permissions.IsAuthenticated, AdministratorPermissions]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, AdministratorPermissions]
 
 
 class GenreDetail(RetrieveUpdateDestroyAPIView):
@@ -151,7 +151,7 @@ class GenreDetail(RetrieveUpdateDestroyAPIView):
     queryset = Genre.objects.get_queryset().order_by('id')
     serializer_class = GenreSerializer
 
-    permission_classes = [permissions.IsAuthenticated, AdministratorPermissions]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, AdministratorPermissions]
 
 
 class AuthorListView(ListCreateAPIView):
@@ -159,7 +159,7 @@ class AuthorListView(ListCreateAPIView):
     queryset = Author.objects.get_queryset().order_by('id')
     serializer_class = AuthorSerializer
 
-    permission_classes = [permissions.IsAuthenticated, AdministratorPermissions]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, AdministratorPermissions]
 
     search_fields = ['^name', '^email']
     ordering_fields = ['name', 'email']
@@ -171,7 +171,7 @@ class AuthorDetail(RetrieveUpdateDestroyAPIView):
     queryset = Author.objects.get_queryset().order_by('id')
     serializer_class = AuthorSerializer
 
-    permission_classes = [permissions.IsAuthenticated,  AdministratorPermissions]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,  AdministratorPermissions]
 
 
 class WriteListView(ListCreateAPIView):
@@ -179,7 +179,7 @@ class WriteListView(ListCreateAPIView):
     queryset = Write.objects.get_queryset().order_by('id')
     serializer_class = WriteSerializer
 
-    permission_classes = [permissions.IsAuthenticated,  AdministratorPermissions]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,  AdministratorPermissions]
 
 
 class WriteDetail(RetrieveUpdateDestroyAPIView):
@@ -187,7 +187,7 @@ class WriteDetail(RetrieveUpdateDestroyAPIView):
     queryset = Write.objects.get_queryset().order_by('id')
     serializer_class = WriteSerializer
 
-    permission_classes = [permissions.IsAuthenticated,  AdministratorPermissions]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,  AdministratorPermissions]
 
 
 class BookListView(ListCreateAPIView):
@@ -195,7 +195,7 @@ class BookListView(ListCreateAPIView):
     queryset = Book.objects.get_queryset().order_by('id')
     serializer_class = BookSerializer
 
-    permission_classes = [permissions.IsAuthenticated, AdministratorPermissions]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, AdministratorPermissions]
 
     search_fields = ['^title', '^genre']
     ordering_fields = ['title', 'genre']
@@ -208,7 +208,7 @@ class BookDetail(RetrieveUpdateDestroyAPIView):
     serializer_class = BookSerializer
 
     permission_classes = [
-    permissions.IsAuthenticated, AdministratorPermissions | BookPermission]
+    permissions.IsAuthenticatedOrReadOnly, AdministratorPermissions | BookPermission]
     
     def delete(self, request, *args, **kwargs):
         is_employee = Employee.objects.filter(email=request.user.email).exists()
