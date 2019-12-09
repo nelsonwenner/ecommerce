@@ -125,20 +125,17 @@ REST_FRAMEWORK = {
         'rest_framework.schemas.coreapi.AutoSchema'
     ,
 
-    
-}
-
-'''
-'DEFAULT_THROTTLE_CLASSES': 
+    'DEFAULT_THROTTLE_CLASSES': 
         ['rest_framework.throttling.AnonRateThrottle',
         'rest_framework.throttling.UserRateThrottle']
     ,
     
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '5/hour',
-        'user': '20/hour'
+        'anon': '5/minute',
+        'user': '100/minute'
     }
-'''
+    
+}
 
 LOGIN_URL = 'rest_framework:login'
 LOGOUT_URL = 'rest_framework:logout'
