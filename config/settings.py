@@ -134,6 +134,7 @@ REST_FRAMEWORK = {
         'anon': '5/minute',
         'user': '100/minute'
     }
+    
 }
 
 LOGIN_URL = 'rest_framework:login'
