@@ -139,3 +139,6 @@ Itemsale {
 | Exibe a quantidade total de livros vendidos pelo funcionario                 |         ✔️          |
 | Exibe os livros comprados pelo cliente                                       |         ✔️          |
 | Exibe todas as compras do cliente                                            |         ✔️          |
+
+
+#Apresentação: https://youtu.be/zWX7eeqCixw
