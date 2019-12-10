@@ -43,4 +43,4 @@ $ python manage.py runserver
 
 ## Diagram project
 
-![bookstore-api](https://user-images.githubusercontent.com/40550247/70279430-3f6e9880-1795-11ea-8ac2-7cee757dab7a.png)
+![bookstore-ecommerce-api](https://user-images.githubusercontent.com/40550247/70489904-baa8b500-1adb-11ea-9273-7407cb7040db.png)
