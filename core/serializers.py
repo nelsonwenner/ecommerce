@@ -120,6 +120,13 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['url', 'client', 'manager', 'credit_card', 'status', 'total', 'date_created']
 
 
+class CreditCardSerializer(serializers.HyperlinkedModelSerializer):
+ 
+    class Meta:
+        model = CreditCard
+        fields = '__all__'
+
+
 class OrderDetailSerializer(serializers.HyperlinkedModelSerializer):
     total = serializers.FloatField(style={'input_type': 'interger'})
 
@@ -176,7 +183,7 @@ class ItemOrderSerializer(serializers.HyperlinkedModelSerializer):
         
         item_order.sub_total_order
         item_order.add_stock
-
+        
         instance.amount = validated_data.get('amount', instance.amount)
 
         instance.calc_amount

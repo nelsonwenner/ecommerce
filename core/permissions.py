@@ -1,15 +1,6 @@
+from rest_framework import serializers
 from rest_framework import permissions
 from .models import *
-
-
-class AddressPermissions(permissions.BasePermission):
-    
-    def has_permission(self, request, view):
-        if request.method in permissions.SAFE_METHODS:
-            return True
-        elif request.user.is_staff:
-            return True
-        return False
 
 
 class ClientPermissions(permissions.BasePermission):
@@ -22,18 +13,41 @@ class ClientPermissions(permissions.BasePermission):
         return False
 
 
-class AdministratorPermissions(permissions.BasePermission):
+class ManagerPermissions(permissions.BasePermission):
     
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:
             return True
         try:
-            if request.user.is_superuser:
+            if (Manager.objects.get(email=request.user.email).user.is_staff):
                 return True
-            if (Administrator.objects.get(email=request.user.email).user.is_staff):
-                return True
-        except Administrator.DoesNotExist:
+        except Manager.DoesNotExist:
             return False
+
+
+class BookPermission(permissions.BasePermission):
+    
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        try:
+            try:
+                if (Manager.objects.get(email=request.user.email).user.is_staff):
+                    return True
+            except Manager.DoesNotExist:
+                return False
+        except Exception:
+            return False # AnonymousUser
+
+
+class AddressPermissions(permissions.BasePermission):
+    
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        elif request.user.is_staff:
+            return True
+        return False
 
 
 class SalePermissions(permissions.BasePermission):
@@ -49,18 +63,6 @@ class SalePermissions(permissions.BasePermission):
 
 
 class ItemsalePermissions(permissions.BasePermission):
-
-    def has_permission(self, request, view):
-        if request.method in permissions.SAFE_METHODS:
-            return True
-        try:
-            if (Employee.objects.get(email=request.user.email).user.is_staff):
-                return True
-        except Employee.DoesNotExist:
-            return False
-
-
-class BookPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:

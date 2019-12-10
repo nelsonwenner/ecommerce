@@ -9,7 +9,6 @@ from .serializers import *
 
 User = get_user_model()
 
-
 class ApiRoot(GenericAPIView):
     name = 'api-root'
 
@@ -26,6 +25,7 @@ class ApiRoot(GenericAPIView):
             "authors": reverse(AuthorListView.name, request=request),
             "books": reverse(BookListView.name, request=request),
             "writes": reverse(WriteListView.name, request=request),
+            "credits-cards": reverse(CreditCardListView.name, request=request),
             "orders": reverse(OrderListView.name, request=request),
             "items-orders": reverse(ItemOrderListView.name, request=request),
         }
@@ -38,7 +38,7 @@ class UserListView(ListAPIView):
     queryset = User.objects.get_queryset().order_by('id')
     serializer_class = UserSerializer
 
-    #permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
 
     search_fields = ['^username']
 
@@ -48,7 +48,7 @@ class UserDetail(RetrieveUpdateDestroyAPIView):
     queryset = User.objects.get_queryset().order_by('id')
     serializer_class = UserSerializer
     
-    #permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAuthenticated, ManagerPermissions]
 
 
 class ClientListView(ListCreateAPIView):
@@ -174,7 +174,7 @@ class BookListView(ListCreateAPIView):
     queryset = Book.objects.get_queryset().order_by('id')
     serializer_class = BookSerializer
 
-    #permission_classes = [permissions.IsAuthenticatedOrReadOnly, AdministratorPermissions]
+    permission_classes = [BookPermission]
 
     search_fields = ['^title', '^genre']
     ordering_fields = ['title', 'genre']
@@ -217,8 +217,20 @@ class ItemOrderListView(ListCreateAPIView):
 
     
 class ItemOrderDetail(RetrieveUpdateDestroyAPIView):
-    name = 'item-order-detail'
+    name = 'itemorder-detail'
     queryset = ItemOrder.objects.get_queryset().order_by('id')
     serializer_class = ItemOrderSerializer
 
     #permission_classes = [permissions.IsAuthenticated, AdministratorPermissions | ItemsalePermissions]
+
+
+class CreditCardListView(ListCreateAPIView):
+    name = 'credit-card-list-view'
+    queryset = CreditCard.objects.get_queryset().order_by('id')
+    serializer_class = CreditCardSerializer
+
+
+class CreditCardDetail(RetrieveUpdateDestroyAPIView):
+    name = 'creditcard-detail'
+    queryset = CreditCard.objects.get_queryset().order_by('id')
+    serializer_class = CreditCardSerializer

@@ -77,8 +77,8 @@ class Order(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return "Client: {}, Manager: {}, Total: $ {}, Status: {}, Creditcard: {}".format(
-        self.client.name, self.manager.name, self.total, self.status.message, self.credit_card)
+        return "Client: {} Total: $ {}, Status: {}, Creditcard: {}".format(
+        self.client.name, self.total, self.status.message, self.credit_card)
     
     @property
     def get_status(self):
@@ -132,7 +132,8 @@ class ItemOrder(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return "Book: {}, Amount: {}, Subtotal".format(self.book, self.amount, self.subtotal)
+        return "Book: {}, Amount: {}, Subtotal: {}, Order: {}".format(
+        self.book, self.amount, self.subtotal, self.order)
 
     @property
     def calc_amount(self):
