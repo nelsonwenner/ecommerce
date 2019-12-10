@@ -106,7 +106,7 @@ class StatusListView(ListCreateAPIView):
     queryset = Status.objects.get_queryset().order_by('id')
     serializer_class = StatusSerializer
 
-    #permission_classes = [permissions.IsAuthenticated, AdministratorPermissions]
+    permission_classes = [permissions.IsAuthenticated, StatusPermission]
 
 
 class StatusDetail(RetrieveUpdateDestroyAPIView):
@@ -114,7 +114,7 @@ class StatusDetail(RetrieveUpdateDestroyAPIView):
     queryset = Status.objects.get_queryset().order_by('id')
     serializer_class = StatusDetailSerializer
     
-    #permission_classes = [permissions.IsAuthenticated,AdministratorPermissions]
+    permission_classes = [permissions.IsAuthenticated, StatusPermission]
        
     
 class GenreListView(ListCreateAPIView):
@@ -122,7 +122,7 @@ class GenreListView(ListCreateAPIView):
     queryset = Genre.objects.get_queryset().order_by('id')
     serializer_class = GenreSerializer
 
-    #permission_classes = [permissions.IsAuthenticatedOrReadOnly, AdministratorPermissions]
+    permission_classes = [permissions.IsAuthenticated, GenrerPermission]
 
 
 class GenreDetail(RetrieveUpdateDestroyAPIView):

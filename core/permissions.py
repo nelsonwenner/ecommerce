@@ -40,6 +40,37 @@ class BookPermission(permissions.BasePermission):
             return False # AnonymousUser
 
 
+class StatusPermission(permissions.BasePermission):
+    
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        if Client.objects.filter(email=request.user.email).exists():
+            return True
+        try:
+            if (Manager.objects.get(email=request.user.email).user.is_staff):
+                return True
+        except Manager.DoesNotExist:
+            return False
+
+
+class GenrerPermission(permissions.BasePermission):
+    
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        try:
+            if Client.objects.filter(email=request.user.email).exists():
+                return False
+            try:
+                if (Manager.objects.get(email=request.user.email).user.is_staff):
+                    return True
+            except Manager.DoesNotExist:
+                return False
+        except Exception:
+            return False 
+
+
 class AddressPermissions(permissions.BasePermission):
     
     def has_permission(self, request, view):
