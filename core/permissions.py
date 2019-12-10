@@ -8,9 +8,33 @@ class ClientPermissions(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:
             return True
-        elif request.user.is_staff:
+        try:
+            if Client.objects.filter(email=request.user.email).exists():
+                return True
+            try:
+                if (Manager.objects.get(email=request.user.email).user.is_staff):
+                    return True
+            except Manager.DoesNotExist:
+                return False
+        except Client.DoesNotExist:
+            return False
+
+
+class AddressPermissions(permissions.BasePermission):
+    
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
             return True
-        return False
+        try:
+            if Client.objects.filter(email=request.user.email).exists():
+                return True
+            try:
+                if (Manager.objects.get(email=request.user.email).user.is_staff):
+                    return True
+            except Manager.DoesNotExist:
+                return False
+        except Client.DoesNotExist:
+            return False
 
 
 class ManagerPermissions(permissions.BasePermission):
@@ -25,7 +49,7 @@ class ManagerPermissions(permissions.BasePermission):
             return False
 
 
-class BookPermission(permissions.BasePermission):
+class BookPermissions(permissions.BasePermission):
     
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:
@@ -40,12 +64,10 @@ class BookPermission(permissions.BasePermission):
             return False # AnonymousUser
 
 
-class StatusPermission(permissions.BasePermission):
+class StatusPermissions(permissions.BasePermission):
     
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:
-            return True
-        if Client.objects.filter(email=request.user.email).exists():
             return True
         try:
             if (Manager.objects.get(email=request.user.email).user.is_staff):
@@ -54,7 +76,7 @@ class StatusPermission(permissions.BasePermission):
             return False
 
 
-class GenrerPermission(permissions.BasePermission):
+class GenrerPermissions(permissions.BasePermission):
     
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:
@@ -68,50 +90,89 @@ class GenrerPermission(permissions.BasePermission):
             except Manager.DoesNotExist:
                 return False
         except Exception:
+            return False
+
+
+class AuthorPermissions(permissions.BasePermission):
+    
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        try:
+            if Client.objects.filter(email=request.user.email).exists():
+                return False
+            try:
+                if (Manager.objects.get(email=request.user.email).user.is_staff):
+                    return True
+            except Manager.DoesNotExist:
+                return False
+        except Exception:
+            return False
+
+
+class WritePermissions(permissions.BasePermission):
+    
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        try:
+            if Client.objects.filter(email=request.user.email).exists():
+                return False
+            try:
+                if (Manager.objects.get(email=request.user.email).user.is_staff):
+                    return True
+            except Manager.DoesNotExist:
+                return False
+        except Exception:
+            return False  
+  
+
+class OrderPermissions(permissions.BasePermission):
+    
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        try:
+            if Client.objects.filter(email=request.user.email).exists():
+                return True
+            try:
+                if (Manager.objects.get(email=request.user.email).user.is_staff):
+                    return True
+            except Manager.DoesNotExist:
+                return False
+        except Client.DoesNotExist:
             return False 
 
 
-class AddressPermissions(permissions.BasePermission):
+class ItemOrderPermissions(permissions.BasePermission):
     
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:
             return True
-        elif request.user.is_staff:
-            return True
-        return False
-
-
-class SalePermissions(permissions.BasePermission):
-
-    def has_permission(self, request, view):
-        if request.method in permissions.SAFE_METHODS:
-            return True
         try:
-            if (Employee.objects.get(email=request.user.email).user.is_staff):
+            if Client.objects.filter(email=request.user.email).exists():
                 return True
-        except Employee.DoesNotExist:
+            try:
+                if (Manager.objects.get(email=request.user.email).user.is_staff):
+                    return True
+            except Manager.DoesNotExist:
+                return False
+        except Client.DoesNotExist:
             return False
 
 
-class ItemsalePermissions(permissions.BasePermission):
-
-    def has_permission(self, request, view):
-        if request.method in permissions.SAFE_METHODS:
-            return True
-        try:
-            if (Employee.objects.get(email=request.user.email).user.is_staff):
-                return True
-        except Employee.DoesNotExist:
-            return False
-
-
-class ReportPermissions(permissions.BasePermission):
+class CreditCardPermissions(permissions.BasePermission):
     
     def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
         try:
-            if request.user.is_superuser:
+            if Client.objects.filter(email=request.user.email).exists():
                 return True
-            if (Administrator.objects.get(email=request.user.email).user.is_staff):
-                return True
-        except Administrator.DoesNotExist:
+            try:
+                if (Manager.objects.get(email=request.user.email).user.is_staff):
+                    return True
+            except Manager.DoesNotExist:
+                return False
+        except Client.DoesNotExist:
             return False

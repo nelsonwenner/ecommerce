@@ -10,6 +10,7 @@ from .serializers import *
 
 User = get_user_model()
 
+
 class ApiRoot(GenericAPIView):
     name = 'api-root'
 
@@ -61,7 +62,7 @@ class ClientListView(ListCreateAPIView):
     queryset = Client.objects.get_queryset().order_by('id')
     serializer_class = ClientSerializer
 
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, ClientPermissions]
 
     search_fields = ['^email']
 
@@ -71,7 +72,7 @@ class ClientDetail(RetrieveUpdateDestroyAPIView):
     queryset = Client.objects.get_queryset().order_by('id')
     serializer_class = ClientSerializer
 
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, ClientPermissions]
 
 
 class AddressListView(ListCreateAPIView):
@@ -79,7 +80,7 @@ class AddressListView(ListCreateAPIView):
     queryset = Address.objects.get_queryset().order_by('id')
     serializer_class = AddressSerializer
 
-    #permission_classes = [permissions.IsAuthenticated, AddressPermissions]
+    permission_classes = [permissions.IsAuthenticated, AddressPermissions]
 
 
 class AddressDetail(RetrieveUpdateDestroyAPIView):
@@ -87,7 +88,7 @@ class AddressDetail(RetrieveUpdateDestroyAPIView):
     queryset = Address.objects.get_queryset().order_by('id')
     serializer_class = AddressSerializer
 
-    #permission_classes = [permissions.IsAuthenticated, AddressPermissions]
+    permission_classes = [permissions.IsAuthenticated, AddressPermissions]
 
 
 class ManagerListView(ListCreateAPIView):
@@ -95,7 +96,7 @@ class ManagerListView(ListCreateAPIView):
     queryset = Manager.objects.get_queryset().order_by('id')
     serializer_class = ManagerSerializer
 
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, ManagerPermissions]
 
 
 class ManagerDetail(RetrieveUpdateDestroyAPIView):
@@ -103,7 +104,7 @@ class ManagerDetail(RetrieveUpdateDestroyAPIView):
     queryset = Manager.objects.get_queryset().order_by('id')
     serializer_class = ManagerSerializer
 
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated,  ManagerPermissions]
 
 
 class StatusListView(ListCreateAPIView):
@@ -111,7 +112,7 @@ class StatusListView(ListCreateAPIView):
     queryset = Status.objects.get_queryset().order_by('id')
     serializer_class = StatusSerializer
 
-    permission_classes = [permissions.IsAuthenticated, StatusPermission]
+    permission_classes = [permissions.IsAuthenticated, StatusPermissions]
 
 
 class StatusDetail(RetrieveUpdateDestroyAPIView):
@@ -119,7 +120,7 @@ class StatusDetail(RetrieveUpdateDestroyAPIView):
     queryset = Status.objects.get_queryset().order_by('id')
     serializer_class = StatusDetailSerializer
     
-    permission_classes = [permissions.IsAuthenticated, StatusPermission]
+    permission_classes = [permissions.IsAuthenticated, StatusPermissions]
        
     
 class GenreListView(ListCreateAPIView):
@@ -127,7 +128,7 @@ class GenreListView(ListCreateAPIView):
     queryset = Genre.objects.get_queryset().order_by('id')
     serializer_class = GenreSerializer
 
-    permission_classes = [permissions.IsAuthenticated, GenrerPermission]
+    permission_classes = [permissions.IsAuthenticated, GenrerPermissions]
 
 
 class GenreDetail(RetrieveUpdateDestroyAPIView):
@@ -135,7 +136,7 @@ class GenreDetail(RetrieveUpdateDestroyAPIView):
     queryset = Genre.objects.get_queryset().order_by('id')
     serializer_class = GenreSerializer
 
-    permission_classes = [permissions.IsAuthenticated, GenrerPermission]
+    permission_classes = [permissions.IsAuthenticated, GenrerPermissions]
 
 
 class AuthorListView(ListCreateAPIView):
@@ -143,7 +144,7 @@ class AuthorListView(ListCreateAPIView):
     queryset = Author.objects.get_queryset().order_by('id')
     serializer_class = AuthorSerializer
 
-    #permission_classes = [permissions.IsAuthenticatedOrReadOnly, AdministratorPermissions]
+    permission_classes = [permissions.IsAuthenticated, AuthorPermissions]
 
     search_fields = ['^name', '^email']
     ordering_fields = ['name', 'email']
@@ -155,7 +156,7 @@ class AuthorDetail(RetrieveUpdateDestroyAPIView):
     queryset = Author.objects.get_queryset().order_by('id')
     serializer_class = AuthorSerializer
 
-    #permission_classes = [permissions.IsAuthenticatedOrReadOnly,  AdministratorPermissions]
+    permission_classes = [permissions.IsAuthenticated, AuthorPermissions]
 
 
 class WriteListView(ListCreateAPIView):
@@ -163,7 +164,7 @@ class WriteListView(ListCreateAPIView):
     queryset = Write.objects.get_queryset().order_by('id')
     serializer_class = WriteSerializer
 
-    #permission_classes = [permissions.IsAuthenticatedOrReadOnly,  AdministratorPermissions]
+    permission_classes = [permissions.IsAuthenticated, WritePermissions]
 
 
 class WriteDetail(RetrieveUpdateDestroyAPIView):
@@ -171,7 +172,7 @@ class WriteDetail(RetrieveUpdateDestroyAPIView):
     queryset = Write.objects.get_queryset().order_by('id')
     serializer_class = WriteSerializer
 
-    #permission_classes = [permissions.IsAuthenticatedOrReadOnly,  AdministratorPermissions]
+    permission_classes = [permissions.IsAuthenticated, WritePermissions]
 
 
 class BookListView(ListCreateAPIView):
@@ -179,7 +180,7 @@ class BookListView(ListCreateAPIView):
     queryset = Book.objects.get_queryset().order_by('id')
     serializer_class = BookSerializer
 
-    permission_classes = [BookPermission]
+    permission_classes = [BookPermissions]
 
     search_fields = ['^title', '^genre']
     ordering_fields = ['title', 'genre']
@@ -191,7 +192,7 @@ class BookDetail(RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.get_queryset().order_by('id')
     serializer_class = BookSerializer
 
-    #permission_classes = [permissions.IsAuthenticatedOrReadOnly, AdministratorPermissions | BookPermission]
+    permission_classes = [BookPermissions]
 
 
 class OrderListView(ListCreateAPIView):
@@ -199,7 +200,7 @@ class OrderListView(ListCreateAPIView):
     queryset = Order.objects.get_queryset().order_by('id')
     serializer_class = OrderSerializer
 
-    #permission_classes = [permissions.IsAuthenticated, AdministratorPermissions | SalePermissions]
+    permission_classes = [permissions.IsAuthenticated, OrderPermissions]
 
     search_fields = ['^client']
     ordering_fields = ['total']
@@ -210,7 +211,7 @@ class OrderDetail(RetrieveUpdateDestroyAPIView):
     queryset = Order.objects.get_queryset().order_by('id')
     serializer_class = OrderDetailSerializer
 
-    #permission_classes = [permissions.IsAuthenticated, AdministratorPermissions | SalePermissions]
+    permission_classes = [permissions.IsAuthenticated, OrderPermissions]
 
 
 class ItemOrderListView(ListCreateAPIView):
@@ -218,7 +219,7 @@ class ItemOrderListView(ListCreateAPIView):
     queryset = ItemOrder.objects.get_queryset().order_by('id')
     serializer_class = ItemOrderSerializer
 
-    #permission_classes = [permissions.IsAuthenticated, AdministratorPermissions | ItemsalePermissions]
+    permission_classes = [permissions.IsAuthenticated, ItemOrderPermissions]
 
     
 class ItemOrderDetail(RetrieveUpdateDestroyAPIView):
@@ -226,7 +227,7 @@ class ItemOrderDetail(RetrieveUpdateDestroyAPIView):
     queryset = ItemOrder.objects.get_queryset().order_by('id')
     serializer_class = ItemOrderSerializer
 
-    #permission_classes = [permissions.IsAuthenticated, AdministratorPermissions | ItemsalePermissions]
+    permission_classes = [permissions.IsAuthenticated, ItemOrderPermissions]
 
 
 class CreditCardListView(ListCreateAPIView):
@@ -234,8 +235,11 @@ class CreditCardListView(ListCreateAPIView):
     queryset = CreditCard.objects.get_queryset().order_by('id')
     serializer_class = CreditCardSerializer
 
+    permission_classes = [permissions.IsAuthenticated, CreditCardPermissions]
 
 class CreditCardDetail(RetrieveUpdateDestroyAPIView):
     name = 'creditcard-detail'
     queryset = CreditCard.objects.get_queryset().order_by('id')
     serializer_class = CreditCardSerializer
+
+    permission_classes = [permissions.IsAuthenticated, CreditCardPermissions]
