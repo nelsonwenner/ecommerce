@@ -26,7 +26,7 @@ class Client(models.Model):
         return "Client: {}".format(self.name)
     
 
-class Administrator(models.Model):
+class Manager(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=60)
     email = models.EmailField()
@@ -34,19 +34,7 @@ class Administrator(models.Model):
     salary = models.FloatField()
 
     def __str__(self):
-        return "Administrator: {}".format(self.name)
-
-
-class Employee(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=60)
-    email = models.EmailField()
-    cpf = models.CharField(max_length=11)
-    salary = models.FloatField()
-    administrator = models.ForeignKey(Administrator, on_delete=models.CASCADE, related_name='employees')
-
-    def __str__(self):
-        return "Employee: {}".format(self.name)
+        return "Manager: {}".format(self.name)
 
 
 class Status(models.Model):
@@ -55,6 +43,8 @@ class Status(models.Model):
        ('Processando Compra', 'Processando Compra'),
        ('Aguardando Finalização', 'Aguardando Finalização'),
        ('Compra Finalizada', 'Compra Finalizada'),
+       ('Aprovado', 'Aprovado'),
+       ('Compra enviada', 'Compra enviada'),
     )
 
     message = models.CharField(max_length=30, default='Processando Compra', choices=STATUS)
@@ -63,21 +53,32 @@ class Status(models.Model):
         return "Status: {}".format(self.message)
 
 
-class Sale(models.Model):
+class CreditCard(models.Model):
+    flag = models.CharField(max_length=60)
+    number = models.CharField(max_length=60)
+    number_security = models.CharField(max_length=3)
+
+    def __str__(self):
+        return "Flag: {}, Number: {}, Number security: {}".format(
+        self.flag, self.number, self.number_security)
+
+
+class Order(models.Model):
 
     CALC = (
        (0.0, 0.0),
     )
 
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="sales")
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name="employee_sale")
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="orders")
+    manager = models.ForeignKey(Manager, on_delete=models.CASCADE, null=True, related_name="managers")
+    credit_card = models.ForeignKey(CreditCard, on_delete=models.CASCADE, related_name="credits_cards")
     status = models.ForeignKey(Status, on_delete=models.CASCADE, related_name="status")
     total = models.FloatField(default=0.0, choices=CALC)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return "Client: {}, Employee: {}, Total: $ {}, Status: {}".format(
-        self.client.name, self.employee.name, self.total, self.status.message)
+        return "Client: {}, Manager: {}, Total: $ {}, Status: {}, Creditcard: {}".format(
+        self.client.name, self.manager.name, self.total, self.status.message, self.credit_card)
     
     @property
     def get_status(self):
@@ -118,17 +119,18 @@ class Write(models.Model):
         return "Author: {}, Book: {}".format(self.author, self.book)
 
 
-class Itemsale(models.Model):
+class ItemOrder(models.Model):
 
     CALC = (
        (0.0, 0.0),
     )
     
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="itemsales")
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="items_orders")
     amount = models.IntegerField()
     subtotal = models.FloatField(default=0.0, choices=CALC)
-    sale = models.ForeignKey(Sale, on_delete=models.CASCADE)
-    
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    date_created = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
         return "Book: {}, Amount: {}, Subtotal".format(self.book, self.amount, self.subtotal)
 
@@ -149,15 +151,15 @@ class Itemsale(models.Model):
         self.book.save()
     
     @property
-    def add_total_sale(self):
-        self.sale.total += self.subtotal
-        self.sale.save()
+    def add_total_order(self):
+        self.order.total += self.subtotal
+        self.order.save()
 
     @property
-    def sub_total_sale(self):
-        self.sale.total -= self.subtotal
-        self.sale.save()
+    def sub_total_order(self):
+        self.order.total -= self.subtotal
+        self.order.save()
 
     @property
     def get_status(self):
-        return self.sale.status.message
+        return self.order.status.message
