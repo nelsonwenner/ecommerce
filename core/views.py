@@ -1,3 +1,4 @@
+from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import get_user_model
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -31,6 +32,10 @@ class ApiRoot(GenericAPIView):
         }
         
         return Response(data, status=status.HTTP_200_OK)
+
+
+class TokenObtainPairView(TokenObtainPairView):
+    serializer_class = TokenObtainPairSerializer
 
 
 class UserListView(ListAPIView):
@@ -130,7 +135,7 @@ class GenreDetail(RetrieveUpdateDestroyAPIView):
     queryset = Genre.objects.get_queryset().order_by('id')
     serializer_class = GenreSerializer
 
-    #permission_classes = [permissions.IsAuthenticatedOrReadOnly, AdministratorPermissions]
+    permission_classes = [permissions.IsAuthenticated, GenrerPermission]
 
 
 class AuthorListView(ListCreateAPIView):
