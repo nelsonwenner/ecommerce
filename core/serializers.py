@@ -16,19 +16,18 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
-    password = serializers.CharField(source='user.password')
-
+    password = serializers.CharField(source='user.password', write_only=True)
+    
     class Meta:
         model = Client
         fields = ['url', 'name', 'email', 'password', 'phone', 'address']
-        extra_kwargs = {'password': {'write_only': True}}
     
     def create(self, validated_data):
         if Client.objects.filter(email=validated_data['email']).exists():
             raise serializers.ValidationError("Error: This email already exists")
         
         user_data = validated_data.pop('user') 
-
+        
         user_data['username'] = validated_data['name'].split()[0]
         user_data['email'] = validated_data['email']
 
@@ -40,12 +39,11 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ManagerSerializer(serializers.HyperlinkedModelSerializer):
-    password = serializers.CharField(source='user.password')
+    password = serializers.CharField(source='user.password', write_only=True)
     
     class Meta:
         model = Manager
         fields = ['url', 'name', 'email', 'password', 'cpf', 'salary']
-        extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
         if Manager.objects.filter(email=validated_data['email']).exists():
