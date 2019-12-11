@@ -1,5 +1,4 @@
 from rest_framework_simplejwt.views import TokenObtainPairView
-from django.contrib.auth import get_user_model
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import serializers
@@ -7,8 +6,7 @@ from rest_framework import permissions
 from rest_framework.generics import *
 from .permissions import *
 from .serializers import *
-
-User = get_user_model()
+from .models import *
 
 
 class ApiRoot(GenericAPIView):

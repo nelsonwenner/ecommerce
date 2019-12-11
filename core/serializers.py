@@ -1,12 +1,9 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from django.contrib.auth import get_user_model
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import serializers
 from rest_framework import status
 from .models import *
-
-User = get_user_model()
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -204,7 +201,7 @@ class TokenObtainPairSerializer(TokenObtainPairSerializer):
         refresh = self.get_token(self.user)
 
         data['refresh'] = str(refresh)
-        data['access'] = str(refresh.access_token)
+        data['token'] = str(refresh.access_token)
 
         data['user_id'] = self.user.id
         data['username'] = self.user.username
