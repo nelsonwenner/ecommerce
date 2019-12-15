@@ -118,7 +118,7 @@ REST_FRAMEWORK = {
 
     'DEFAULT_PAGINATION_CLASS': 
         'rest_framework.pagination.PageNumberPagination',
-        'PAGE_SIZE': 5
+        'PAGE_SIZE': 25
     ,
     
     'DEFAULT_FILTER_BACKENDS':
@@ -154,6 +154,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+'''
+Config CORS
+'''
 AUTH_USER_MODEL = "core.User"
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -162,3 +165,8 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:8000'
 ]
 
+'''
+Config upload images
+'''
+MEDIA_URL =  '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")

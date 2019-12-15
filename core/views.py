@@ -1,4 +1,5 @@
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import serializers
@@ -177,6 +178,7 @@ class BookListView(ListCreateAPIView):
     name = 'book-list-view'
     queryset = Book.objects.get_queryset().order_by('id')
     serializer_class = BookSerializer
+    parser_class = [FileUploadParser]
 
     permission_classes = [BookPermissions]
 

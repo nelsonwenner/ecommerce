@@ -58,6 +58,8 @@ class BookPermissions(permissions.BasePermission):
             return True
         try:
             try:
+                if request.user.is_superuser:
+                    return True
                 if (Manager.objects.get(email=request.user.email).user.is_staff):
                     return True
             except Manager.DoesNotExist:
@@ -72,6 +74,8 @@ class StatusPermissions(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         try:
+            if request.user.is_superuser:
+                return True
             if (Manager.objects.get(email=request.user.email).user.is_staff):
                 return True
         except Manager.DoesNotExist:
@@ -84,6 +88,8 @@ class GenrerPermissions(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         try:
+            if request.user.is_superuser:
+                return True
             if Client.objects.filter(email=request.user.email).exists():
                 return False
             try:
@@ -101,6 +107,8 @@ class AuthorPermissions(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         try:
+            if request.user.is_superuser:
+                return True
             if Client.objects.filter(email=request.user.email).exists():
                 return False
             try:
@@ -118,6 +126,8 @@ class WritePermissions(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         try:
+            if request.user.is_superuser:
+                return True
             if Client.objects.filter(email=request.user.email).exists():
                 return False
             try:

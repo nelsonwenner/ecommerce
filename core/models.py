@@ -146,10 +146,11 @@ class Book(models.Model):
     prince = models.FloatField()
     stock = models.IntegerField()
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, related_name="books")
-
+    image = models.FileField(blank=False, null=False)
+    
     def __str__(self):
-        return "Book: {}, Prince: $ {}, Genre: {}, Stock: {}".format(
-        self.title, self.prince, self.genre.description, self.stock)
+        return "Book: {}, Prince: $ {}, Genre: {}, Stock: {}, Image: {}".format(
+        self.title, self.prince, self.genre.description, self.stock, self.image.name)
 
 
 class Write(models.Model):
