@@ -64,6 +64,16 @@ class Migration(migrations.Migration):
                 ('image', models.FileField(upload_to='')),
             ],
         ),
+         migrations.CreateModel(
+            name='CreditCard',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('owner', models.CharField(max_length=60)),
+                ('flag', models.CharField(max_length=60)),
+                ('number', models.CharField(max_length=60)),
+                ('number_security', models.CharField(max_length=3)),
+            ],
+        ),
         migrations.CreateModel(
             name='Client',
             fields=[
@@ -71,17 +81,9 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=60)),
                 ('email', models.EmailField(max_length=254)),
                 ('phone', models.CharField(max_length=12)),
-                ('address', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='clients', to='core.Address')),
+                ('credit_card', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='credits_cards', to='core.CreditCard')),
+                ('address', models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='clients', to='core.Address')),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='CreditCard',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('flag', models.CharField(max_length=60)),
-                ('number', models.CharField(max_length=60)),
-                ('number_security', models.CharField(max_length=3)),
             ],
         ),
         migrations.CreateModel(
@@ -123,10 +125,9 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('total', models.FloatField(choices=[(0.0, 0.0)], default=0.0)),
                 ('date_created', models.DateTimeField(auto_now_add=True)),
-                ('client', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='orders', to='core.Client')),
-                ('credit_card', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='credits_cards', to='core.CreditCard')),
+                ('client', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='orders', to='core.Client')),
                 ('manager', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='managers', to='core.Manager')),
-                ('status', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='status', to='core.Status')),
+                ('status', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='status', to='core.Status')),
             ],
         ),
         migrations.CreateModel(

@@ -6,19 +6,27 @@ from rest_framework import status
 from .models import *
 
 
+class AddressSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Address
+        fields = ['id','url', 'street', 'suite', 'city', 'zipcode']
+
+
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     
     class Meta:
         model = User
-        fields = ['url', 'username', 'email', 'is_staff']
+        fields = ['id', 'url', 'username', 'email', 'is_staff']
 
 
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
     password = serializers.CharField(source='user.password', write_only=True)
+    is_staff = serializers.BooleanField(source='user.is_staff', read_only=True)
     
     class Meta:
         model = Client
-        fields = ['url', 'name', 'email', 'password', 'phone', 'address']
+        fields = ['id', 'url', 'name', 'email', 'password', 'phone', 'is_staff', 'credit_card', 'address']
     
     def create(self, validated_data):
         if Client.objects.filter(email=validated_data['email']).exists():
@@ -33,8 +41,8 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
 
         user_created.save()
 
-        return Client.objects.create(user=user_created, **validated_data)
-
+        return Client.objects.create(id=user_created.id, user=user_created, **validated_data)
+    
 
 class ManagerSerializer(serializers.HyperlinkedModelSerializer):
     password = serializers.CharField(source='user.password', write_only=True)
@@ -58,14 +66,7 @@ class ManagerSerializer(serializers.HyperlinkedModelSerializer):
 
         user_created.save()
 
-        return Manager.objects.create(user=user_created, **validated_data)
-
-
-class AddressSerializer(serializers.HyperlinkedModelSerializer):
-
-    class Meta:
-        model = Address
-        fields = '__all__'
+        return Manager.objects.create(id=user_created.id, user=user_created, **validated_data)
 
 
 class StatusSerializer(serializers.HyperlinkedModelSerializer):
@@ -108,14 +109,14 @@ class BookSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Book
-        fields = '__all__'
+        fields = ['id', 'url', 'title', 'prince', 'stock', 'genre', 'image']
 
 
 class OrderSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Order
-        fields = ['url', 'client', 'manager', 'credit_card', 'status', 'total', 'date_created']
+        fields = ['id', 'url', 'client', 'manager', 'credit_card', 'status', 'total', 'date_created']
 
 
 class CreditCardSerializer(serializers.HyperlinkedModelSerializer):
@@ -130,14 +131,14 @@ class OrderDetailSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Order
-        fields = ['url', 'client', 'manager', 'credit_card', 'status', 'total', 'date_created']
-
+        fields = ['id', 'url', 'client', 'manager', 'status', 'total', 'date_created']
+    
 
 class ItemOrderSerializer(serializers.HyperlinkedModelSerializer):
     
     class Meta:
         model = ItemOrder
-        fields = ['url', 'book', 'amount', 'subtotal', 'order', 'date_created']
+        fields = ['id', 'url', 'book', 'amount', 'subtotal', 'order', 'date_created']
 
     def create(self, validated_data):
         stock = validated_data['book'].stock
@@ -203,7 +204,7 @@ class TokenObtainPairSerializer(TokenObtainPairSerializer):
         data['refresh'] = str(refresh)
         data['token'] = str(refresh.access_token)
 
-        data['user_id'] = self.user.id
+        data['id'] = self.user.id
         data['username'] = self.user.username
         data['email'] = self.user.email
         data['is_staff'] = self.user.is_staff

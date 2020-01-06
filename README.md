@@ -44,3 +44,75 @@ $ python manage.py runserver
 ## Diagram project
 
 ![bookstore-ecommerce-api](https://user-images.githubusercontent.com/40550247/70489904-baa8b500-1adb-11ea-9273-7407cb7040db.png)
+
+
+``` json
+Address {
+    "street": "",
+    "suite": "",
+    "city": "",
+    "zipcode": ""
+}
+
+Client {
+	"name": "",
+	"email": "",
+	"phone": "",
+	"address": Address()
+}
+
+Manager {
+    "name": "",
+    "email": "",
+    "cpf": "",
+    "salary": 0.0
+}
+
+Genre {
+    "description": ""
+}
+
+Book {
+    "title": "",
+    "prince": 0.0,
+    "stock": 0,
+    "genre": Genre()
+}
+
+Author {
+    "name": "",
+    "email": ""
+}
+
+Write {
+    "book": Book(),
+    "author": Author()
+}
+
+Status {
+    "message": ""
+}
+
+Creditcard {
+    "flag": "",
+    "number": "",
+    "number_security": ""
+}
+
+Order {
+    "total": 0.0,
+    "client": Client(),
+    "creditcard": Creditcard(),
+    "manager": Manager(),
+    "status": Status(),
+    "total": 0.0,
+    "date_created": 00-00-0000
+}
+
+ItemOrder {
+    "amount": 0,
+    "subtotal": 0.0,
+    "book": Book(),
+    "order": Order()
+}
+```
