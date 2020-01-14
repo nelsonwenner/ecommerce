@@ -1,4 +1,5 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from django.forms.models import model_to_dict
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import serializers
@@ -27,7 +28,13 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Client
         fields = ['id', 'url', 'name', 'email', 'password', 'phone', 'is_staff', 'credit_card', 'address']
-    
+     
+    '''
+    def get_address(self, obj):
+        if obj.address: return model_to_dict(obj.address) 
+        return None
+    '''
+
     def create(self, validated_data):
         if Client.objects.filter(email=validated_data['email']).exists():
             raise serializers.ValidationError("Error: This email already exists")
@@ -46,7 +53,7 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
 
 class ManagerSerializer(serializers.HyperlinkedModelSerializer):
     password = serializers.CharField(source='user.password', write_only=True)
-    
+
     class Meta:
         model = Manager
         fields = ['url', 'name', 'email', 'password', 'cpf', 'salary']
@@ -110,14 +117,7 @@ class BookSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Book
         fields = ['id', 'url', 'title', 'prince', 'stock', 'genre', 'image']
-
-
-class OrderSerializer(serializers.HyperlinkedModelSerializer):
-
-    class Meta:
-        model = Order
-        fields = ['id', 'url', 'client', 'manager', 'credit_card', 'status', 'total', 'date_created']
-
+ 
 
 class CreditCardSerializer(serializers.HyperlinkedModelSerializer):
  
@@ -132,13 +132,14 @@ class OrderDetailSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Order
         fields = ['id', 'url', 'client', 'manager', 'status', 'total', 'date_created']
-    
+
 
 class ItemOrderSerializer(serializers.HyperlinkedModelSerializer):
-    
+
     class Meta:
         model = ItemOrder
         fields = ['id', 'url', 'book', 'amount', 'subtotal', 'order', 'date_created']
+    
 
     def create(self, validated_data):
         stock = validated_data['book'].stock
@@ -192,6 +193,22 @@ class ItemOrderSerializer(serializers.HyperlinkedModelSerializer):
         instance.save()
 
         return instance
+
+
+class OrderSerializer(serializers.HyperlinkedModelSerializer):
+    items = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Order
+        fields = ['id', 'url', 'client', 'manager', 'status', 'total', 'date_created', 'items']
+      
+    def get_items(self, obj):
+        new_list = []
+        item = ItemOrder.objects.filter(order=obj)
+        for i in range(len(item)): 
+            new_list.append(model_to_dict(item[i]))
+            new_list[i]['title'] = item[i].book.title
+        return new_list
 
 
 class TokenObtainPairSerializer(TokenObtainPairSerializer):

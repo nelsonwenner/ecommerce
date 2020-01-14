@@ -507,8 +507,11 @@ class OrderPermissions(permissions.BasePermission):
 
         elif request.method == "DELETE" and request.user.is_authenticated:
             is_manager = Manager.objects.filter(email=request.user.email)
+            is_client = Client.objects.filter(email=request.user.email).exists()
 
             if request.user.is_superuser:
+                return True
+            elif is_client:
                 return True
             elif is_manager and is_manager[0].user.is_staff:
                 return True

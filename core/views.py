@@ -60,7 +60,7 @@ class ClientListView(ListCreateAPIView):
     name = "client-list"
     queryset = Client.objects.get_queryset().order_by('id')
     serializer_class = ClientSerializer
-
+    
     permission_classes = [ClientPermissions]
 
     search_fields = ['^email']

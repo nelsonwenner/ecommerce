@@ -114,14 +114,13 @@ class Order(models.Model):
     
     client = models.ForeignKey(Client, on_delete=models.CASCADE, null=True, related_name="orders")
     manager = models.ForeignKey(Manager, on_delete=models.CASCADE, null=True, related_name="managers")
-    #credit_card = models.ForeignKey(CreditCard, on_delete=models.CASCADE, null=True, related_name="credits_cards")
     status = models.ForeignKey(Status, on_delete=models.CASCADE, null=True, related_name="status")
     total = models.FloatField(default=0.0, choices=CALC)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return "Client: {} Total: $ {}, Status: {}, Creditcard: {}".format(
-        self.client.name, self.total, self.status.message, self.credit_card)
+        return "Client: {} Total: $ {}, Status: {}".format(
+        self.client.name, self.total, self.status.message)
     
     @property
     def get_status(self):
