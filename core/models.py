@@ -196,8 +196,10 @@ class ItemOrder(models.Model):
     
     @property
     def add_total_order(self):
+        print("\nSUBTOTAL ITENS: ", self.subtotal)
         self.order.total += self.subtotal
         self.order.save()
+        print("\nTOTAL ORDER: ", self.order.total)
 
     @property
     def sub_total_order(self):
@@ -207,3 +209,4 @@ class ItemOrder(models.Model):
     @property
     def get_status(self):
         return self.order.status.message
+        

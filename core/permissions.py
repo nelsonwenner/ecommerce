@@ -39,7 +39,7 @@ class ClientPermissions(permissions.BasePermission):
         elif request.method == "PATCH" and request.user.is_authenticated:
             is_manager = Manager.objects.filter(email=request.user.email)
             is_client = Client.objects.filter(email=request.user.email).exists()
-
+            
             if request.user.is_superuser:
                 return True
             elif is_client:

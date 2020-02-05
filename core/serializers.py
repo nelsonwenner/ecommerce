@@ -14,6 +14,13 @@ class AddressSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['id','url', 'street', 'suite', 'city', 'zipcode']
 
 
+class CreditCardSerializer(serializers.HyperlinkedModelSerializer):
+ 
+    class Meta:
+        model = CreditCard
+        fields = '__all__'
+
+
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     
     class Meta:
@@ -24,16 +31,11 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
     password = serializers.CharField(source='user.password', write_only=True)
     is_staff = serializers.BooleanField(source='user.is_staff', read_only=True)
-    
+
     class Meta:
         model = Client
         fields = ['id', 'url', 'name', 'email', 'password', 'phone', 'is_staff', 'credit_card', 'address']
-     
-    '''
-    def get_address(self, obj):
-        if obj.address: return model_to_dict(obj.address) 
-        return None
-    '''
+        depth = 1
 
     def create(self, validated_data):
         if Client.objects.filter(email=validated_data['email']).exists():
@@ -50,6 +52,24 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
 
         return Client.objects.create(id=user_created.id, user=user_created, **validated_data)
     
+    def update(self, instance, validated_data):
+        data = self.context['request'].data.keys()
+        key = list(map(lambda x: x, data))[0]
+        
+        if key == 'address':
+            address = Address.objects.get(pk=self.context['request'].data['address'])
+            instance.address = address
+            instance.save()
+            return instance
+
+        elif key == 'credit_card':
+            credit_card = CreditCard.objects.get(pk=self.context['request'].data['credit_card'])
+            instance.credit_card = credit_card
+            instance.save()
+            return instance
+
+        return super().update(instance, validated_data)
+    
 
 class ManagerSerializer(serializers.HyperlinkedModelSerializer):
     password = serializers.CharField(source='user.password', write_only=True)
@@ -57,7 +77,7 @@ class ManagerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Manager
         fields = ['url', 'name', 'email', 'password', 'cpf', 'salary']
-
+    
     def create(self, validated_data):
         if Manager.objects.filter(email=validated_data['email']).exists():
             raise serializers.ValidationError("Error: This email already exists")
@@ -117,13 +137,6 @@ class BookSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Book
         fields = ['id', 'url', 'title', 'prince', 'stock', 'genre', 'image']
- 
-
-class CreditCardSerializer(serializers.HyperlinkedModelSerializer):
- 
-    class Meta:
-        model = CreditCard
-        fields = '__all__'
 
 
 class OrderDetailSerializer(serializers.HyperlinkedModelSerializer):
@@ -140,11 +153,10 @@ class ItemOrderSerializer(serializers.HyperlinkedModelSerializer):
         model = ItemOrder
         fields = ['id', 'url', 'book', 'amount', 'subtotal', 'order', 'date_created']
     
-
     def create(self, validated_data):
+        status = validated_data['order'].status.message
         stock = validated_data['book'].stock
         amount = validated_data['amount']
-        status = validated_data['order'].status.message
         
         if amount > stock:
             raise serializers.ValidationError("Error: insufficient stock to perform this operation")
@@ -154,12 +166,13 @@ class ItemOrderSerializer(serializers.HyperlinkedModelSerializer):
         
         if status == "Compra Finalizada":
             raise serializers.ValidationError("Error: The status of this sale is finalized")
-
+        
         item_order = ItemOrder.objects.create(**validated_data)
-
+      
         item_order.calc_amount
-        item_order.sub_stock
         item_order.add_total_order
+        item_order.sub_stock
+        
         return item_order
 
     def update(self, instance, validated_data):
@@ -185,6 +198,7 @@ class ItemOrderSerializer(serializers.HyperlinkedModelSerializer):
         item_order.add_stock
         
         instance.amount = validated_data.get('amount', instance.amount)
+        instance.save()
 
         instance.calc_amount
         instance.sub_stock
@@ -201,7 +215,7 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Order
         fields = ['id', 'url', 'client', 'manager', 'status', 'total', 'date_created', 'items']
-      
+    
     def get_items(self, obj):
         new_list = []
         item = ItemOrder.objects.filter(order=obj)

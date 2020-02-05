@@ -73,7 +73,6 @@ class ClientDetail(RetrieveUpdateDestroyAPIView):
 
     permission_classes = [ClientPermissions]
 
-
 class AddressListView(ListCreateAPIView):
     name = 'address-list-view'
     queryset = Address.objects.get_queryset().order_by('id')
