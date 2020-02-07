@@ -171,7 +171,7 @@ class ItemOrder(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="items_orders")
     amount = models.IntegerField()
     subtotal = models.FloatField(default=0.0, choices=CALC)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -196,10 +196,8 @@ class ItemOrder(models.Model):
     
     @property
     def add_total_order(self):
-        print("\nSUBTOTAL ITENS: ", self.subtotal)
         self.order.total += self.subtotal
         self.order.save()
-        print("\nTOTAL ORDER: ", self.order.total)
 
     @property
     def sub_total_order(self):
@@ -209,4 +207,3 @@ class ItemOrder(models.Model):
     @property
     def get_status(self):
         return self.order.status.message
-        
