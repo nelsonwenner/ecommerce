@@ -171,7 +171,7 @@ class ItemOrder(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="items_orders")
     amount = models.IntegerField()
     subtotal = models.FloatField(default=0.0, choices=CALC)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
+    # order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
