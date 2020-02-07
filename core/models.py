@@ -126,6 +126,9 @@ class Order(models.Model):
     def get_status(self):
         return self.status.message
 
+    def add_total(self, value):
+        self.total += value
+        
 
 class Author(models.Model):
     name = models.CharField(max_length=60)
@@ -178,28 +181,24 @@ class ItemOrder(models.Model):
         return "Book: {}, Amount: {}, Subtotal: {}, Order: {}".format(
         self.book, self.amount, self.subtotal, self.order)
 
-    @property
-    def calc_amount(self):
-        instance = self
-        self.subtotal = (self.amount * self.book.prince)
-        instance.save() 
+    def order_calc(self):
+        itens = ItemOrder.objects.filter(order=self.order)
+        order = Order.objects.get(pk=self.order.id)
+        
+        total = 0
+        for item in itens: total += item.subtotal
+        order.total = total
+        order.save()
 
-    @property
-    def sub_stock(self):
-        self.book.stock -= self.amount 
-        self.book.save()
-
+    def sub_book_stock(self, amount):
+        book = Book.objects.get(pk=self.book.id)
+        book.stock -= amount
+        book.save()
+    
     @property
     def add_stock(self):
         self.book.stock += self.amount
         self.book.save()
-    
-    @property
-    def add_total_order(self):
-        print("\nSUBTOTAL ITENS: ", self.subtotal)
-        self.order.total += self.subtotal
-        self.order.save()
-        print("\nTOTAL ORDER: ", self.order.total)
 
     @property
     def sub_total_order(self):

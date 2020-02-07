@@ -167,12 +167,14 @@ class ItemOrderSerializer(serializers.HyperlinkedModelSerializer):
         if status == "Compra Finalizada":
             raise serializers.ValidationError("Error: The status of this sale is finalized")
         
-        item_order = ItemOrder.objects.create(**validated_data)
-      
-        item_order.calc_amount
-        item_order.add_total_order
-        item_order.sub_stock
+        price = validated_data['book'].prince
+        validated_data['subtotal'] = (amount * price)
         
+        item_order = ItemOrder.objects.create(**validated_data)
+
+        item_order.order_calc()
+        item_order.sub_book_stock(amount)
+
         return item_order
 
     def update(self, instance, validated_data):
