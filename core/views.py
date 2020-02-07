@@ -213,6 +213,27 @@ class OrderDetail(RetrieveUpdateDestroyAPIView):
     permission_classes = [OrderPermissions]
 
 
+class OrderClose(APIView):
+    """ApiView to close an Order"""
+
+    name = 'order-close'
+    closed_status, created = Status.objects.get_or_create(message='Compra Finalizada')
+
+    def put(self, request, pk):
+        """Update an order to be wiht cloased status"""
+        order = Order.objects.get(pk=pk)
+
+        total = 0
+        for item in order.items.all():
+            total += item.subtotal
+
+        order.status = self.closed_status  # Set status to closed
+        order.total = total  # update total
+        order.save()
+
+        return Response(status=status.HTTP_201_CREATED)
+
+
 class ItemOrderListView(ListCreateAPIView):
     name = 'item-order-list-view'
     queryset = ItemOrder.objects.get_queryset().order_by('id')
