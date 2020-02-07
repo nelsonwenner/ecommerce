@@ -1,15 +1,13 @@
 from rest_framework_swagger.views import get_swagger_view
 from rest_framework_simplejwt import views as jwt_views
-from django.conf.urls.static import static
 from django.urls import path, include
-from django.conf import settings
 from .views import *
 
 schema_view = get_swagger_view(title='BOOKSTORE API')
 
 
 urlpatterns = [
-    
+
     path('api-docs/', schema_view),
 
     path('', ApiRoot.as_view(), name=ApiRoot.name),
@@ -23,8 +21,11 @@ urlpatterns = [
     path('clients/', ClientListView.as_view(), name=ClientListView.name),
     path('clients/<int:pk>/', ClientDetail.as_view(), name=ClientDetail.name),
 
-    path('managers/', ManagerListView.as_view(), name=ManagerListView.name),
-    path('managers/<int:pk>/', ManagerDetail.as_view(), name=ManagerDetail.name),
+    path('administrators/', AdministratorListView.as_view(), name=AdministratorListView.name),
+    path('administrators/<int:pk>/', AdministratorDetail.as_view(), name=AdministratorDetail.name),
+
+    path('employees/', EmployeeListView.as_view(), name=EmployeeListView.name),
+    path('employees/<int:pk>/', EmployeeDetail.as_view(), name=EmployeeDetail.name),
 
     path('status/', StatusListView.as_view(), name=StatusListView.name),
     path('status/<int:pk>/', StatusDetail.as_view(), name=StatusDetail.name),
@@ -41,22 +42,21 @@ urlpatterns = [
     path('books/', BookListView.as_view(), name=BookListView.name),
     path('books/<int:pk>/', BookDetail.as_view(), name=BookDetail.name),
 
-    path('orders/', OrderListView.as_view(), name=OrderListView.name),
-    path('orders/<int:pk>/', OrderDetail.as_view(), name=OrderDetail.name),
-    path('orders/<int:pk>/close/', OrderClose.as_view(), name=OrderClose.name),
+    path('sales/', SaleListView.as_view(), name=SaleListView.name),
+    path('sales/<int:pk>/', SaleDetail.as_view(), name=SaleDetail.name),
 
-    path('itemsorders/', ItemOrderListView.as_view(), name=ItemOrderListView.name),
-    path('itemsorders/<int:pk>/', ItemOrderDetail.as_view(), name=ItemOrderDetail.name),
+    path('itemsales/', ItemsaleListView.as_view(), name=ItemsaleListView.name),
+    path('itemsales/<int:pk>/', ItemsaleDetail.as_view(), name=ItemsaleDetail.name),
 
-    path('creditscards/', CreditCardListView.as_view(), name=CreditCardListView.name),
-    path('creditscards/<int:pk>/', CreditCardDetail.as_view(), name=CreditCardDetail.name),
+    path('administrators-employees/', AdministratorEmployeeList.as_view(), name=AdministratorEmployeeList.name),
+    path('administrators-employees/<int:pk>/', AdministratorEmployeeDetail.as_view(), name=AdministratorEmployeeDetail.name),
+    
+    path('reports-employess/', ReportEmployee.as_view(), name=ReportEmployee.name),
+    path('reports-clients/', ReportClient.as_view(), name=ReportClient.name),
 
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('api-token', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api-token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api-token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     
 ]
-
-if settings.DEBUG:
-  urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

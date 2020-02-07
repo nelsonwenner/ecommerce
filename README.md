@@ -43,8 +43,7 @@ $ python manage.py runserver
 
 ## Diagram project
 
-![bookstore-ecommerce-api](https://user-images.githubusercontent.com/40550247/70489904-baa8b500-1adb-11ea-9273-7407cb7040db.png)
-
+![bookstore-api](https://user-images.githubusercontent.com/40550247/70279430-3f6e9880-1795-11ea-8ac2-7cee757dab7a.png)
 
 ``` json
 Address {
@@ -61,11 +60,19 @@ Client {
 	"address": Address()
 }
 
-Manager {
+Administrator {
     "name": "",
     "email": "",
     "cpf": "",
     "salary": 0.0
+}
+
+Employee {
+    "name": "",
+    "email": "",
+    "cpf": "",
+    "salary": 0.0,
+    "Administrator": Administrator()
 }
 
 Genre {
@@ -93,26 +100,45 @@ Status {
     "message": ""
 }
 
-Creditcard {
-    "flag": "",
-    "number": "",
-    "number_security": ""
-}
-
-Order {
+Sale {
     "total": 0.0,
-    "client": Client(),
-    "creditcard": Creditcard(),
-    "manager": Manager(),
+    "date_created": 00-00-0000,
     "status": Status(),
-    "total": 0.0,
-    "date_created": 00-00-0000
+    "employee": Employee(),
+    "client": Client()
 }
 
-ItemOrder {
+Itemsale {
     "amount": 0,
     "subtotal": 0.0,
     "book": Book(),
-    "order": Order()
+    "sale": Sale()
 }
 ```
+
+## Features
+
+|                                  Features                                    |     Book Store     |
+| :--------------------------------------------------------------------------: | :----------------: |
+| Somente administradores e admin criam status e o modificam                   |         ✔️          |
+| Somente administradores e admin criam e modificam livros                     |         ✔️          |
+| Funcionarios podem modificar a quantidade de estoques de livros              |         ✔️          |
+| Funcionarios e administradores podem criar vendas                            |         ✔️          |
+| Funcionarios e administradores podem mudar o status das vendas               |         ✔️          |
+| Não pode adicionar items a uma venda com status compra finalizada            |         ✔️          |
+| O sistema é responsavel por realizar todos os calculos das vendas            |         ✔️          |
+| O sistema gerencia a quantidade de stock dos livros, ao adiciona-lo a venda  |         ✔️          |
+| Somento administradores e admin podem ver os relatórios                      |         ✔️          |
+
+## Reports
+
+|                          Reports                                             |     Book Store     |
+| :--------------------------------------------------------------------------: | :----------------: |
+| Exibe o valor total em dinheiro de todos os livros vendidos pelo funcionario |         ✔️          |
+| Exibe a quantidade de clientes que o funcionario atendeu                     |         ✔️          |
+| Exibe a quantidade total de livros vendidos pelo funcionario                 |         ✔️          |
+| Exibe os livros comprados pelo cliente                                       |         ✔️          |
+| Exibe todas as compras do cliente                                            |         ✔️          |
+
+
+#Apresentação: https://youtu.be/zWX7eeqCixw
