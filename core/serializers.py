@@ -1,73 +1,99 @@
-from django.contrib.auth import get_user_model
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from django.forms.models import model_to_dict
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import serializers
 from rest_framework import status
 from .models import *
 
-User = get_user_model()
+
+class AddressSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Address
+        fields = ['id','url', 'street', 'suite', 'city', 'zipcode']
+
+
+class CreditCardSerializer(serializers.HyperlinkedModelSerializer):
+ 
+    class Meta:
+        model = CreditCard
+        fields = '__all__'
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     
     class Meta:
         model = User
-        fields = ['url', 'is_superuser', 'username', 'email', 'is_staff']
-
-
-class AddressSerializer(serializers.HyperlinkedModelSerializer):
-
-    class Meta:
-        model = Address
-        fields = '__all__'
+        fields = ['id', 'url', 'username', 'email', 'is_staff']
 
 
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
-    
+    password = serializers.CharField(source='user.password', write_only=True)
+    is_staff = serializers.BooleanField(source='user.is_staff', read_only=True)
+
     class Meta:
         model = Client
-        fields = ['url', 'name', 'email', 'phone', 'address']
-    
+        fields = ['id', 'url', 'name', 'email', 'password', 'phone', 'is_staff', 'credit_card', 'address']
+        depth = 1
+
     def create(self, validated_data):
         if Client.objects.filter(email=validated_data['email']).exists():
             raise serializers.ValidationError("Error: This email already exists")
+        
+        user_data = validated_data.pop('user') 
+        
+        user_data['username'] = validated_data['name'].split()[0]
+        user_data['email'] = validated_data['email']
 
-        user_created = User.objects.create_user(
-        username=validated_data['name'].split()[0],
-        email=validated_data['email'], password='admin@123')
-        return Client.objects.create(user=user_created, **validated_data)
+        user_created = User.objects.create_user(**user_data)
 
+        user_created.save()
 
-class AdministratorSerializer(serializers.HyperlinkedModelSerializer):
+        return Client.objects.create(id=user_created.id, user=user_created, **validated_data)
+    
+    def update(self, instance, validated_data):
+        data = self.context['request'].data.keys()
+        key = list(map(lambda x: x, data))[0]
+        
+        if key == 'address':
+            address = Address.objects.get(pk=self.context['request'].data['address'])
+            instance.address = address
+            instance.save()
+            return instance
+
+        elif key == 'credit_card':
+            credit_card = CreditCard.objects.get(pk=self.context['request'].data['credit_card'])
+            instance.credit_card = credit_card
+            instance.save()
+            return instance
+
+        return super().update(instance, validated_data)
+    
+
+class ManagerSerializer(serializers.HyperlinkedModelSerializer):
+    password = serializers.CharField(source='user.password', write_only=True)
 
     class Meta:
-        model = Administrator
-        fields = ['url', 'name', 'email', 'cpf', 'salary']
-
+        model = Manager
+        fields = ['url', 'name', 'email', 'password', 'cpf', 'salary']
+    
     def create(self, validated_data):
-        if Administrator.objects.filter(email=validated_data['email']).exists():
+        if Manager.objects.filter(email=validated_data['email']).exists():
             raise serializers.ValidationError("Error: This email already exists")
+        
+        user_data = validated_data.pop('user') 
 
-        user_created = User.objects.create_user(
-        username=validated_data['name'].split()[0],
-        email=validated_data['email'], password='admin@123', is_staff=True)
-        return Administrator.objects.create(user=user_created, **validated_data)
+        user_data['username'] = validated_data['name'].split()[0]
+        user_data['email'] = validated_data['email']
 
+        user_created = User.objects.create_user(**user_data)
 
-class EmployeeSerializer(serializers.HyperlinkedModelSerializer):
+        user_created.is_staff = True
 
-    class Meta:
-        model = Employee
-        fields = ['url', 'name', 'email', 'cpf', 'salary', 'administrator']
+        user_created.save()
 
-    def create(self, validated_data):
-        if Employee.objects.filter(email=validated_data['email']).exists():
-            raise serializers.ValidationError("Error: This email already exists")
-
-        user_created = User.objects.create_user(
-        username=validated_data['name'].split()[0],
-        email=validated_data['email'], password='admin@123', is_staff=True)
-        return Employee.objects.create(user=user_created, **validated_data)
+        return Manager.objects.create(id=user_created.id, user=user_created, **validated_data)
 
 
 class StatusSerializer(serializers.HyperlinkedModelSerializer):
@@ -110,68 +136,27 @@ class BookSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Book
-        fields = '__all__'
-
-    def update(self, instance, validated_data):
-        request = self.context.get('request')
-        book_pk = request.parser_context.get('kwargs')['pk']
-
-        book = Book.objects.get(pk=book_pk)
-
-        title_old = book.title
-        prince_old = float(book.prince)
-        genre_old = book.genre
-        title_new = validated_data.get('title')
-        prince_new = validated_data.get('prince')
-        genre_new = validated_data.get('genre')
-
-        is_administrator = Administrator.objects.filter(email=request.user.email).exists()
-        is_employee = Employee.objects.filter(email=request.user.email).exists()
-
-        if request.user.is_superuser or is_administrator:
-            instance.title = validated_data.get('title', instance.title)
-            instance.stock = validated_data.get('stock', instance.stock)
-            instance.prince = validated_data.get('prince', instance.prince)
-            instance.genre = validated_data.get('genre', instance.genre)
-            instance.save()
-            return instance
-
-        if (is_employee and (title_old == title_new) and 
-            (prince_old == prince_new) and 
-            (genre_old == genre_new)):
-            instance.stock = validated_data.get('stock', instance.stock)
-            instance.save()
-            return instance
-            
-        raise serializers.ValidationError(
-        "Error: Only admin or administrator can perform this operation")
+        fields = ['id', 'url', 'title', 'prince', 'stock', 'genre', 'image']
 
 
-class SaleSerializer(serializers.HyperlinkedModelSerializer):
-
-    class Meta:
-        model = Sale
-        fields = ['url', 'client', 'employee', 'status', 'total', 'date_created']
-
-
-class SaleDetailSerializer(serializers.HyperlinkedModelSerializer):
+class OrderDetailSerializer(serializers.HyperlinkedModelSerializer):
     total = serializers.FloatField(style={'input_type': 'interger'})
 
     class Meta:
-        model = Sale
-        fields = ['url', 'client', 'employee', 'status', 'total', 'date_created']
+        model = Order
+        fields = ['id', 'url', 'client', 'manager', 'status', 'total', 'date_created']
 
 
-class ItemsaleSerializer(serializers.HyperlinkedModelSerializer):
-    
+class ItemOrderSerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
-        model = Itemsale
-        fields = ['url', 'book', 'amount', 'subtotal', 'sale']
-
+        model = ItemOrder
+        fields = ['id', 'url', 'book', 'amount', 'subtotal', 'order', 'date_created']
+    
     def create(self, validated_data):
+        status = validated_data['order'].status.message
         stock = validated_data['book'].stock
         amount = validated_data['amount']
-        status = validated_data['sale'].status.message
         
         if amount > stock:
             raise serializers.ValidationError("Error: insufficient stock to perform this operation")
@@ -182,51 +167,75 @@ class ItemsaleSerializer(serializers.HyperlinkedModelSerializer):
         if status == "Compra Finalizada":
             raise serializers.ValidationError("Error: The status of this sale is finalized")
 
-        item_sale = Itemsale.objects.create(**validated_data)
+        price = validated_data['book'].prince
+        validated_data['subtotal'] = amount * price
 
-        item_sale.calc_amount
-        item_sale.sub_stock
-        item_sale.add_total_sale
-        return item_sale
+        item_order = ItemOrder.objects.create(**validated_data)
+        return item_order
 
     def update(self, instance, validated_data):
-        status = validated_data['sale'].status.message
-        sale = validated_data['sale']
+        status = validated_data['order'].status.message
+        order = validated_data['order']
         book = validated_data['book']
 
         request = self.context.get('request')
-        item_sale_pk = request.parser_context.get('kwargs')['pk']
+        item_order_pk = request.parser_context.get('kwargs')['pk']
         
-        item_sale = Itemsale.objects.get(pk=item_sale_pk)
+        item_order = ItemOrder.objects.get(pk=item_order_pk)
 
         if status == "Compra Finalizada":
             raise serializers.ValidationError("Error: The status of this sale is finalized")
         
-        if item_sale.book != book:
+        if item_order.book != book:
             raise serializers.ValidationError("Error: You cannot update with a different book")
         
-        if item_sale.sale != sale:
+        if item_order.order != order:
             raise serializers.ValidationError("You cannot update with a different sale")
         
-        item_sale.sub_total_sale
-        item_sale.add_stock
-
+        item_order.sub_total_order
+        item_order.add_stock
+        
         instance.amount = validated_data.get('amount', instance.amount)
+        instance.save()
 
         instance.calc_amount
         instance.sub_stock
-        instance.add_total_sale
+        instance.add_total_order
 
         instance.save()
 
         return instance
 
-       
-class AdministratorEmployeeSerializer(serializers.HyperlinkedModelSerializer):
-    employees = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name="employee-detail")
+
+class OrderSerializer(serializers.HyperlinkedModelSerializer):
+    items = serializers.SerializerMethodField()
 
     class Meta:
-        model = Administrator
-        fields = ['url', 'name', 'email', 'cpf', 'salary', 'employees']
-
+        model = Order
+        fields = ['id', 'url', 'client', 'manager', 'status', 'total', 'date_created', 'items']
     
+    def get_items(self, obj):
+        new_list = []
+        item = ItemOrder.objects.filter(order=obj)
+        for i in range(len(item)): 
+            new_list.append(model_to_dict(item[i]))
+            new_list[i]['title'] = item[i].book.title
+        return new_list
+
+
+class TokenObtainPairSerializer(TokenObtainPairSerializer):
+
+    def validate(self, attrs):
+        
+        data = super().validate(attrs)
+        refresh = self.get_token(self.user)
+
+        data['refresh'] = str(refresh)
+        data['token'] = str(refresh.access_token)
+
+        data['id'] = self.user.id
+        data['username'] = self.user.username
+        data['email'] = self.user.email
+        data['is_staff'] = self.user.is_staff
+        
+        return data
