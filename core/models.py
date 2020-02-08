@@ -125,9 +125,6 @@ class Order(models.Model):
     @property
     def get_status(self):
         return self.status.message
-
-    def add_total(self, value):
-        self.total += value
         
 
 class Author(models.Model):
