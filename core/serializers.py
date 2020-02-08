@@ -169,46 +169,13 @@ class ItemOrderSerializer(serializers.HyperlinkedModelSerializer):
         
         price = validated_data['book'].prince
         validated_data['subtotal'] = (amount * price)
-        
+
         item_order = ItemOrder.objects.create(**validated_data)
 
         item_order.order_calc()
         item_order.sub_book_stock(amount)
 
         return item_order
-
-    def update(self, instance, validated_data):
-        status = validated_data['order'].status.message
-        order = validated_data['order']
-        book = validated_data['book']
-
-        request = self.context.get('request')
-        item_order_pk = request.parser_context.get('kwargs')['pk']
-        
-        item_order = ItemOrder.objects.get(pk=item_order_pk)
-
-        if status == "Compra Finalizada":
-            raise serializers.ValidationError("Error: The status of this sale is finalized")
-        
-        if item_order.book != book:
-            raise serializers.ValidationError("Error: You cannot update with a different book")
-        
-        if item_order.order != order:
-            raise serializers.ValidationError("You cannot update with a different sale")
-        
-        item_order.sub_total_order
-        item_order.add_stock
-        
-        instance.amount = validated_data.get('amount', instance.amount)
-        instance.save()
-
-        instance.calc_amount
-        instance.sub_stock
-        instance.add_total_order
-
-        instance.save()
-
-        return instance
 
 
 class OrderSerializer(serializers.HyperlinkedModelSerializer):

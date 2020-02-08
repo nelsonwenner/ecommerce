@@ -194,18 +194,3 @@ class ItemOrder(models.Model):
         book = Book.objects.get(pk=self.book.id)
         book.stock -= amount
         book.save()
-    
-    @property
-    def add_stock(self):
-        self.book.stock += self.amount
-        self.book.save()
-
-    @property
-    def sub_total_order(self):
-        self.order.total -= self.subtotal
-        self.order.save()
-
-    @property
-    def get_status(self):
-        return self.order.status.message
-        

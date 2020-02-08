@@ -1,118 +1,51 @@
-# BOOK STORE API - REST
+<h1 align="center">
+  <img src="https://user-images.githubusercontent.com/40550247/72228004-81071600-3581-11ea-9972-1cbe906001ed.png" width="120px" />
+</h1>
 
-Um pequeno sistema de vendas de livros.
+<h1 align="center">
+  BOOK STORE API - REST
+</h1>
+
+<p align="center">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/nelsondiaas/bookstore-api?color=%2304D361">
+
+  <a href="https://github.com/nelsondiaas">
+    <img alt="Made by @nelsondiaas" src="https://img.shields.io/badge/made%20by-%40nelsondiaas-%2304D361">
+  </a>
+
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-%2304D361">
+
+  <a href="https://github.com/nelsondiaas/bookstore-api/stargazers">
+    <img alt="Stargazers" src="https://img.shields.io/github/stars/nelsondiaas/bookstore-api?style=social">
+  </a>
+</p>
 
 ## Require
- * Python >= 3.6
+ * Python (>= 3.6)
 
-## Dependencies
-
-* Django == 2.2.8
-* djangorestframework == 3.10.3
-* django-rest-swagger == 2.2.0
-* django-filter == 2.2.0
-* djangorestframework-simplejwt == 4.3.0
-
-## Installation
-
-Para preparar o ambiente de execução do projeto, teremos que usar o ```virtualenv```, para comportar todas as nossas dependências.
+## Getting Started
+1. Fork este repositório e clone em sua máquina.
+2. Mude o diretório para `bookstore-api` onde você o clonou.
+3. No terminal, execute:
 
 ``` bash
-# Instalando vitualenv
-$ pip install virtualenv
-
 # Criando o venv do projeto.
-$ virtualenv venv
+$ python -m venv venv
 
 # Utilizando o venv do projeto.
 $ source venv/Scripts/activate
 
 # Instalando dependências.
 $ pip install -r requirements.txt
-```
 
-## Starting project
-
-``` bash
 # Criando um user admin
 $ python manage.py createsuperuser
 
 # Iniciando projeto
 $ python manage.py runserver
 ```
+  4. Abra o host [localhost:8000](http://localhost:8000) e comece a usá-lo.
 
 ## Diagram project
 
-![bookstore-ecommerce-api](https://user-images.githubusercontent.com/40550247/70489904-baa8b500-1adb-11ea-9273-7407cb7040db.png)
-
-
-``` json
-Address {
-    "street": "",
-    "suite": "",
-    "city": "",
-    "zipcode": ""
-}
-
-Client {
-	"name": "",
-	"email": "",
-	"phone": "",
-	"address": Address()
-}
-
-Manager {
-    "name": "",
-    "email": "",
-    "cpf": "",
-    "salary": 0.0
-}
-
-Genre {
-    "description": ""
-}
-
-Book {
-    "title": "",
-    "prince": 0.0,
-    "stock": 0,
-    "genre": Genre()
-}
-
-Author {
-    "name": "",
-    "email": ""
-}
-
-Write {
-    "book": Book(),
-    "author": Author()
-}
-
-Status {
-    "message": ""
-}
-
-Creditcard {
-    "flag": "",
-    "number": "",
-    "number_security": ""
-}
-
-Order {
-    "total": 0.0,
-    "client": Client(),
-    "creditcard": Creditcard(),
-    "manager": Manager(),
-    "status": Status(),
-    "total": 0.0,
-    "date_created": 00-00-0000
-}
-
-ItemOrder {
-    "amount": 0,
-    "subtotal": 0.0,
-    "book": Book(),
-    "order": Order()
-}
-```
+![bookstore-ecommerce-api](https://user-images.githubusercontent.com/40550247/74076709-c0961600-49f8-11ea-807c-2af80d6307e1.png)
