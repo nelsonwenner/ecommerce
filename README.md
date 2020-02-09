@@ -59,6 +59,8 @@ $ python manage.py runserver
 
 ## Endpoints access
 
+<details><summary><b>API</b></summary><blockquote>
+
 <details><summary><b>Tokens</b></summary><blockquote>
 
 #### Allowed methods = [POST]
@@ -474,6 +476,8 @@ $ python manage.py runserver
     "order": Order()
 }
 ```
+
+</details>
 
 </details>
 
