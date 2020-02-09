@@ -70,7 +70,7 @@ $ python manage.py runserver
 ```json
 {
     "email": "",
-	"password": ""
+    "password": ""
 }
 ```
 ##### Sample response
