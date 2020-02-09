@@ -166,7 +166,6 @@ $ python manage.py runserver
 {
     "name": "",
     "email": "",
-    "password": "",
     "phone": "",
     "credit_card": Creditcart(),
     "address": Client()
@@ -233,7 +232,6 @@ $ python manage.py runserver
 {
     "name": "",
     "email": "",
-    "password": "",
     "cpf": "",
     "salary": 0.0
 }
