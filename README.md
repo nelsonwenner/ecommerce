@@ -7,16 +7,16 @@
 </h1>
 
 <p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/nelsondiaas/bookstore-api?color=%2304D361">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/nelsonwenner/bookstore-api?color=%2304D361">
 
-  <a href="https://github.com/nelsondiaas">
-    <img alt="Made by @nelsondiaas" src="https://img.shields.io/badge/made%20by-%40nelsondiaas-%2304D361">
+  <a href="https://github.com/nelsonwenner">
+    <img alt="Made by @nelsonwenner" src="https://img.shields.io/badge/made%20by-%40nelsonwenner-%2304D361">
   </a>
 
   <img alt="License" src="https://img.shields.io/badge/license-MIT-%2304D361">
 
-  <a href="https://github.com/nelsondiaas/bookstore-api/stargazers">
-    <img alt="Stargazers" src="https://img.shields.io/github/stars/nelsondiaas/bookstore-api?style=social">
+  <a href="https://github.com/nelsonwenner/bookstore-api/stargazers">
+    <img alt="Stargazers" src="https://img.shields.io/github/stars/nelsonwenner/bookstore-api?style=social">
   </a>
 </p>
 
@@ -36,11 +36,14 @@
 3. No terminal, execute:
 
 ``` bash
-# Criando o venv do projeto.
-$ python -m venv venv
+# Instalando virtualenv
+$ pip install virtualenv
 
-# Utilizando o venv do projeto.
-$ source venv/Scripts/activate
+# Criando o env do projeto.
+$ virtualenv env
+
+# Utilizando o env do projeto.
+$ source env/bin/activate
 
 # Instalando dependências.
 $ pip install -r requirements.txt
