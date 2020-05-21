@@ -1,7 +1,48 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import BaseUserManager
 from django.db import models
 
-User = get_user_model()
+
+class MyUserManager(BaseUserManager):
+    
+    use_in_migrations = True
+
+    def create_user(self, username, email, password, **extra_fields):
+        
+        if not email:
+            raise ValueError('The Email must be set')
+        email = self.normalize_email(email)
+        user = self.model(username=username, email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, username, email, password, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('is_active', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+        return self.create_user(username, email, password, **extra_fields)
+       
+
+class User(AbstractBaseUser, PermissionsMixin):
+    username = models.CharField(max_length=30)
+    email = models.EmailField(unique=True)
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
+
+    objects = MyUserManager()
+
+    def __str__(self):
+        return self.email
 
 
 class Address(models.Model):
@@ -15,18 +56,30 @@ class Address(models.Model):
         self.street ,self.suite, self.city, self.zipcode)
 
 
+class CreditCard(models.Model):
+    owner = models.CharField(max_length=60)
+    flag = models.CharField(max_length=60)
+    number = models.CharField(max_length=60)
+    number_security = models.CharField(max_length=3)
+
+    def __str__(self):
+        return "Flag: {}, Number: {}, Number security: {}".format(
+        self.flag, self.number, self.number_security)
+
+
 class Client(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=60)
     email = models.EmailField()
     phone = models.CharField(max_length=12)
-    address = models.OneToOneField(Address, on_delete=models.CASCADE, related_name='clients')
+    credit_card = models.ForeignKey(CreditCard, on_delete=models.CASCADE, null=True, related_name="credits_cards")
+    address = models.OneToOneField(Address, on_delete=models.CASCADE, null=True, related_name='clients')
 
     def __str__(self):
         return "Client: {}".format(self.name)
     
 
-class Administrator(models.Model):
+class Manager(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=60)
     email = models.EmailField()
@@ -34,19 +87,7 @@ class Administrator(models.Model):
     salary = models.FloatField()
 
     def __str__(self):
-        return "Administrator: {}".format(self.name)
-
-
-class Employee(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=60)
-    email = models.EmailField()
-    cpf = models.CharField(max_length=11)
-    salary = models.FloatField()
-    administrator = models.ForeignKey(Administrator, on_delete=models.CASCADE, related_name='employees')
-
-    def __str__(self):
-        return "Employee: {}".format(self.name)
+        return "Manager: {}".format(self.name)
 
 
 class Status(models.Model):
@@ -55,6 +96,8 @@ class Status(models.Model):
        ('Processando Compra', 'Processando Compra'),
        ('Aguardando Finalização', 'Aguardando Finalização'),
        ('Compra Finalizada', 'Compra Finalizada'),
+       ('Aprovado', 'Aprovado'),
+       ('Compra enviada', 'Compra enviada'),
     )
 
     message = models.CharField(max_length=30, default='Processando Compra', choices=STATUS)
@@ -63,21 +106,21 @@ class Status(models.Model):
         return "Status: {}".format(self.message)
 
 
-class Sale(models.Model):
+class Order(models.Model):
 
     CALC = (
        (0.0, 0.0),
     )
-
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="sales")
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name="employee_sale")
-    status = models.ForeignKey(Status, on_delete=models.CASCADE, related_name="status")
+    
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, null=True, related_name="orders")
+    manager = models.ForeignKey(Manager, on_delete=models.CASCADE, null=True, related_name="managers")
+    status = models.ForeignKey(Status, on_delete=models.CASCADE, null=True, related_name="status")
     total = models.FloatField(default=0.0, choices=CALC)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return "Client: {}, Employee: {}, Total: $ {}, Status: {}".format(
-        self.client.name, self.employee.name, self.total, self.status.message)
+        return "Client: {} Total: $ {}, Status: {}".format(
+        self.client.name, self.total, self.status.message)
     
     @property
     def get_status(self):
@@ -104,10 +147,11 @@ class Book(models.Model):
     prince = models.FloatField()
     stock = models.IntegerField()
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, related_name="books")
-
+    image = models.FileField(blank=False, null=False)
+    
     def __str__(self):
-        return "Book: {}, Prince: $ {}, Genre: {}, Stock: {}".format(
-        self.title, self.prince, self.genre.description, self.stock)
+        return "Book: {}, Prince: $ {}, Genre: {}, Stock: {}, Image: {}".format(
+        self.title, self.prince, self.genre.description, self.stock, self.image.name)
 
 
 class Write(models.Model):
@@ -118,19 +162,21 @@ class Write(models.Model):
         return "Author: {}, Book: {}".format(self.author, self.book)
 
 
-class Itemsale(models.Model):
+class ItemOrder(models.Model):
 
     CALC = (
        (0.0, 0.0),
     )
     
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="itemsales")
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="items_orders")
     amount = models.IntegerField()
     subtotal = models.FloatField(default=0.0, choices=CALC)
-    sale = models.ForeignKey(Sale, on_delete=models.CASCADE)
-    
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    date_created = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
-        return "Book: {}, Amount: {}, Subtotal".format(self.book, self.amount, self.subtotal)
+        return "Book: {}, Amount: {}, Subtotal: {}, Order: {}".format(
+        self.book, self.amount, self.subtotal, self.order)
 
     def order_calc(self):
         itens = ItemOrder.objects.filter(order=self.order)
