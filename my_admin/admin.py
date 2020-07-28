@@ -8,3 +8,4 @@ class AdminSite(DjangoAdminSite):
     login_form = AuthenticationForm
 
 admin_site = AdminSite(name="admin_site")
+

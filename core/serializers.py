@@ -6,12 +6,12 @@ from rest_framework import serializers
 from rest_framework import status
 from .models import *
 
-
 class AddressSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Address
         fields = '__all__'
+        read_only_fields = ('customer',)
 
 class CreditCardSerializer(serializers.ModelSerializer):
     
@@ -25,16 +25,14 @@ class ClientSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = '__all__'
+        fields = ['id', 'name', 'email', 'password', 'phone', 'personal_document']
 
     def create(self, validated_data):
         if Customer.objects.filter(email=validated_data['email']).exists():
             raise serializers.ValidationError("Error: This email already exists")
-
         user_data = validated_data.pop('auth_core')['user']
-        user_data['username'] = validated_data['email']
+        user_data['username'] = validated_data['name']
         user_data['email'] = validated_data['email']
-        address = validated_data.pop('address')
         userClient = UserClient.objects.create_client(**user_data)
         customer = Customer.objects.create(id=userClient.id, user=userClient, **validated_data)
         return customer
