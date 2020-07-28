@@ -10,8 +10,8 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['username']
 
     class Meta:
-        verbose_name = 'user'
-    
+        verbose_name = 'user auth'
+
 class UserClient(User):
     objects = UserClientManager()
 

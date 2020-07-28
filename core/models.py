@@ -1,132 +1,130 @@
+from common.models import BaseCustomer, AutoCreateUpdatedMixin
+from auth_core.models import UserClient
+from django.conf import settings
 from django.db import models
+import uuid
+import os
 
-class Address(models.Model):
+class Customer(BaseCustomer):
+    user = models.OneToOneField(UserClient, on_delete=models.CASCADE, related_name='user_client')
+    phone = models.CharField(max_length=12)
+
+    class Meta:
+        verbose_name = 'client'
+
+class Address(models.Model, AutoCreateUpdatedMixin):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='user_client_address')
     street = models.CharField(max_length=200)
     suite = models.CharField(max_length=200)
     city = models.CharField(max_length=200)
     zipcode = models.CharField(max_length=200)
 
-    def __str__(self):
-        return "city: {} | street: {}".format(self.city, self.street)
+    class Meta:
+        verbose_name = 'address'
 
-
-class CreditCard(models.Model):
+class CreditCard(models.Model, AutoCreateUpdatedMixin):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='user_client_creditcard')
     owner = models.CharField(max_length=60)
     flag = models.CharField(max_length=60)
     number = models.CharField(max_length=60)
     number_security = models.CharField(max_length=3)
 
-    def __str__(self):
-        return "Flag: {}, Number: {}, Number security: {}".format(
-        self.flag, self.number, self.number_security)
+    class Meta:
+        verbose_name = 'creditcard'
 
-
-class Client(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=60)
-    email = models.EmailField()
-    phone = models.CharField(max_length=12)
-    credit_card = models.ForeignKey(CreditCard, on_delete=models.CASCADE, null=True, related_name="credits_cards")
-    address = models.OneToOneField(Address, on_delete=models.CASCADE, null=True, related_name='clients')
-
-    def __str__(self):
-        return "Client: {}".format(self.name)
-    
-
-class Manager(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=60)
-    email = models.EmailField()
-    cpf = models.CharField(max_length=11)
-    salary = models.FloatField()
-
-    def __str__(self):
-        return "Manager: {}".format(self.name)
-
-
-class Status(models.Model):
+class Status(models.Model, AutoCreateUpdatedMixin):
 
     STATUS = (
-       ('Processando Compra', 'Processando Compra'),
-       ('Aguardando Finalização', 'Aguardando Finalização'),
-       ('Compra Finalizada', 'Compra Finalizada'),
-       ('Aprovado', 'Aprovado'),
-       ('Compra enviada', 'Compra enviada'),
+        (0, 'Processing Purchase'),
+        (1', 'Approved Purchase'),
+        (2', 'Purchase Denied'),
+        (3', 'Purchase sent'),
     )
-
-    message = models.CharField(max_length=30, default='Processando Compra', choices=STATUS)
     
-    def __str__(self):
-        return "Status: {}".format(self.message)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    message = models.CharField(max_length=30, default=0, choices=STATUS)
+    
+    class Meta:
+        verbose_name = 'status'
 
-
-class Order(models.Model):
+class Order(models.Model, AutoCreateUpdatedMixin):
 
     CALC = (
-       (0.0, 0.0),
+       (0, 0.0),
     )
-    
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, null=True, related_name="orders")
-    manager = models.ForeignKey(Manager, on_delete=models.CASCADE, null=True, related_name="managers")
-    status = models.ForeignKey(Status, on_delete=models.CASCADE, null=True, related_name="status")
-    total = models.FloatField(default=0.0, choices=CALC)
-    date_created = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return "Client: {} Total: $ {}, Status: {}".format(
-        self.client.name, self.total, self.status.message)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='user_client_order')
+    status = models.OneToOneField(Status, on_delete=models.PROTECT, null=True, related_name="status")
+    total = models.FloatField(default=0, choices=CALC)
+
+    class Meta:
+        verbose_name = 'order'
     
     @property
     def get_status(self):
         return self.status.message
         
-
-class Author(models.Model):
+class Author(models.Model, AutoCreateUpdatedMixin):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=60)
     email = models.EmailField()
 
-    def __str__(self):
-        return "Author: {}".format(self.name)
+    class Meta:
+        verbose_name = 'author'
 
-
-class Genre(models.Model):
+class Category(models.Model, AutoCreateUpdatedMixin):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    slug = models.SlugField()
     description = models.CharField(max_length=255)
 
-    def __str__(self):
-        return "Genre: {}".format(self.description)
+    class Meta:
+        verbose_name = 'category'
 
+def hash_filename_to_uuid(instance, filename):
+    ext = os.path.splitext(filename)
+    new_filename = "{0}{1}".format(uuid.uuid4(), ext)
+    return new_filename
 
-class Book(models.Model):
+def upload_to(instance, filename):
+    new_filename = hash_filename_to_uuid(instance, filename)
+    return os.path.join(settings.MEDIA_BASE_PATH + '/books/', new_filename)
+
+class Book(models.Model, AutoCreateUpdatedMixin):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=60)
     prince = models.FloatField()
     stock = models.IntegerField()
-    genre = models.ForeignKey(Genre, on_delete=models.CASCADE, related_name="books")
-    image = models.FileField(blank=False, null=False)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="categories_books")
+    image = models.ImageField(max_length=255, upload_to=upload_to)
     
-    def __str__(self):
-        return "Book: {}, Prince: $ {}, Genre: {}, Stock: {}, Image: {}".format(
-        self.title, self.prince, self.genre.description, self.stock, self.image.name)
+    class Meta:
+        verbose_name = 'books'
 
-
-class Write(models.Model):
+class Write(models.Model, AutoCreateUpdatedMixin):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name="writes")
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return "Author: {}, Book: {}".format(self.author, self.book)
+    class Meta:
+        verbose_name = 'writes'
 
-
-class ItemOrder(models.Model):
+class ItemOrder(models.Model, AutoCreateUpdatedMixin):
 
     CALC = (
-       (0.0, 0.0),
+       (0, 0.0),
     )
     
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="items_orders")
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="item_order")
     amount = models.IntegerField()
-    subtotal = models.FloatField(default=0.0, choices=CALC)
+    subtotal = models.FloatField(default=0, choices=CALC)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    date_created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'item order'
 
     def __str__(self):
         return "Book: {}, Amount: {}, Subtotal: {}, Order: {}".format(
