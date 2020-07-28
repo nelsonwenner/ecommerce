@@ -37,10 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
     'rest_framework_swagger',
     'rest_framework',
     'django_filters',
+    'corsheaders',
     'core'
 ]
 
@@ -52,9 +52,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
+    # my middlewares #
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -107,27 +106,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = "core.User"
 
 REST_FRAMEWORK = {
     
-    'DEFAULT_AUTHENTICATION_CLASSES': 
-        ['rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication']
+   'DEFAULT_AUTHENTICATION_CLASSES': 
+        ['rest_framework_simplejwt.authentication.JWTAuthentication']
     ,
 
     'DEFAULT_PAGINATION_CLASS': 
         'rest_framework.pagination.PageNumberPagination',
         'PAGE_SIZE': 12
-    ,
-    
-    'DEFAULT_FILTER_BACKENDS':
-        ['django_filters.rest_framework.DjangoFilterBackend',
-        'rest_framework.filters.SearchFilter',
-        'rest_framework.filters.OrderingFilter']
-    ,
-    'DEFAULT_SCHEMA_CLASS': 
-        'rest_framework.schemas.coreapi.AutoSchema'
     ,
 }
 
@@ -154,18 +143,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-'''
-Config CORS
-'''
-AUTH_USER_MODEL = "core.User"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL =  '/media/'
+
+MEDIA_BASE_PATH = 'uploads'
 
 CORS_ORIGIN_ALLOW_ALL = True
-
-'''
-Config upload images
-'''
-MEDIA_URL =  '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 '''
 Config JWT
