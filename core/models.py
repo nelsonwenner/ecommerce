@@ -7,7 +7,7 @@ from django.db import models
 class MyUserManager(BaseUserManager):
     
     use_in_migrations = True
-
+    
     def create_user(self, username, email, password, **extra_fields):
         
         if not email:
@@ -52,8 +52,7 @@ class Address(models.Model):
     zipcode = models.CharField(max_length=200)
 
     def __str__(self):
-        return "street: {}, suite: {}, city: {}, zipcode: {}".format(
-        self.street ,self.suite, self.city, self.zipcode)
+        return "city: {} | street: {}".format(self.city, self.street)
 
 
 class CreditCard(models.Model):
