@@ -36,14 +36,14 @@ class TokenObtainPairView(TokenObtainPairView):
 
 class ClientListView(ListCreateAPIView):
     name = "client-list"
-    queryset = Client.objects.get_queryset()
+    queryset = Customer.objects.get_queryset()
     serializer_class = ClientSerializer
     
     search_fields = ['^email']
 
 class ClientDetail(RetrieveUpdateDestroyAPIView):
     name = "client-detail"
-    queryset = Client.objects.get_queryset()
+    queryset = Customer.objects.get_queryset()
     serializer_class = ClientSerializer
 
 class AddressListView(ListCreateAPIView):
@@ -55,16 +55,6 @@ class AddressDetail(RetrieveUpdateDestroyAPIView):
     name = 'address-detail'
     queryset = Address.objects.get_queryset()
     serializer_class = AddressSerializer
-
-class ManagerListView(ListCreateAPIView):
-    name = 'manager-list-view'
-    queryset = Manager.objects.get_queryset()
-    serializer_class = ManagerSerializer
-
-class ManagerDetail(RetrieveUpdateDestroyAPIView):
-    name = 'manager-detail'
-    queryset = Manager.objects.get_queryset()
-    serializer_class = ManagerSerializer
 
 class StatusListView(ListCreateAPIView):
     name = 'status-list-view'

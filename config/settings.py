@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'corsheaders',
+    'auth_core',
+    'my_admin',
     'core'
 ]
 
@@ -106,7 +108,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = "core.User"
+AUTH_USER_MODEL = 'auth_core.User'
+
+AUTHENTICATION_BACKENDS = (
+    'my_admin.backends.AdminBackend',
+)
 
 REST_FRAMEWORK = {
     

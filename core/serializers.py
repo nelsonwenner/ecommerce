@@ -101,7 +101,7 @@ class TokenObtainPairSerializer(TokenObtainPairSerializer):
         
         data = super().validate(attrs)
         refresh = self.get_token(self.user)
-
+        
         data['id'] = self.user.id
         data['username'] = self.user.username
         data['email'] = self.user.email

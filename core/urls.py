@@ -23,7 +23,7 @@ urlpatterns = [
     path('status/<str:pk>/', StatusDetail.as_view(), name=StatusDetail.name),
 
     path('categories/', CategoryListView.as_view(), name=CategoryListView.name),
-    path('categories/<str:pk>/', GenreDetail.as_view(), name=GenreDetail.name),
+    path('categories/<str:pk>/', CategoryDetail.as_view(), name=CategoryDetail.name),
     
     path('authors/', AuthorListView.as_view(), name=AuthorListView.name),
     path('authors/<str:pk>/', AuthorDetail.as_view(), name=AuthorDetail.name),
