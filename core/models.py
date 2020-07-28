@@ -125,21 +125,3 @@ class ItemOrder(models.Model, AutoCreateUpdatedMixin):
 
     class Meta:
         verbose_name = 'item order'
-
-    def __str__(self):
-        return "Book: {}, Amount: {}, Subtotal: {}, Order: {}".format(
-        self.book, self.amount, self.subtotal, self.order)
-
-    def order_calc(self):
-        itens = ItemOrder.objects.filter(order=self.order)
-        order = Order.objects.get(pk=self.order.id)
-        
-        total = 0
-        for item in itens: total += item.subtotal
-        order.total = total
-        order.save()
-
-    def sub_book_stock(self, amount):
-        book = Book.objects.get(pk=self.book.id)
-        book.stock -= amount
-        book.save()

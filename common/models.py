@@ -11,7 +11,7 @@ class AutoCreateUpdatedMixin(models.Model):
 class BaseCustomer(AutoCreateUpdatedMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     name = models.CharField(max_length=255, verbose_name='name')
-    email = models.CharField(max_length=255, verbose_name='e-mail')
+    email = models.CharField(unique=True, max_length=255, verbose_name='e-mail')
     personal_document = models.CharField(max_length=20, verbose_name='cpf')
     
     class Meta:
