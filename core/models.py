@@ -74,7 +74,7 @@ class Order(AutoCreateUpdatedMixin):
         return self.status.message
 
     def __str__(self):
-        return self.status
+        return self.customer.email
         
 class Author(AutoCreateUpdatedMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -127,7 +127,10 @@ class Write(AutoCreateUpdatedMixin):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name = 'writes'
+        verbose_name = 'write'
+
+    def __str__(self):
+        return self.author.name
 
 class ItemOrder(AutoCreateUpdatedMixin):
 

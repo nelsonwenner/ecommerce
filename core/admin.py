@@ -26,3 +26,7 @@ class OrderAdmin(ModelAdmin):
 @admin.register(Author, site=admin_site)
 class AuthorAdmin(ModelAdmin):
     pass
+
+@admin.register(Write, site=admin_site)
+class WriteAdmin(ModelAdmin):
+    pass
