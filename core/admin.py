@@ -30,3 +30,7 @@ class AuthorAdmin(ModelAdmin):
 @admin.register(Write, site=admin_site)
 class WriteAdmin(ModelAdmin):
     pass
+
+@admin.register(ItemOrder, site=admin_site)
+class ItemOrderAdmin(ModelAdmin):
+    pass

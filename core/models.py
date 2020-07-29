@@ -146,3 +146,6 @@ class ItemOrder(AutoCreateUpdatedMixin):
 
     class Meta:
         verbose_name = 'item order'
+
+    def __str__(self):
+        return self.book.title
