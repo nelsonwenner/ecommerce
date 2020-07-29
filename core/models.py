@@ -26,6 +26,9 @@ class Address(AutoCreateUpdatedMixin):
     class Meta:
         verbose_name = 'address'
 
+    def __str__(self):
+        return self.city
+
 class CreditCard(AutoCreateUpdatedMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='user_client_creditcard')

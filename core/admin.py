@@ -39,3 +39,7 @@ class ItemOrderAdmin(ModelAdmin):
 class CustomerAdmin(ModelAdmin):
     exclude = ['user']
     list_display = ('name', 'email')
+
+@admin.register(Address, site=admin_site)
+class AddressAdmin(ModelAdmin):
+    pass
