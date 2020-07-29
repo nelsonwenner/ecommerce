@@ -22,9 +22,9 @@ class ApiRoot(APIView):
             "authors": reverse(AuthorListView.name, request=request),
             "books": reverse(BookListView.name, request=request),
             "writes": reverse(WriteListView.name, request=request),
-            "credits-cards": reverse(CreditCardListView.name, request=request),
-            "orders": reverse(OrderListView.name, request=request),
-            "items-orders": reverse(ItemOrderListView.name, request=request),
+            "creditcards": reverse(CreditCardListView.name, request=request),
+            "checkouts": reverse(CheckoutListView.name, request=request),
+            "checkoutitems": reverse(CheckoutItemListView.name, request=request),
         }
         
         return Response(data, status=status.HTTP_200_OK)
@@ -107,29 +107,29 @@ class BookDetail(RetrieveAPIView):
     queryset = Book.objects.get_queryset()
     serializer_class = BookSerializer
 
-class OrderListView(CreateAPIView):
-    name = 'order-list-view'
-    queryset = Order.objects.get_queryset()
-    serializer_class = OrderSerializer
+class CheckoutListView(CreateAPIView):
+    name = 'checkout-list-view'
+    queryset = Checkout.objects.get_queryset()
+    serializer_class = CheckoutSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-class OrderDetail(RetrieveAPIView):
-    name = 'order-detail'
-    queryset = Order.objects.get_queryset()
-    serializer_class = OrderDetailSerializer
-    permission_classes = [permissions.IsAuthenticated, IsOrderOwner]
+class CheckoutDetail(RetrieveAPIView):
+    name = 'checkout-detail'
+    queryset = Checkout.objects.get_queryset()
+    serializer_class = CheckoutSerializer
+    permission_classes = [permissions.IsAuthenticated, IsCheckoutOwner]
 
-class ItemOrderListView(CreateAPIView):
-    name = 'item-order-list-view'
-    queryset = ItemOrder.objects.get_queryset()
-    serializer_class = ItemOrderSerializer
+class CheckoutItemListView(CreateAPIView):
+    name = 'checkouitem-list-view'
+    queryset = CheckoutItem.objects.get_queryset()
+    serializer_class = CheckoutItemSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-class ItemOrderDetail(RetrieveAPIView):
-    name = 'itemorder-detail'
-    queryset = ItemOrder.objects.get_queryset()
-    serializer_class = ItemOrderSerializer
-    permission_classes = [permissions.IsAuthenticated, IsItemOrderOwner]
+class CheckoutItemDetail(RetrieveAPIView):
+    name = 'checkoutitem-detail'
+    queryset = CheckoutItem.objects.get_queryset()
+    serializer_class = CheckoutItemSerializer
+    permission_classes = [permissions.IsAuthenticated, IsCheckoutItemOwner]
 
 class CreditCardListView(ListAPIView):
     name = 'credit-card-list-view'

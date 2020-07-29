@@ -46,41 +46,20 @@ class CreditCard(AutoCreateUpdatedMixin):
 class Status(AutoCreateUpdatedMixin):
 
     STATUS = (
-        (0, 'Processing Purchase'),
-        (1, 'Approved Purchase'),
-        (2, 'Purchase Denied'),
-        (3, 'Purchase sent'),
+        ('Processing Purchase', 'Processing Purchase'),
+        ('Approved Purchase', 'Approved Purchase'),
+        ('Purchase Denied', 'Purchase Denied'),
+        ('Purchase Denied', 'Purchase sent'),
     )
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    message = models.CharField(max_length=30, default=0, choices=STATUS)
+    message = models.CharField(max_length=30, default='Processing Purchase', choices=STATUS)
     
     class Meta:
         verbose_name = 'status'
 
     def __str__(self):
         return self.message
-
-class Order(AutoCreateUpdatedMixin):
-
-    CALC = (
-       (0, 0.0),
-    )
-
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='user_client_order')
-    status = models.OneToOneField(Status, on_delete=models.PROTECT, null=True, related_name="status")
-    total = models.FloatField(default=0, choices=CALC)
-
-    class Meta:
-        verbose_name = 'order'
-    
-    @property
-    def get_status(self):
-        return self.status.message
-
-    def __str__(self):
-        return self.customer.email
         
 class Author(AutoCreateUpdatedMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -138,20 +117,34 @@ class Write(AutoCreateUpdatedMixin):
     def __str__(self):
         return self.author.name
 
-class ItemOrder(AutoCreateUpdatedMixin):
+class Checkout(AutoCreateUpdatedMixin):
 
-    CALC = (
-       (0, 0.0),
-    )
-    
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="item_order")
-    amount = models.IntegerField()
-    subtotal = models.FloatField(default=0, choices=CALC)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
-
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='user_client_checkout')
+    status = models.OneToOneField(Status, on_delete=models.PROTECT, null=True, related_name="status")
+    
     class Meta:
-        verbose_name = 'item order'
+        verbose_name = 'checkout'
+    
+    @property
+    def total(self):
+        sum = 0
+        for item in self.checkout_items.all():
+            sum += item.price * item.quantity
+        return sum
 
     def __str__(self):
-        return self.book.title
+        return self.customer.email
+
+class CheckoutItem(AutoCreateUpdatedMixin):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    checkout = models.ForeignKey(Checkout, on_delete=models.CASCADE, related_name="checkout_items")
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    quantity = models.PositiveSmallIntegerField(verbose_name='quantity')
+    price = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='price')
+
+    class Meta:
+        verbose_name = 'checkout item'
+
+    def __str__(self):
+        return "Email: {} Date: {}".format(self.checkout.customer.email, self.created_at)

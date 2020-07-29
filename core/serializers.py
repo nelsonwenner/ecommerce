@@ -75,28 +75,29 @@ class WriteSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class BookSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Book
         fields = '__all__'
 
-class OrderDetailSerializer(serializers.ModelSerializer):
-    total = serializers.FloatField(style={'input_type': 'interger'})
+    def get_image_url(self, obj):
+        return obj.image.url
+
+class CheckoutSerializer(serializers.ModelSerializer):
+    total = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
-        model = Order
-        fields = ['id', 'customer', 'status', 'total']
-
-class ItemOrderSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = ItemOrder
+        model = Checkout
         fields = '__all__'
-    
-class OrderSerializer(serializers.ModelSerializer):
+
+    def get_total(self, obj):
+        return obj.total
+
+class CheckoutItemSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Order
+        model = CheckoutItem
         fields = '__all__'
     
 class TokenObtainPairSerializer(TokenObtainPairSerializer):

@@ -19,9 +19,37 @@ class CreditCardAdmin(ModelAdmin):
 class StatusAdmin(ModelAdmin):
     pass
 
-@admin.register(Order, site=admin_site)
-class OrderAdmin(ModelAdmin):
-    pass
+@admin.register(CheckoutItem, site=admin_site)
+class CheckoutItemAdmin(ModelAdmin):
+    list_display = ('get_customer', 'get_date')
+
+    def get_customer(self, obj):
+        return obj.checkout.customer.email
+
+    get_customer.short_description = 'client'
+
+    def get_date(self, obj):
+        return obj.created_at
+
+    get_date.short_description = 'date'
+
+class CheckoutInline(admin.TabularInline):
+    model = CheckoutItem
+
+@admin.register(Checkout, site=admin_site)
+class CheckoutAdmin(ModelAdmin):
+    list_display = ('get_customer', 'status', 'get_total')
+    inlines = (CheckoutInline, )
+
+    def get_customer(self, obj):
+        return obj.customer.email
+
+    get_customer.short_description = 'client'
+
+    def get_total(self, obj):
+        return obj.total
+
+    get_total.short_description = 'total'
 
 @admin.register(Author, site=admin_site)
 class AuthorAdmin(ModelAdmin):
@@ -29,10 +57,6 @@ class AuthorAdmin(ModelAdmin):
 
 @admin.register(Write, site=admin_site)
 class WriteAdmin(ModelAdmin):
-    pass
-
-@admin.register(ItemOrder, site=admin_site)
-class ItemOrderAdmin(ModelAdmin):
     pass
 
 @admin.register(Customer, site=admin_site)

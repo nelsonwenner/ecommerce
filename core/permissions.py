@@ -18,15 +18,15 @@ class IsAddressOwner(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return obj.customer_id == request.user.id
 
-class IsOrderOwner(permissions.BasePermission):
+class IsCheckoutOwner(permissions.BasePermission):
     
     def has_object_permission(self, request, view, obj):
         return obj.customer_id == request.user.id
 
-class IsItemOrderOwner(permissions.BasePermission):
+class IsCheckoutItemOwner(permissions.BasePermission):
     
     def has_object_permission(self, request, view, obj):
-        return obj.order.customer_id == request.user.id
+        return obj.checkout.customer_id == request.user.id
 
 class IsCreditCardOwner(permissions.BasePermission):
     

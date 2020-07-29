@@ -34,11 +34,11 @@ urlpatterns = [
     path('books', BookListView.as_view(), name=BookListView.name),
     path('books/<str:pk>', BookDetail.as_view(), name=BookDetail.name),
 
-    path('orders', OrderListView.as_view(), name=OrderListView.name),
-    path('orders/<str:pk>', OrderDetail.as_view(), name=OrderDetail.name),
+    path('checkouts', CheckoutListView.as_view(), name=CheckoutListView.name),
+    path('checkouts/<str:pk>', CheckoutDetail.as_view(), name=CheckoutDetail.name),
 
-    path('itemsorders', ItemOrderListView.as_view(), name=ItemOrderListView.name),
-    path('itemsorders/<str:pk>', ItemOrderDetail.as_view(), name=ItemOrderDetail.name),
+    path('checkoutitems', CheckoutItemListView.as_view(), name=CheckoutItemListView.name),
+    path('checkoutitems/<str:pk>', CheckoutItemDetail.as_view(), name=CheckoutItemDetail.name),
 
     path('creditscards', CreditCardListView.as_view(), name=CreditCardListView.name),
     path('creditscards/<str:pk>', CreditCardDetail.as_view(), name=CreditCardDetail.name),
