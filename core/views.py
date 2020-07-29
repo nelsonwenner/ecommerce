@@ -38,11 +38,11 @@ class ClientListView(CreateAPIView):
     queryset = Customer.objects.get_queryset()
     serializer_class = ClientSerializer
 
-class ClientDetail(RetrieveUpdateDestroyAPIView):
+class ClientDetail(RetrieveUpdateAPIView):
     name = "client-detail"
     queryset = Customer.objects.get_queryset()
     serializer_class = ClientSerializer
-    permission_classes = [permissions.IsAuthenticated, IsOwner]
+    permission_classes = [permissions.IsAuthenticated, IsClientOwner]
 
 class AddressListView(CreateAPIView):
     name = 'address-list-view'
@@ -53,7 +53,7 @@ class AddressDetail(RetrieveUpdateDestroyAPIView):
     name = 'address-detail'
     queryset = Address.objects.get_queryset()
     serializer_class = AddressSerializer
-    permission_classes = [permissions.IsAuthenticated, IsOwner]
+    permission_classes = [permissions.IsAuthenticated, IsAddressOwner]
 
 class StatusListView(ListAPIView):
     name = 'status-list-view'
@@ -61,7 +61,7 @@ class StatusListView(ListAPIView):
     serializer_class = StatusSerializer
     permission_classes = [permissions.IsAuthenticated, ReadOnlyPermission]
 
-class StatusDetail(RetrieveUpdateDestroyAPIView):
+class StatusDetail(RetrieveAPIView):
     name = 'status-detail'
     queryset = Status.objects.get_queryset()
     serializer_class = StatusDetailSerializer
@@ -117,7 +117,7 @@ class OrderDetail(RetrieveAPIView):
     name = 'order-detail'
     queryset = Order.objects.get_queryset()
     serializer_class = OrderDetailSerializer
-    permission_classes = [permissions.IsAuthenticated, IsOwner]
+    permission_classes = [permissions.IsAuthenticated, IsOrderOwner]
 
 class ItemOrderListView(CreateAPIView):
     name = 'item-order-list-view'
@@ -129,7 +129,7 @@ class ItemOrderDetail(RetrieveAPIView):
     name = 'itemorder-detail'
     queryset = ItemOrder.objects.get_queryset()
     serializer_class = ItemOrderSerializer
-    permission_classes = [permissions.IsAuthenticated, IsOwner]
+    permission_classes = [permissions.IsAuthenticated, IsItemOrderOwner]
 
 class CreditCardListView(ListAPIView):
     name = 'credit-card-list-view'
@@ -141,4 +141,4 @@ class CreditCardDetail(RetrieveAPIView):
     name = 'creditcard-detail'
     queryset = CreditCard.objects.get_queryset()
     serializer_class = CreditCardSerializer
-    permission_classes = [permissions.IsAuthenticated, IsOwner]
+    permission_classes = [permissions.IsAuthenticated, IsCreditCardOwner]

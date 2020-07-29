@@ -6,19 +6,6 @@ from rest_framework import serializers
 from rest_framework import status
 from .models import *
 
-class AddressSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Address
-        fields = '__all__'
-        read_only_fields = ('customer',)
-
-class CreditCardSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = CreditCard
-        fields = '__all__'
-
 class ClientSerializer(serializers.ModelSerializer):
     password = serializers.CharField(source='auth_core.user.password', write_only=True)
     email = serializers.EmailField()
@@ -36,6 +23,25 @@ class ClientSerializer(serializers.ModelSerializer):
         userClient = UserClient.objects.create_client(**user_data)
         customer = Customer.objects.create(id=userClient.id, user=userClient, **validated_data)
         return customer
+
+class AddressSerializer(serializers.ModelSerializer):
+    customer = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = Address
+        fields = ['id', 'customer', 'street', 'suite', 'city', 'zipcode']
+        read_only_fields = ('customer',)
+    
+    def create(self, validated_data):
+        user_id = validated_data.pop('customer')
+        customer = Customer.objects.get(id=user_id)
+        return Address.objects.create(customer=customer, **validated_data)
+
+class CreditCardSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = CreditCard
+        fields = '__all__'
     
 class StatusSerializer(serializers.ModelSerializer):
 
