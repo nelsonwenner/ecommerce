@@ -34,6 +34,9 @@ class CreditCard(AutoCreateUpdatedMixin):
     class Meta:
         verbose_name = 'creditcard'
 
+    def __str__(self):
+        return self.flag
+
 class Status(AutoCreateUpdatedMixin):
 
     STATUS = (
@@ -83,6 +86,9 @@ class Category(AutoCreateUpdatedMixin):
     class Meta:
         verbose_name = 'category'
 
+    def __str__(self):
+        return self.description
+    
 def hash_filename_to_uuid(instance, filename):
     ext = os.path.splitext(filename)
     new_filename = "{0}{1}".format(uuid.uuid4(), ext)
@@ -102,6 +108,9 @@ class Book(AutoCreateUpdatedMixin):
     
     class Meta:
         verbose_name = 'book'
+
+    def __str__(self):
+        return self.title
 
 class Write(AutoCreateUpdatedMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
