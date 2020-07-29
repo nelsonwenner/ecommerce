@@ -34,3 +34,8 @@ class WriteAdmin(ModelAdmin):
 @admin.register(ItemOrder, site=admin_site)
 class ItemOrderAdmin(ModelAdmin):
     pass
+
+@admin.register(Customer, site=admin_site)
+class CustomerAdmin(ModelAdmin):
+    exclude = ['user']
+    list_display = ('name', 'email')

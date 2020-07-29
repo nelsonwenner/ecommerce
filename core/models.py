@@ -12,6 +12,9 @@ class Customer(BaseCustomer):
     class Meta:
         verbose_name = 'client'
 
+    def __str__(self):
+        return self.user.email
+
 class Address(AutoCreateUpdatedMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='user_client_address')
