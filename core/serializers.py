@@ -26,7 +26,7 @@ class ClientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
         fields = ['id', 'name', 'email', 'password', 'phone', 'personal_document']
-
+    
     def create(self, validated_data):
         if Customer.objects.filter(email=validated_data['email']).exists():
             raise serializers.ValidationError("Error: This email already exists")

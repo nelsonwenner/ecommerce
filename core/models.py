@@ -101,7 +101,7 @@ class Book(AutoCreateUpdatedMixin):
     image = models.ImageField(max_length=255, upload_to=upload_to)
     
     class Meta:
-        verbose_name = 'books'
+        verbose_name = 'book'
 
 class Write(AutoCreateUpdatedMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
