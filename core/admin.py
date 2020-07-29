@@ -14,3 +14,7 @@ class BookAdmin(ModelAdmin):
 @admin.register(CreditCard, site=admin_site)
 class CreditCardAdmin(ModelAdmin):
     search_fields = ('number',)
+
+@admin.register(Status, site=admin_site)
+class StatusCardAdmin(ModelAdmin):
+    pass

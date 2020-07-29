@@ -52,6 +52,9 @@ class Status(AutoCreateUpdatedMixin):
     class Meta:
         verbose_name = 'status'
 
+    def __str__(self):
+        return self.message
+
 class Order(AutoCreateUpdatedMixin):
 
     CALC = (
