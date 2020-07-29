@@ -16,5 +16,9 @@ class CreditCardAdmin(ModelAdmin):
     search_fields = ('number',)
 
 @admin.register(Status, site=admin_site)
-class StatusCardAdmin(ModelAdmin):
+class StatusAdmin(ModelAdmin):
+    pass
+
+@admin.register(Order, site=admin_site)
+class OrderAdmin(ModelAdmin):
     pass

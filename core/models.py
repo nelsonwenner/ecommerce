@@ -72,6 +72,9 @@ class Order(AutoCreateUpdatedMixin):
     @property
     def get_status(self):
         return self.status.message
+
+    def __str__(self):
+        return self.status
         
 class Author(AutoCreateUpdatedMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
