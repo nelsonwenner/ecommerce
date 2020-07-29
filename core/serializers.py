@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import serializers
 from rest_framework import status
+from django.db import transaction
 from .models import *
 
 class ClientSerializer(serializers.ModelSerializer):
@@ -103,14 +104,18 @@ class CheckoutSerializer(serializers.ModelSerializer):
         return obj.total
 
     def create(self, validated_data):
-        items = list(validated_data.pop('items'))
-        checkout = Checkout.objects.create(**validated_data)
-        checkout_items = []
-        for item in items:
-            item['checkout'] = checkout
-            checkout_items.append(CheckoutItem(**item))
-        checkout.items = checkout.checkout_items.bulk_create(checkout_items)
-        return checkout
+        try:
+            with transaction.atomic():
+                items = list(validated_data.pop('items'))
+                checkout = Checkout.objects.create(**validated_data)
+                checkout_items = []
+                for item in items:
+                    item['checkout'] = checkout
+                    checkout_items.append(CheckoutItem(**item))
+                checkout.items = checkout.checkout_items.bulk_create(checkout_items)
+                return checkout
+        except Exception as e:
+            raise Exception("Error: {}".format(e))
 
 class TokenObtainPairSerializer(TokenObtainPairSerializer):
 
