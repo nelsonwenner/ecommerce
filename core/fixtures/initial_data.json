@@ -1,0 +1,59 @@
+[
+  {
+    "model": "core.category",
+    "pk": "e5182812-d1b0-4585-99bf-6510497602ab",
+    "fields": {
+      "slug": "horror-e5182812",
+      "description": "Horror",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.category",
+    "pk": "e5182812-d1b0-4585-99bf-6510497603ab",
+    "fields": {
+      "slug": "anime-e5182812",
+      "description": "Anime",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.category",
+    "pk": "e5182812-d1b0-4585-99bf-6510497604ab",
+    "fields": {
+      "slug": "adventure-e5182812",
+      "description": "Adventure",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.category",
+    "pk": "e5182812-d1b0-4585-99bf-6510497605ab",
+    "fields": {
+      "slug": "action-e5182812",
+      "description": "Action",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.book",
+    "pk": "e5182812-d1b0-4585-99bf-6511497605ab",
+    "fields": {
+      "title": "Diablo II",
+      "prince": 30.0,
+      "stock": 12,
+      "category_id": "e5182812-d1b0-4585-99bf-6510497602ab",
+      "image": "/uploads/books/e5182812-d1b0-4585-99bf-6510497602ab-diabloII.jpg",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  }
+]
