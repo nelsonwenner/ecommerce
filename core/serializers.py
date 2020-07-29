@@ -30,7 +30,7 @@ class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
         fields = ['id', 'customer', 'street', 'suite', 'city', 'zipcode']
-        read_only_fields = ('customer',)
+        read_only_fields = ['customer']
     
     def create(self, validated_data):
         user_id = validated_data.pop('customer')
@@ -84,7 +84,15 @@ class BookSerializer(serializers.ModelSerializer):
     def get_image_url(self, obj):
         return obj.image.url
 
+class CheckoutItemSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CheckoutItem
+        fields = '__all__'
+        read_only_fields = ['checkout']
+
 class CheckoutSerializer(serializers.ModelSerializer):
+    items = CheckoutItemSerializer(many=True)
     total = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
@@ -94,12 +102,16 @@ class CheckoutSerializer(serializers.ModelSerializer):
     def get_total(self, obj):
         return obj.total
 
-class CheckoutItemSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        items = list(validated_data.pop('items'))
+        checkout = Checkout.objects.create(**validated_data)
+        checkout_items = []
+        for item in items:
+            item['checkout'] = checkout
+            checkout_items.append(CheckoutItem(**item))
+        checkout.items = checkout.checkout_items.bulk_create(checkout_items)
+        return checkout
 
-    class Meta:
-        model = CheckoutItem
-        fields = '__all__'
-    
 class TokenObtainPairSerializer(TokenObtainPairSerializer):
 
     def validate(self, attrs):

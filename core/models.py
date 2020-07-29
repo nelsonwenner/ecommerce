@@ -118,7 +118,6 @@ class Write(AutoCreateUpdatedMixin):
         return self.author.name
 
 class Checkout(AutoCreateUpdatedMixin):
-
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='user_client_checkout')
     status = models.OneToOneField(Status, on_delete=models.PROTECT, null=True, related_name="status")

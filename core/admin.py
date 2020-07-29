@@ -22,7 +22,7 @@ class StatusAdmin(ModelAdmin):
 @admin.register(CheckoutItem, site=admin_site)
 class CheckoutItemAdmin(ModelAdmin):
     list_display = ('get_customer', 'get_date')
-
+    
     def get_customer(self, obj):
         return obj.checkout.customer.email
 
