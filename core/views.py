@@ -1,5 +1,4 @@
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import serializers
@@ -10,7 +9,7 @@ from .serializers import *
 from .models import *
 
 
-class ApiRoot(GenericAPIView):
+class ApiRoot(APIView):
     name = 'api-root'
 
     def get(self, request, *args, **kwargs):
@@ -34,19 +33,18 @@ class ApiRoot(GenericAPIView):
 class TokenObtainPairView(TokenObtainPairView):
     serializer_class = TokenObtainPairSerializer
 
-class ClientListView(ListCreateAPIView):
+class ClientListView(CreateAPIView):
     name = "client-list"
     queryset = Customer.objects.get_queryset()
     serializer_class = ClientSerializer
-    
-    search_fields = ['^email']
 
 class ClientDetail(RetrieveUpdateDestroyAPIView):
     name = "client-detail"
     queryset = Customer.objects.get_queryset()
     serializer_class = ClientSerializer
+    permission_classes = [permissions.IsAuthenticated, IsOwner]
 
-class AddressListView(ListCreateAPIView):
+class AddressListView(CreateAPIView):
     name = 'address-list-view'
     queryset = Address.objects.get_queryset()
     serializer_class = AddressSerializer
@@ -55,95 +53,92 @@ class AddressDetail(RetrieveUpdateDestroyAPIView):
     name = 'address-detail'
     queryset = Address.objects.get_queryset()
     serializer_class = AddressSerializer
+    permission_classes = [permissions.IsAuthenticated, IsOwner]
 
-class StatusListView(ListCreateAPIView):
+class StatusListView(ListAPIView):
     name = 'status-list-view'
     queryset = Status.objects.get_queryset()
     serializer_class = StatusSerializer
+    permission_classes = [permissions.IsAuthenticated, ReadOnlyPermission]
 
 class StatusDetail(RetrieveUpdateDestroyAPIView):
     name = 'status-detail'
     queryset = Status.objects.get_queryset()
     serializer_class = StatusDetailSerializer
+    permission_classes = [permissions.IsAuthenticated]
     
-class CategoryListView(ListCreateAPIView):
+class CategoryListView(ListAPIView):
     name = 'category-list-view'
     queryset = Category.objects.get_queryset()
     serializer_class = CategorySerializer
 
-class CategoryDetail(RetrieveUpdateDestroyAPIView):
+class CategoryDetail(RetrieveAPIView):
     name = 'category-detail'
     queryset = Category.objects.get_queryset()
     serializer_class = CategorySerializer
 
-class AuthorListView(ListCreateAPIView):
+class AuthorListView(ListAPIView):
     name = 'author-list-view'
     queryset = Author.objects.get_queryset()
     serializer_class = AuthorSerializer
 
-    search_fields = ['^name', '^email']
-    ordering_fields = ['name', 'email']
-    filter_fields = ['name', 'email']
-
-class AuthorDetail(RetrieveUpdateDestroyAPIView):
+class AuthorDetail(RetrieveAPIView):
     name = 'author-detail'
     queryset = Author.objects.get_queryset()
     serializer_class = AuthorSerializer
 
-class WriteListView(ListCreateAPIView):
+class WriteListView(ListAPIView):
     name = 'write-list-view'
     queryset = Write.objects.get_queryset()
     serializer_class = WriteSerializer
 
-class WriteDetail(RetrieveUpdateDestroyAPIView):
+class WriteDetail(RetrieveAPIView):
     name = 'write-detail'
     queryset = Write.objects.get_queryset()
     serializer_class = WriteSerializer
 
-class BookListView(ListCreateAPIView):
+class BookListView(ListAPIView):
     name = 'book-list-view'
     queryset = Book.objects.get_queryset()
     serializer_class = BookSerializer
-    parser_class = [FileUploadParser]
 
-    search_fields = ['^title', '^genre']
-    ordering_fields = ['title', 'genre']
-    filter_fields = ['title', 'genre']
-
-class BookDetail(RetrieveUpdateDestroyAPIView):
+class BookDetail(RetrieveAPIView):
     name = 'book-detail'
     queryset = Book.objects.get_queryset()
     serializer_class = BookSerializer
 
-class OrderListView(ListCreateAPIView):
+class OrderListView(CreateAPIView):
     name = 'order-list-view'
     queryset = Order.objects.get_queryset()
     serializer_class = OrderSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-    search_fields = ['^client']
-    ordering_fields = ['total']
-
-class OrderDetail(RetrieveUpdateDestroyAPIView):
+class OrderDetail(RetrieveAPIView):
     name = 'order-detail'
     queryset = Order.objects.get_queryset()
     serializer_class = OrderDetailSerializer
+    permission_classes = [permissions.IsAuthenticated, IsOwner]
 
-class ItemOrderListView(ListCreateAPIView):
+class ItemOrderListView(CreateAPIView):
     name = 'item-order-list-view'
     queryset = ItemOrder.objects.get_queryset()
     serializer_class = ItemOrderSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-class ItemOrderDetail(RetrieveUpdateDestroyAPIView):
+class ItemOrderDetail(RetrieveAPIView):
     name = 'itemorder-detail'
     queryset = ItemOrder.objects.get_queryset()
     serializer_class = ItemOrderSerializer
+    permission_classes = [permissions.IsAuthenticated, IsOwner]
 
-class CreditCardListView(ListCreateAPIView):
+class CreditCardListView(ListAPIView):
     name = 'credit-card-list-view'
     queryset = CreditCard.objects.get_queryset()
     serializer_class = CreditCardSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-class CreditCardDetail(RetrieveUpdateDestroyAPIView):
+class CreditCardDetail(RetrieveAPIView):
     name = 'creditcard-detail'
     queryset = CreditCard.objects.get_queryset()
     serializer_class = CreditCardSerializer
+    permission_classes = [permissions.IsAuthenticated, IsOwner]
