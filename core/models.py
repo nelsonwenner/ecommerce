@@ -84,6 +84,9 @@ class Author(AutoCreateUpdatedMixin):
     class Meta:
         verbose_name = 'author'
 
+    def __str__(self):
+        return self.name
+
 class Category(AutoCreateUpdatedMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     slug = models.SlugField()
