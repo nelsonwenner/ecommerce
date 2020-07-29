@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'auth_core',
     'my_admin',
+    'fixtures',
     'core'
 ]
 
