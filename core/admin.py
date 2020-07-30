@@ -1,5 +1,7 @@
+from polymorphic.admin import PolymorphicParentModelAdmin, PolymorphicChildModelAdmin
 from django.contrib.admin import ModelAdmin
 from my_admin.admin import admin_site
+from payment_gateway.models import *
 from django.contrib import admin
 from core.models import *
 
@@ -10,10 +12,6 @@ class CategoryAdmin(ModelAdmin):
 @admin.register(Book, site=admin_site)
 class BookAdmin(ModelAdmin):
     search_fields = ('title',)
-
-@admin.register(CreditCard, site=admin_site)
-class CreditCardAdmin(ModelAdmin):
-    search_fields = ('number',)
 
 @admin.register(Status, site=admin_site)
 class StatusAdmin(ModelAdmin):
@@ -38,7 +36,7 @@ class CheckoutInline(admin.TabularInline):
 
 @admin.register(Checkout, site=admin_site)
 class CheckoutAdmin(ModelAdmin):
-    list_display = ('get_customer', 'status', 'get_total')
+    list_display = ('get_customer', 'payment_method', 'status', 'get_total')
     inlines = (CheckoutInline, )
 
     def get_customer(self, obj):
@@ -67,3 +65,18 @@ class CustomerAdmin(ModelAdmin):
 @admin.register(Address, site=admin_site)
 class AddressAdmin(ModelAdmin):
     pass
+
+@admin.register(PaymentMethodConfig, site=admin_site)
+class PaymentMethodConfig(ModelAdmin):
+    pass
+
+@admin.register(PagarmeGateway, site=admin_site)
+class PagarmeGatewayAdmin(PolymorphicChildModelAdmin):
+    base_model = PaymentGateway
+    show_in_index = True
+
+@admin.register(PaymentGateway, site=admin_site)
+class PaymentGatewayAdmin(PolymorphicParentModelAdmin):
+    base_model = PaymentGateway
+    child_models = (PagarmeGateway,)
+

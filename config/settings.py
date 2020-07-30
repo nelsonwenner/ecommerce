@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # my middlewares #
     'corsheaders.middleware.CorsMiddleware',
+    'payment_gateway.middlewares.CheckPaymentMethodConfigMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'

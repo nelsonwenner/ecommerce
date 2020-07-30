@@ -26,6 +26,7 @@ class Address(AutoCreateUpdatedMixin):
 
     class Meta:
         verbose_name = 'address'
+        verbose_name_plural = 'address'
 
     def __str__(self):
         return self.city
@@ -44,6 +45,7 @@ class Status(AutoCreateUpdatedMixin):
     
     class Meta:
         verbose_name = 'status'
+        verbose_name_plural = 'status'
 
     def __str__(self):
         return self.message
@@ -66,6 +68,7 @@ class Category(AutoCreateUpdatedMixin):
 
     class Meta:
         verbose_name = 'category'
+        verbose_name_plural = 'categories'
 
     def __str__(self):
         return self.description
