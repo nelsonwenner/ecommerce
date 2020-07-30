@@ -36,12 +36,6 @@ class AddressSerializer(serializers.ModelSerializer):
         user_id = validated_data.pop('customer')
         customer = Customer.objects.get(id=user_id)
         return Address.objects.create(customer=customer, **validated_data)
-
-class CreditCardSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = CreditCard
-        fields = '__all__'
     
 class StatusSerializer(serializers.ModelSerializer):
 

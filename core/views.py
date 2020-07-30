@@ -22,7 +22,6 @@ class ApiRoot(APIView):
             "authors": reverse(AuthorListView.name, request=request),
             "books": reverse(BookListView.name, request=request),
             "writes": reverse(WriteListView.name, request=request),
-            "creditcards": reverse(CreditCardListView.name, request=request),
             "checkouts": reverse(CheckoutListView.name, request=request),
             "checkoutitems": reverse(CheckoutItemListView.name, request=request),
         }
@@ -130,15 +129,3 @@ class CheckoutItemDetail(RetrieveAPIView):
     queryset = CheckoutItem.objects.get_queryset()
     serializer_class = CheckoutItemSerializer
     permission_classes = [permissions.IsAuthenticated, IsCheckoutItemOwner]
-
-class CreditCardListView(ListAPIView):
-    name = 'credit-card-list-view'
-    queryset = CreditCard.objects.get_queryset()
-    serializer_class = CreditCardSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-class CreditCardDetail(RetrieveAPIView):
-    name = 'creditcard-detail'
-    queryset = CreditCard.objects.get_queryset()
-    serializer_class = CreditCardSerializer
-    permission_classes = [permissions.IsAuthenticated, IsCreditCardOwner]

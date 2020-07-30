@@ -1,4 +1,5 @@
 from common.models import BaseCustomer, AutoCreateUpdatedMixin
+from payment_gateway.models import PaymentMethod
 from auth_core.models import UserClient
 from django.conf import settings
 from django.db import models
@@ -28,20 +29,6 @@ class Address(AutoCreateUpdatedMixin):
 
     def __str__(self):
         return self.city
-
-class CreditCard(AutoCreateUpdatedMixin):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='user_client_creditcard')
-    owner = models.CharField(max_length=60)
-    flag = models.CharField(max_length=60)
-    number = models.CharField(max_length=60)
-    number_security = models.CharField(max_length=3)
-
-    class Meta:
-        verbose_name = 'creditcard'
-
-    def __str__(self):
-        return self.flag
 
 class Status(AutoCreateUpdatedMixin):
 
@@ -120,6 +107,7 @@ class Write(AutoCreateUpdatedMixin):
 class Checkout(AutoCreateUpdatedMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='user_client_checkout')
+    payment_method = models.ForeignKey(PaymentMethod, on_delete=models.PROTECT, verbose_name='payment method')
     status = models.OneToOneField(Status, on_delete=models.PROTECT, null=True, related_name="status")
     
     class Meta:

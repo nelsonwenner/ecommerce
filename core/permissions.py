@@ -27,8 +27,3 @@ class IsCheckoutItemOwner(permissions.BasePermission):
     
     def has_object_permission(self, request, view, obj):
         return obj.checkout.customer_id == request.user.id
-
-class IsCreditCardOwner(permissions.BasePermission):
-    
-    def has_object_permission(self, request, view, obj):
-        return obj.customer_id == request.user.id
