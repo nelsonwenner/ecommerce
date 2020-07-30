@@ -1,6 +1,7 @@
 from rest_framework_simplejwt.views import TokenObtainPairView
 from payment_gateway.models import PaymentGateway
 from rest_framework.response import Response
+from rest_framework.reverse import reverse
 from payment_gateway.serializers import *
 from rest_framework.views import APIView
 from rest_framework import serializers
@@ -13,7 +14,7 @@ from .models import *
 
 class ApiRoot(APIView):
     name = 'api-root'
-
+    
     def get(self, request, *args, **kwargs):
 
         data = {
@@ -21,11 +22,10 @@ class ApiRoot(APIView):
             "address": reverse(AddressListView.name, request=request),
             "status": reverse(StatusListView.name, request=request),
             "categories": reverse(CategoryListView.name, request=request),
-            "authors": reverse(AuthorListView.name, request=request),
-            "books": reverse(BookListView.name, request=request),
-            "writes": reverse(WriteListView.name, request=request),
+            "products": reverse(ProductListView.name, request=request),
             "checkouts": reverse(CheckoutListView.name, request=request),
             "checkoutitems": reverse(CheckoutItemListView.name, request=request),
+            "paymentgateway": reverse(PaymentGatewayListView.name, request=request),
         }
         
         return Response(data, status=status.HTTP_200_OK)
@@ -78,35 +78,15 @@ class CategoryDetail(RetrieveAPIView):
     queryset = Category.objects.get_queryset()
     serializer_class = CategorySerializer
 
-class AuthorListView(ListAPIView):
-    name = 'author-list-view'
-    queryset = Author.objects.get_queryset()
-    serializer_class = AuthorSerializer
+class ProductListView(ListAPIView):
+    name = 'product-list-view'
+    queryset = Product.objects.get_queryset()
+    serializer_class = ProductSerializer
 
-class AuthorDetail(RetrieveAPIView):
-    name = 'author-detail'
-    queryset = Author.objects.get_queryset()
-    serializer_class = AuthorSerializer
-
-class WriteListView(ListAPIView):
-    name = 'write-list-view'
-    queryset = Write.objects.get_queryset()
-    serializer_class = WriteSerializer
-
-class WriteDetail(RetrieveAPIView):
-    name = 'write-detail'
-    queryset = Write.objects.get_queryset()
-    serializer_class = WriteSerializer
-
-class BookListView(ListAPIView):
-    name = 'book-list-view'
-    queryset = Book.objects.get_queryset()
-    serializer_class = BookSerializer
-
-class BookDetail(RetrieveAPIView):
-    name = 'book-detail'
-    queryset = Book.objects.get_queryset()
-    serializer_class = BookSerializer
+class ProductDetail(RetrieveAPIView):
+    name = 'product-detail'
+    queryset = Product.objects.get_queryset()
+    serializer_class = ProductSerializer
 
 class CheckoutListView(CreateAPIView):
     name = 'checkout-list-view'
@@ -131,6 +111,8 @@ class CheckoutItemDetail(RetrieveAPIView):
     queryset = CheckoutItem.objects.get_queryset()
     serializer_class = CheckoutItemSerializer
     permission_classes = [permissions.IsAuthenticated, IsCheckoutItemOwner]
+
+
 
 class PaymentGatewayListView(ListAPIView):
     name = 'payment-gateway-list-view'

@@ -19,7 +19,7 @@ class PaymentMethod(AutoCreateUpdatedMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255, choices=PAYMENT_METHOD_CHOICES, verbose_name='name')
     allow_installments = models.BooleanField(default=True, verbose_name='with installments')
-
+    
     class Meta:
         verbose_name = 'payment method'
 
@@ -39,7 +39,7 @@ class PaymentGateway(AutoCreateUpdatedMixin, PolymorphicModel):
 
 class PaymentMethodConfig(AutoCreateUpdatedMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    payment_method = models.ForeignKey(PaymentGateway, on_delete=models.PROTECT, verbose_name='payment method')
+    payment_method = models.ForeignKey(PaymentMethod, on_delete=models.PROTECT, verbose_name='payment method')
     max_installments = models.SmallIntegerField(blank=True, null=True,verbose_name='installment',
     help_text='If you do not allow installments, leave as 0')
     discount_percentage = models.PositiveSmallIntegerField(blank=True, null=True, verbose_name='installment',

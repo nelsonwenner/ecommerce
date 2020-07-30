@@ -1,6 +1,7 @@
+from payment_gateway.models import PagarmeGateway, PaymentMethod
 from rest_polymorphic.serializers import PolymorphicSerializer
-from payment_gateway.models import PagarmeGateway
 from rest_framework import serializers
+
 
 
 class PagarmeGatewaySerializer(serializers.ModelSerializer):

@@ -9,8 +9,8 @@ from core.models import *
 class CategoryAdmin(ModelAdmin):
     pass
 
-@admin.register(Book, site=admin_site)
-class BookAdmin(ModelAdmin):
+@admin.register(Product, site=admin_site)
+class ProductAdmin(ModelAdmin):
     search_fields = ('title',)
 
 @admin.register(Status, site=admin_site)
@@ -49,14 +49,6 @@ class CheckoutAdmin(ModelAdmin):
 
     get_total.short_description = 'total'
 
-@admin.register(Author, site=admin_site)
-class AuthorAdmin(ModelAdmin):
-    pass
-
-@admin.register(Write, site=admin_site)
-class WriteAdmin(ModelAdmin):
-    pass
-
 @admin.register(Customer, site=admin_site)
 class CustomerAdmin(ModelAdmin):
     exclude = ['user']
@@ -65,6 +57,10 @@ class CustomerAdmin(ModelAdmin):
 @admin.register(Address, site=admin_site)
 class AddressAdmin(ModelAdmin):
     pass
+
+@admin.register(PaymentMethod, site=admin_site)
+class PaymentMethodAdmin(ModelAdmin):
+    list_display = ('name', 'allow_installments')
 
 @admin.register(PaymentMethodConfig, site=admin_site)
 class PaymentMethodConfig(ModelAdmin):

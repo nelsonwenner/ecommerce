@@ -56,23 +56,11 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = '__all__'
 
-class AuthorSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = Author
-        fields = '__all__'
-
-class WriteSerializer(serializers.ModelSerializer):
-
-     class Meta:
-        model = Write
-        fields = '__all__'
-
-class BookSerializer(serializers.ModelSerializer):
+class ProductSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
-        model = Book
+        model = Product
         fields = '__all__'
 
     def get_image_url(self, obj):

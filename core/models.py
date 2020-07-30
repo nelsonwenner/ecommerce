@@ -1,6 +1,7 @@
 from common.models import BaseCustomer, AutoCreateUpdatedMixin
 from payment_gateway.models import PaymentMethod
 from auth_core.models import UserClient
+from autoslug import AutoSlugField
 from django.conf import settings
 from django.db import models
 import uuid
@@ -41,7 +42,7 @@ class Status(AutoCreateUpdatedMixin):
     )
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    message = models.CharField(max_length=30, default='Processing Purchase', choices=STATUS)
+    message = models.CharField(max_length=30, choices=STATUS)
     
     class Meta:
         verbose_name = 'status'
@@ -49,29 +50,18 @@ class Status(AutoCreateUpdatedMixin):
 
     def __str__(self):
         return self.message
-        
-class Author(AutoCreateUpdatedMixin):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=60)
-    email = models.EmailField()
-
-    class Meta:
-        verbose_name = 'author'
-
-    def __str__(self):
-        return self.name
 
 class Category(AutoCreateUpdatedMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    slug = models.SlugField()
-    description = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, verbose_name='name')
+    slug = AutoSlugField(populate_from='name')
 
     class Meta:
         verbose_name = 'category'
         verbose_name_plural = 'categories'
 
     def __str__(self):
-        return self.description
+        return self.name
     
 def hash_filename_to_uuid(instance, filename):
     ext = os.path.splitext(filename)
@@ -80,32 +70,22 @@ def hash_filename_to_uuid(instance, filename):
 
 def upload_to(instance, filename):
     new_filename = hash_filename_to_uuid(instance, filename)
-    return os.path.join(settings.MEDIA_BASE_PATH + '/books/', new_filename)
+    return os.path.join(settings.MEDIA_BASE_PATH + '/product/', new_filename)
 
-class Book(AutoCreateUpdatedMixin):
+class Product(AutoCreateUpdatedMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=60)
-    prince = models.FloatField()
+    description = models.TextField(blank=True)
+    price = models.FloatField()
     stock = models.IntegerField()
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="categories_books")
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="category_product")
     image = models.ImageField(max_length=255, upload_to=upload_to)
     
     class Meta:
-        verbose_name = 'book'
+        verbose_name = 'product'
 
     def __str__(self):
         return self.title
-
-class Write(AutoCreateUpdatedMixin):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name="writes")
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name = 'write'
-
-    def __str__(self):
-        return self.author.name
 
 class Checkout(AutoCreateUpdatedMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -126,7 +106,7 @@ class Checkout(AutoCreateUpdatedMixin):
 class CheckoutItem(AutoCreateUpdatedMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     checkout = models.ForeignKey(Checkout, on_delete=models.CASCADE, related_name="checkout_items")
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveSmallIntegerField(verbose_name='quantity')
     price = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='price')
 

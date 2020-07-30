@@ -5,7 +5,7 @@ from django.urls import path, include
 from django.conf import settings
 from .views import *
 
-schema_view = get_swagger_view(title='BOOKSTORE API')
+schema_view = get_swagger_view(title='ECOMMERCE API REST')
 
 urlpatterns = [
     
@@ -24,15 +24,9 @@ urlpatterns = [
 
     path('categories', CategoryListView.as_view(), name=CategoryListView.name),
     path('categories/<str:pk>', CategoryDetail.as_view(), name=CategoryDetail.name),
-    
-    path('authors', AuthorListView.as_view(), name=AuthorListView.name),
-    path('authors/<str:pk>', AuthorDetail.as_view(), name=AuthorDetail.name),
 
-    path('writes', WriteListView.as_view(), name=WriteListView.name),
-    path('writes/<str:pk>', WriteDetail.as_view(), name=WriteDetail.name),
-
-    path('books', BookListView.as_view(), name=BookListView.name),
-    path('books/<str:pk>', BookDetail.as_view(), name=BookDetail.name),
+    path('products', ProductListView.as_view(), name=ProductListView.name),
+    path('products/<str:pk>', ProductDetail.as_view(), name=ProductDetail.name),
 
     path('checkouts', CheckoutListView.as_view(), name=CheckoutListView.name),
     path('checkouts/<str:pk>', CheckoutDetail.as_view(), name=CheckoutDetail.name),
