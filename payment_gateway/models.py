@@ -37,3 +37,15 @@ class ProductPaymentMethod(AutoCreateUpdatedMixin):
     class Meta:
         verbose_name = 'payment methods'
         unique_together = ('product_id', 'payment_method_id',)
+
+class PaymentGateway(AutoCreateUpdatedMixin):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=255, verbose_name='name')
+    default = models.BooleanField(default=False, verbose_name='main')
+
+    class Meta:
+        verbose_name = 'payment gateway'
+
+    def __str__(self):
+        return self.name
+    
