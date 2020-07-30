@@ -25,7 +25,8 @@ class ApiRoot(APIView):
             "products": reverse(ProductListView.name, request=request),
             "checkouts": reverse(CheckoutListView.name, request=request),
             "checkoutitems": reverse(CheckoutItemListView.name, request=request),
-            "paymentgateway": reverse(PaymentGatewayListView.name, request=request),
+            "paymentmethods": reverse(PaymentMethodListView.name, request=request),
+            "paymentgateways": reverse(PaymentGatewayListView.name, request=request),
         }
         
         return Response(data, status=status.HTTP_200_OK)

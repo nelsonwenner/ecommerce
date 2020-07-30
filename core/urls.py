@@ -34,7 +34,9 @@ urlpatterns = [
     path('checkoutitems', CheckoutItemListView.as_view(), name=CheckoutItemListView.name),
     path('checkoutitems/<str:pk>', CheckoutItemDetail.as_view(), name=CheckoutItemDetail.name),
 
-    path('paymentgateway', PaymentGatewayListView.as_view(), name=PaymentGatewayListView.name),
+    path('paymentmethods', PaymentMethodListView.as_view(), name=PaymentMethodListView.name),
+
+    path('paymentgateways', PaymentGatewayListView.as_view(), name=PaymentGatewayListView.name),
     
     path('api-auth', include('rest_framework.urls', namespace='rest_framework')),
     path('api-token', TokenObtainPairView.as_view(), name='token_obtain_pair'),
