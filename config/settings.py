@@ -59,6 +59,7 @@ MIDDLEWARE = [
     # my middlewares #
     'corsheaders.middleware.CorsMiddleware',
     'payment_gateway.middlewares.CheckPaymentMethodConfigMiddleware',
+    'payment_gateway.middlewares.CheckPaymentGatewayDefaultMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
