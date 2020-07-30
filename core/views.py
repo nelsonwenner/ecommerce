@@ -1,5 +1,7 @@
 from rest_framework_simplejwt.views import TokenObtainPairView
+from payment_gateway.models import PaymentGateway
 from rest_framework.response import Response
+from payment_gateway.serializers import *
 from rest_framework.views import APIView
 from rest_framework import serializers
 from rest_framework import permissions
@@ -129,3 +131,9 @@ class CheckoutItemDetail(RetrieveAPIView):
     queryset = CheckoutItem.objects.get_queryset()
     serializer_class = CheckoutItemSerializer
     permission_classes = [permissions.IsAuthenticated, IsCheckoutItemOwner]
+
+class PaymentGatewayListView(ListAPIView):
+    name = 'payment-gateway-list-view'
+    queryset = PaymentGateway.objects.get_queryset()
+    serializer_class = PaymentGatewaySerializer
+    permission_classes = [permissions.IsAuthenticated]

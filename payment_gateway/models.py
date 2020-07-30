@@ -1,4 +1,5 @@
 from common.models import AutoCreateUpdatedMixin
+from polymorphic.models import PolymorphicModel
 from core.models import Book
 from django.db import models
 from enum import Enum
@@ -49,7 +50,7 @@ class PaymentGateway(AutoCreateUpdatedMixin):
     def __str__(self):
         return self.name
 
-class PaymentMethodConfig(AutoCreateUpdatedMixin):
+class PaymentMethodConfig(AutoCreateUpdatedMixin, PolymorphicModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     payment_method = models.ForeignKey(PaymentGateway, on_delete=models.PROTECT, verbose_name='payment method')
     max_installments = models.SmallIntegerField(blank=True, null=True,verbose_name='installment',
