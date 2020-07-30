@@ -112,7 +112,11 @@ class CheckoutItemDetail(RetrieveAPIView):
     serializer_class = CheckoutItemSerializer
     permission_classes = [permissions.IsAuthenticated, IsCheckoutItemOwner]
 
-
+class PaymentMethodListView(ListAPIView):
+    name = 'payment-method-list-view'
+    queryset = PaymentMethod.objects.get_queryset()
+    serializer_class = PaymentMethodSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 class PaymentGatewayListView(ListAPIView):
     name = 'payment-gateway-list-view'
