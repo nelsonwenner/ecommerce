@@ -62,3 +62,11 @@ class PaymentMethodConfig(AutoCreateUpdatedMixin):
 
     def __str__(self):
         return self.payment_method.get_name_display()
+
+class PagarmeGateway(PaymentGateway):
+    api_key = models.CharField(max_length=255)
+    encryption_key = models.CharField(max_length=255)
+
+    class Meta:
+        verbose_name = 'Pagar.me'
+        verbose_name_plural = 'Pagar.me'
