@@ -132,9 +132,6 @@ class Checkout(AutoCreateUpdatedMixin):
             sum += item.price * item.quantity
         return sum
 
-    def __str__(self):
-        return self.customer.email
-
 class CheckoutItem(AutoCreateUpdatedMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     checkout = models.ForeignKey(Checkout, on_delete=models.CASCADE, related_name="checkout_items")

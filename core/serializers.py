@@ -1,7 +1,6 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.forms.models import model_to_dict
 from rest_framework.response import Response
-from rest_framework.reverse import reverse
 from rest_framework import serializers
 from rest_framework import status
 from django.db import transaction
@@ -115,7 +114,7 @@ class CheckoutSerializer(serializers.ModelSerializer):
                 checkout.items = checkout.checkout_items.bulk_create(checkout_items)
                 return checkout
         except Exception as e:
-            raise Exception("Error: {}".format(e))
+            raise serializers.ValidationError("Error: {}".format(e))
 
 class TokenObtainPairSerializer(TokenObtainPairSerializer):
 
