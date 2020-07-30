@@ -1,4 +1,6 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_polymorphic.serializers import PolymorphicSerializer
+from payment_gateway.models import PagarmeGateway
 from django.forms.models import model_to_dict
 from rest_framework.response import Response
 from rest_framework import serializers
@@ -77,6 +79,18 @@ class BookSerializer(serializers.ModelSerializer):
 
     def get_image_url(self, obj):
         return obj.image.url
+
+class PagarmeGatewaySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = PagarmeGateway
+        fields = ['id', 'encryption_key']
+
+class PaymentGatewaySerializer(PolymorphicSerializer):
+    
+    model_serializer_mapping = {
+        PagarmeGateway: PagarmeGatewaySerializer,
+    }
 
 class CheckoutItemSerializer(serializers.ModelSerializer):
 
