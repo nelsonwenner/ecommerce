@@ -1,5 +1,6 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from payment_gateway.proccess_payment import proccess_payment_simulation
+from django.db import transaction, IntegrityError
 from django.forms.models import model_to_dict
 from rest_framework.response import Response
 from rest_framework import serializers
@@ -104,7 +105,7 @@ class CheckoutSerializer(serializers.ModelSerializer):
                     checkout_items.append(CheckoutItem(**item))
                 checkout.items = checkout.checkout_items.bulk_create(checkout_items)
                 return checkout
-        except Exception as e:
+        except IntegrityError as e:
             raise serializers.ValidationError("Error: {}".format(e))
 
 class TokenObtainPairSerializer(TokenObtainPairSerializer):

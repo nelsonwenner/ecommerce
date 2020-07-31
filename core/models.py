@@ -93,8 +93,8 @@ class Checkout(AutoCreateUpdatedMixin):
     payment_method = models.ForeignKey(PaymentMethod, on_delete=models.PROTECT, verbose_name='payment method')
     status = models.OneToOneField(Status, on_delete=models.PROTECT, null=True, related_name="status")
     installments = models.SmallIntegerField(blank=True, null=True, verbose_name='number of installments')
-    bank_slip_url = models.URLField(null=True, verbose_name='billet url')
-    remote_id = models.CharField(max_length=255, null=True, default=None, verbose_name='Remote invoice ID',
+    bank_slip_url = models.URLField(blank=True, null=True, verbose_name='billet url')
+    remote_id = models.CharField(max_length=255, blank=True, null=True, default=None, verbose_name='Remote invoice ID',
     help_text='Remote invoice id at the payment gateway')
     
     class Meta:
@@ -110,7 +110,7 @@ class Checkout(AutoCreateUpdatedMixin):
 class CheckoutItem(AutoCreateUpdatedMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     checkout = models.ForeignKey(Checkout, on_delete=models.CASCADE, related_name="checkout_items")
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="checkout_item_product")
     quantity = models.PositiveSmallIntegerField(verbose_name='quantity')
     price = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='price')
 
