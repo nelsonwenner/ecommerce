@@ -1,15 +1,10 @@
-from rest_framework_swagger.views import get_swagger_view
 from rest_framework_simplejwt import views as jwt_views
 from django.conf.urls.static import static
 from django.urls import path, include
 from django.conf import settings
 from .views import *
 
-schema_view = get_swagger_view(title='ECOMMERCE API REST')
-
 urlpatterns = [
-    
-    path('api-docs/', schema_view),
 
     path('', ApiRoot.as_view(), name=ApiRoot.name),
 
