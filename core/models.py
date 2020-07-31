@@ -90,8 +90,9 @@ class Product(AutoCreateUpdatedMixin):
 class Checkout(AutoCreateUpdatedMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='user_client_checkout')
+    address = models.ForeignKey(Address, on_delete=models.PROTECT)
     payment_method = models.ForeignKey(PaymentMethod, on_delete=models.PROTECT, verbose_name='payment method')
-    status = models.OneToOneField(Status, on_delete=models.PROTECT, null=True, related_name="status")
+    status = models.ForeignKey(Status, on_delete=models.PROTECT, null=True, related_name="status")
     installments = models.SmallIntegerField(blank=True, null=True, verbose_name='number of installments')
     bank_slip_url = models.URLField(blank=True, null=True, verbose_name='billet url')
     remote_id = models.CharField(max_length=255, blank=True, null=True, default=None, verbose_name='Remote invoice ID',

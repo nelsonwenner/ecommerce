@@ -25,17 +25,6 @@ class PaymentMethod(AutoCreateUpdatedMixin):
 
     def __str__(self):
         return self.get_name_display()
-   
-class PaymentGateway(AutoCreateUpdatedMixin, PolymorphicModel):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=255, verbose_name='name')
-    default = models.BooleanField(default=False, verbose_name='main')
-
-    class Meta:
-        verbose_name = 'payment gateway'
-
-    def __str__(self):
-        return self.name
 
 class PaymentMethodConfig(AutoCreateUpdatedMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -51,6 +40,17 @@ class PaymentMethodConfig(AutoCreateUpdatedMixin):
 
     def __str__(self):
         return self.payment_method.get_name_display()
+
+class PaymentGateway(AutoCreateUpdatedMixin, PolymorphicModel):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=255, verbose_name='name')
+    default = models.BooleanField(default=False, verbose_name='main')
+
+    class Meta:
+        verbose_name = 'payment gateway'
+
+    def __str__(self):
+        return self.name
 
 class PagarmeGateway(PaymentGateway):
     api_key = models.CharField(max_length=255)
