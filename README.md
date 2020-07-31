@@ -1,8 +1,7 @@
-### Commands
-```
-$ python manage.py loaddata fake_data
-```
+<h1 align="center">Ecommerce - API REST</h1>
 
-```
-$ python manage.py db-reset
-```
+## :rocket: Technologies
+
+* [Django rest framework](https://www.django-rest-framework.org/)
+* [Django](https://www.djangoproject.com/)
+
