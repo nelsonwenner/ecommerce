@@ -40,6 +40,11 @@ $ python3 manage.py loaddata initial_data
 $ python3 manage.py runserver
 ```
 
+## :telescope: Diagram Database
+<p align="center">
+  <img alt="diagram" src="./screens/diagram.png" />
+</p>
+
 ## :memo: License
 This project is under the MIT license. See the [LICENSE](LICENSE.md) for more information.
 
