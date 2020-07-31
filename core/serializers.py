@@ -1,4 +1,5 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from payment_gateway.proccess_payment import proccess_payment_simulation
 from django.forms.models import model_to_dict
 from rest_framework.response import Response
 from rest_framework import serializers
@@ -83,8 +84,16 @@ class CheckoutSerializer(serializers.ModelSerializer):
 
     def get_total(self, obj):
         return obj.total
-
+    
     def create(self, validated_data):
+        payment_method = validated_data['payment_method']
+        card_hash = self.context['request'].data['card_hash']
+
+        validated_data['remote_id'] = proccess_payment_simulation(
+            payment_method=payment_method,
+            card_hash=card_hash
+        )
+
         try:
             with transaction.atomic():
                 items = list(validated_data.pop('items'))
