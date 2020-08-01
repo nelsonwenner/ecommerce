@@ -15,7 +15,7 @@ services:
     networks:
       - default
       - rabbitmq_broker-ecommerce
-
+  
   celery_broker:
     build: .
     container_name: micro-ecommerce-broker
