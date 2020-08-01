@@ -1,5 +1,19 @@
 <h1 align="center">Ecommerce - API REST</h1>
 
+<p align="center">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/nelsonwenner/django-ecommerce-api?color=%2304D361">
+
+  <a href="https://github.com/nelsonwenner">
+    <img alt="Made by @nelsonwenner" src="https://img.shields.io/badge/made%20by-%40nelsonwenner-%2304D361">
+  </a>
+
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-%2304D361">
+
+  <a href="https://github.com/nelsonwenner/ecoleta/stargazers">
+    <img alt="Stargazers" src="https://img.shields.io/github/stars/nelsonwenner/django-ecommerce-api?style=social">
+  </a>
+</p>
+
 <div align="center">
   <img alt="dashboard" src="./screens/dashboard.png" />
 </div>
