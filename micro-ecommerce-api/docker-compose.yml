@@ -14,21 +14,22 @@ services:
       - database
     networks:
       - default
-      - rabbitmq_broker-ecommerce
   
-  celery_broker:
-    build: .
-    container_name: micro-ecommerce-broker
+  rabbitmq_broker:
+    container_name: ecommerce-rabbitmq
+    image: 'rabbitmq:3.8-management-alpine'
+    hostname: rabbitmq
     restart: on-failure
-    entrypoint: ./.docker/broker-entrypoint.sh
+    ports:
+      - "15672:15672"
+      - "5672:5672"
     volumes:
-      - .:/home/django/app
-    depends_on:
-      - app
-      - database
+      - '.docker/rabbitmq_data:/var/lib/rabbitmq/mnesia'
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin 
+      - RABBITMQ_DEFAULT_PASS=admin
     networks:
       - default
-      - rabbitmq_broker-ecommerce
   
   database:
     container_name: "ecommerce-database"
@@ -58,5 +59,3 @@ services:
 networks:
   default:
     driver: bridge
-  rabbitmq_broker-ecommerce:
-    external: true
