@@ -1,198 +1,112 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from payment_gateway.proccess_payment import proccess_payment_simulation
+from django.db import transaction, IntegrityError
 from django.forms.models import model_to_dict
 from rest_framework.response import Response
-from rest_framework.reverse import reverse
 from rest_framework import serializers
 from rest_framework import status
+from django.db import transaction
 from .models import *
 
+class ClientSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(source='auth_core.user.password', write_only=True)
+    email = serializers.EmailField()
 
-class AddressSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Customer
+        fields = ['id', 'name', 'email', 'password', 'phone', 'personal_document']
+    
+    def create(self, validated_data):
+        if Customer.objects.filter(email=validated_data['email']).exists():
+            raise serializers.ValidationError("Error: This email already exists")
+        user_data = validated_data.pop('auth_core')['user']
+        user_data['username'] = validated_data['name']
+        user_data['email'] = validated_data['email']
+        userClient = UserClient.objects.create_client(**user_data)
+        customer = Customer.objects.create(id=userClient.id, user=userClient, **validated_data)
+        return customer
+
+class AddressSerializer(serializers.ModelSerializer):
+    customer = serializers.CharField(write_only=True)
 
     class Meta:
         model = Address
-        fields = ['id','url', 'street', 'suite', 'city', 'zipcode']
-
-
-class CreditCardSerializer(serializers.HyperlinkedModelSerializer):
- 
-    class Meta:
-        model = CreditCard
-        fields = '__all__'
-
-
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    
-    class Meta:
-        model = User
-        fields = ['id', 'url', 'username', 'email', 'is_staff']
-
-
-class ClientSerializer(serializers.HyperlinkedModelSerializer):
-    password = serializers.CharField(source='user.password', write_only=True)
-    is_staff = serializers.BooleanField(source='user.is_staff', read_only=True)
-
-    class Meta:
-        model = Client
-        fields = ['id', 'url', 'name', 'email', 'password', 'phone', 'is_staff', 'credit_card', 'address']
-        depth = 1
-
-    def create(self, validated_data):
-        if Client.objects.filter(email=validated_data['email']).exists():
-            raise serializers.ValidationError("Error: This email already exists")
-        
-        user_data = validated_data.pop('user') 
-        
-        user_data['username'] = validated_data['name'].split()[0]
-        user_data['email'] = validated_data['email']
-
-        user_created = User.objects.create_user(**user_data)
-
-        user_created.save()
-
-        return Client.objects.create(id=user_created.id, user=user_created, **validated_data)
-    
-    def update(self, instance, validated_data):
-        data = self.context['request'].data.keys()
-        key = list(map(lambda x: x, data))[0]
-        
-        if key == 'address':
-            address = Address.objects.get(pk=self.context['request'].data['address'])
-            instance.address = address
-            instance.save()
-            return instance
-
-        elif key == 'credit_card':
-            credit_card = CreditCard.objects.get(pk=self.context['request'].data['credit_card'])
-            instance.credit_card = credit_card
-            instance.save()
-            return instance
-
-        return super().update(instance, validated_data)
-    
-
-class ManagerSerializer(serializers.HyperlinkedModelSerializer):
-    password = serializers.CharField(source='user.password', write_only=True)
-
-    class Meta:
-        model = Manager
-        fields = ['url', 'name', 'email', 'password', 'cpf', 'salary']
+        fields = ['id', 'customer', 'street', 'suite', 'city', 'zipcode']
+        read_only_fields = ['customer']
     
     def create(self, validated_data):
-        if Manager.objects.filter(email=validated_data['email']).exists():
-            raise serializers.ValidationError("Error: This email already exists")
-        
-        user_data = validated_data.pop('user') 
-
-        user_data['username'] = validated_data['name'].split()[0]
-        user_data['email'] = validated_data['email']
-
-        user_created = User.objects.create_user(**user_data)
-
-        user_created.is_staff = True
-
-        user_created.save()
-
-        return Manager.objects.create(id=user_created.id, user=user_created, **validated_data)
-
-
-class StatusSerializer(serializers.HyperlinkedModelSerializer):
+        user_id = validated_data.pop('customer')
+        customer = Customer.objects.get(id=user_id)
+        return Address.objects.create(customer=customer, **validated_data)
+    
+class StatusSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Status
         fields = '__all__'
 
-
-class StatusDetailSerializer(serializers.HyperlinkedModelSerializer):
+class StatusDetailSerializer(serializers.ModelSerializer):
     message = serializers.CharField(style={'input_type': 'charfild'})
 
     class Meta:
         model = Status
         fields = ['url', 'message']
 
-
-class GenreSerializer(serializers.HyperlinkedModelSerializer):
+class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Genre
+        model = Category
         fields = '__all__'
 
+class ProductSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField(read_only=True)
 
-class AuthorSerializer(serializers.HyperlinkedModelSerializer):
-    
     class Meta:
-        model = Author
+        model = Product
         fields = '__all__'
 
+    def get_image_url(self, obj):
+        return obj.image.url
 
-class WriteSerializer(serializers.HyperlinkedModelSerializer):
+class CheckoutItemSerializer(serializers.ModelSerializer):
 
-     class Meta:
-        model = Write
+    class Meta:
+        model = CheckoutItem
+        fields = '__all__'
+        read_only_fields = ['checkout']
+
+class CheckoutSerializer(serializers.ModelSerializer):
+    items = CheckoutItemSerializer(many=True)
+    total = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = Checkout
         fields = '__all__'
 
-
-class BookSerializer(serializers.HyperlinkedModelSerializer):
-
-    class Meta:
-        model = Book
-        fields = ['id', 'url', 'title', 'prince', 'stock', 'genre', 'image']
-
-
-class OrderDetailSerializer(serializers.HyperlinkedModelSerializer):
-    total = serializers.FloatField(style={'input_type': 'interger'})
-
-    class Meta:
-        model = Order
-        fields = ['id', 'url', 'client', 'manager', 'status', 'total', 'date_created']
-
-
-class ItemOrderSerializer(serializers.HyperlinkedModelSerializer):
-
-    class Meta:
-        model = ItemOrder
-        fields = ['id', 'url', 'book', 'amount', 'subtotal', 'order', 'date_created']
+    def get_total(self, obj):
+        return obj.total
     
     def create(self, validated_data):
-        status = validated_data['order'].status.message
-        stock = validated_data['book'].stock
-        amount = validated_data['amount']
-        
-        if amount > stock:
-            raise serializers.ValidationError("Error: insufficient stock to perform this operation")
-        
-        if amount < 0:
-            raise serializers.ValidationError("Error: Negative amount detected")
-        
-        if status == "Compra Finalizada":
-            raise serializers.ValidationError("Error: The status of this sale is finalized")
-        
-        price = validated_data['book'].prince
-        validated_data['subtotal'] = (amount * price)
+        payment_method = validated_data['payment_method']
+        card_hash = self.context['request'].data['card_hash']
 
-        item_order = ItemOrder.objects.create(**validated_data)
+        validated_data['remote_id'] = proccess_payment_simulation(
+            payment_method=payment_method,
+            card_hash=card_hash
+        )
 
-        item_order.order_calc()
-        item_order.sub_book_stock(amount)
-
-        return item_order
-
-
-class OrderSerializer(serializers.HyperlinkedModelSerializer):
-    items = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Order
-        fields = ['id', 'url', 'client', 'manager', 'status', 'total', 'date_created', 'items']
-    
-    def get_items(self, obj):
-        new_list = []
-        item = ItemOrder.objects.filter(order=obj)
-        for i in range(len(item)): 
-            new_list.append(model_to_dict(item[i]))
-            new_list[i]['title'] = item[i].book.title
-        return new_list
-
+        try:
+            with transaction.atomic():
+                items = list(validated_data.pop('items'))
+                checkout = Checkout.objects.create(**validated_data)
+                checkout_items = []
+                for item in items:
+                    item['checkout'] = checkout
+                    checkout_items.append(CheckoutItem(**item))
+                checkout.items = checkout.checkout_items.bulk_create(checkout_items)
+                return checkout
+        except IntegrityError as e:
+            raise serializers.ValidationError("Error: {}".format(e))
 
 class TokenObtainPairSerializer(TokenObtainPairSerializer):
 
@@ -200,13 +114,9 @@ class TokenObtainPairSerializer(TokenObtainPairSerializer):
         
         data = super().validate(attrs)
         refresh = self.get_token(self.user)
-
-        data['refresh'] = str(refresh)
-        data['token'] = str(refresh.access_token)
-
+        
         data['id'] = self.user.id
         data['username'] = self.user.username
         data['email'] = self.user.email
-        data['is_staff'] = self.user.is_staff
         
         return data

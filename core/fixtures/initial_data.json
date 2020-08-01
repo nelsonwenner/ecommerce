@@ -1,0 +1,315 @@
+[
+  {
+    "model": "core.category",
+    "pk": "e5182812-d1b0-4585-99bf-6510497602ab",
+    "fields": {
+      "name": "Horror",
+      "slug": "horror-6510497602ab",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.category",
+    "pk": "e5182812-d1b0-4585-99bf-6510497603ab",
+    "fields": {
+      "name": "Anime",
+      "slug": "anime-6510497602ab",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.category",
+    "pk": "e5182812-d1b0-4585-99bf-6510497604ab",
+    "fields": {
+      "name": "Adventure",
+      "slug": "adventure-6510497602ab",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.category",
+    "pk": "e5182812-d1b0-4585-99bf-6510497605ab",
+    "fields": {
+      "name": "Action",
+      "slug": "action-6510497602ab",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+   
+  {
+    "model": "core.product",
+    "pk": "e5180912-d1b0-4585-99bf-6511497605ab",
+    "fields": {
+      "title": "Diablo II",
+      "description": "",
+      "price": 30.0,
+      "stock": 12,
+      "category_id": "e5182812-d1b0-4585-99bf-6510497602ab",
+      "image": "/uploads/products/e5182812-d1b0-4585-99bf-6510497602ab-diabloII.jpg",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.product",
+    "pk": "e5182812-d1b0-4585-99bf-6512497999ab",
+    "fields": {
+      "title": "Star Wars",
+      "description": "",
+      "price": 85.0,
+      "stock": 60,
+      "category_id": "e5182812-d1b0-4585-99bf-6510497604ab",
+      "image": "/uploads/products/e5182812-d1b0-4585-99bf-6510497602ab-starwars.jpg",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.product",
+    "pk": "e5182812-d1b0-4585-99bf-6513497605ab",
+    "fields": {
+      "title": "Akira",
+      "description": "",
+      "price": 112.0,
+      "stock": 145,
+      "category_id": "e5182812-d1b0-4585-99bf-6510497603ab",
+      "image": "/uploads/products/e5182812-d1b0-4585-99bf-6510497602ab-akira.jpg",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.product",
+    "pk": "e5281819-d4b0-4585-99bf-6599497605ab",
+    "fields": {
+      "title": "Pokemon",
+      "description": "",
+      "price": 183.0,
+      "stock": 47,
+      "category_id": "e5182812-d1b0-4585-99bf-6510497603ab",
+      "image": "/uploads/products/e5182812-d1b0-4585-99bf-6510497602ab-pokemon-vol-1.jpg",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.product",
+    "pk": "e9289819-d8b0-4595-99bf-6514497605ab",
+    "fields": {
+      "title": "X-man",
+      "description": "",
+      "price": 95.0,
+      "stock": 12,
+      "category_id": "e5182812-d1b0-4585-99bf-6510497603ab",
+      "image": "/uploads/products/e5182812-d1b0-4585-99bf-6510497602ab-xmem.jpg",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.product",
+    "pk": "e5311819-d8b0-4595-99bf-6514497995ab",
+    "fields": {
+      "title": "Infinite Wars",
+      "description": "",
+      "price": 220.0,
+      "stock": 458,
+      "category_id": "e5182812-d1b0-4585-99bf-6510497605ab",
+      "image": "/uploads/products/e5182812-d1b0-4585-99bf-6510497602ab-desafio-ifinito.jpg",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.product",
+    "pk": "e5191819-d1b0-4195-11bf-6514497609ab",
+    "fields": {
+      "title": "Full Alchmist",
+      "description": "",
+      "price": 95.0,
+      "stock": 33,
+      "category_id": "e5182812-d1b0-4585-99bf-6510497603ab",
+      "image": "/uploads/products/e5182812-d1b0-4585-99bf-6510497602ab-fullalchmist.jpg",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.product",
+    "pk": "e1221819-d1b0-4195-19bf-6594497605ab",
+    "fields": {
+      "title": "The Hell",
+      "description": "",
+      "price": 55.0,
+      "stock": 12,
+      "category_id": "e5182812-d1b0-4585-99bf-6510497602ab",
+      "image": "/uploads/products/e5182812-d1b0-4585-99bf-6510497602ab-doiferno.jpg",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.product",
+    "pk": "e1222349-d1b0-4195-11bf-9914497605ab",
+    "fields": {
+      "title": "Ninja Turtles",
+      "description": "",
+      "price": 77.0,
+      "stock": 26,
+      "category_id": "e5182812-d1b0-4585-99bf-6510497603ab",
+      "image": "/uploads/products/e5182812-d1b0-4585-99bf-6510497602ab-Ninja_Turtles.jpg",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.product",
+    "pk": "e1222349-d1b0-4195-11bf-6523197605ab",
+    "fields": {
+      "title": "Game of Thrones",
+      "description": "",
+      "price": 220.0,
+      "stock": 99,
+      "category_id": "e5182812-d1b0-4585-99bf-6510497604ab",
+      "image": "/uploads/products/e5182812-d1b0-4585-99bf-6510497602ab-game-of-thrones-completa.jpg",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.product",
+    "pk": "e1331349-d1b0-4195-11bf-6529197605ab",
+    "fields": {
+      "title": "Gear Of War",
+      "description": "",
+      "price": 99.0,
+      "stock": 78,
+      "category_id": "e5182812-d1b0-4585-99bf-6510497605ab",
+      "image": "/uploads/products/e5182812-d1b0-4585-99bf-6510497602ab-Gears_of_War.jpg",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.product",
+    "pk": "e1331349-d1b0-4195-11bf-6523111105ab",
+    "fields": {
+      "title": "Secret War",
+      "description": "",
+      "price": 199.0,
+      "stock": 28,
+      "category_id": "e5182812-d1b0-4585-99bf-6510497604ab",
+      "image": "/uploads/products/e5182812-d1b0-4585-99bf-6510497602ab-gerra-secreta.jpg",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.product",
+    "pk": "e1331349-d1b0-4195-11bf-6523223305ab",
+    "fields": {
+      "title": "It the thing",
+      "description": "",
+      "price": 66.0,
+      "stock": 11,
+      "category_id": "e5182812-d1b0-4585-99bf-6510497602ab",
+      "image": "/uploads/products/e5182812-d1b0-4585-99bf-6510497602ab-it-a-coisa.jpg",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.product",
+    "pk": "e1331349-d1b0-4195-11bf-6599543305ab",
+    "fields": {
+      "title": "V Revenge",
+      "description": "",
+      "price": 25.0,
+      "stock": 27,
+      "category_id": "e5182812-d1b0-4585-99bf-6510497602ab",
+      "image": "/uploads/products/e5182812-d1b0-4585-99bf-6510497602ab-vdevingaca.jpg",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.product",
+    "pk": "e1391349-d1b0-4195-11bf-6019511905ab",
+    "fields": {
+      "title": "Back to the Future",
+      "description": "",
+      "price": 25.0,
+      "stock": 27,
+      "category_id": "e5182812-d1b0-4585-99bf-6510497604ab",
+      "image": "/uploads/products/e5182812-d1b0-4585-99bf-6510497602ab-de_volta_para_o_futuro.jpg",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.product",
+    "pk": "e1331949-d1b0-4195-11bf-6019500005ab",
+    "fields": {
+      "title": "Oath to Protect",
+      "description": "",
+      "price": 11.0,
+      "stock": 6,
+      "category_id": "e5182812-d1b0-4585-99bf-6510497604ab",
+      "image": "/uploads/products/e5182812-d1b0-4585-99bf-6510497602ab-juramento_para_proteger.jpg",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.product",
+    "pk": "e1339349-d1b0-4195-11bf-6011500115ab",
+    "fields": {
+      "title": "Chronicles Narnia",
+      "description": "",
+      "price": 78.0,
+      "stock": 100,
+      "category_id": "e5182812-d1b0-4585-99bf-6510497604ab",
+      "image": "/uploads/products/e5182812-d1b0-4585-99bf-6510497602ab-cronicas-narnia.jpg",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "core.product",
+    "pk": "e0900349-d0b0-4195-11bf-6011500115ab",
+    "fields": {
+      "title": "Another Wife",
+      "description": "",
+      "price": 45.0,
+      "stock": 61,
+      "category_id": "e5182812-d1b0-4585-99bf-6510497602ab",
+      "image": "/uploads/products/e5182812-d1b0-4585-99bf-6510497602ab-A_outra_esposa.jpg",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  }
+]
