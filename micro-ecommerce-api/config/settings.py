@@ -23,6 +23,10 @@ if os.path.exists(env_path):
 else:
     print("Warning: Dotenv does not exist")
 
+env = environ.Env(
+    DEBUG=(bool, False),
+)
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
