@@ -14,22 +14,20 @@ services:
       - database
     networks:
       - default
+      - rabbitmq_broker-ecommerce
   
-  rabbitmq_broker:
-    container_name: ecommerce-rabbitmq
-    image: 'rabbitmq:3.8-management-alpine'
-    hostname: rabbitmq
+  worker:
+    build: .
+    container_name: micro-ecommerce-worker
     restart: on-failure
-    ports:
-      - "15672:15672"
-      - "5672:5672"
+    entrypoint: ./.docker/worker-entrypoint.sh
     volumes:
-      - '.docker/rabbitmq_data:/var/lib/rabbitmq/mnesia'
-    environment:
-      - RABBITMQ_DEFAULT_USER=admin 
-      - RABBITMQ_DEFAULT_PASS=admin
+      - .:/home/django/app
+    depends_on:
+      - app
     networks:
       - default
+      - rabbitmq_broker-ecommerce
   
   database:
     container_name: "ecommerce-database"
@@ -59,3 +57,5 @@ services:
 networks:
   default:
     driver: bridge
+  rabbitmq_broker-ecommerce:
+    external: true
