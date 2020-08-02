@@ -4,7 +4,7 @@
   "description": "microservice payment",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --ignore-watch node_modules src/server.ts",
+    "dev": "ts-node-dev --transpile-only --respawn --ignore-watch node_modules src/server.ts",
     "build": "tsc",
     "start": "NODE_ENV=production node dist/server.js"
   },
