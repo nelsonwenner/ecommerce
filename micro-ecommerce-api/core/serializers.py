@@ -78,6 +78,7 @@ class CheckoutItemSerializer(serializers.ModelSerializer):
 class CheckoutSerializer(serializers.ModelSerializer):
     items = CheckoutItemSerializer(many=True)
     total = serializers.SerializerMethodField(read_only=True)
+    card_hash = serializers.CharField(write_only=True)
 
     class Meta:
         model = Checkout
@@ -88,8 +89,8 @@ class CheckoutSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         payment_method = validated_data['payment_method']
-        card_hash = self.context['request'].data['card_hash']
-
+        card_hash = validated_data.pop('card_hash')
+        
         validated_data['remote_id'] = proccess_payment_simulation(
             payment_method=payment_method,
             card_hash=card_hash

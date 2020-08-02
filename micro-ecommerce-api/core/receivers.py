@@ -3,4 +3,4 @@ from core.serializers import CheckoutSerializer
 from core.models import Checkout
 
 checkout_observer = ModelObserver(sender=Checkout, serializer=CheckoutSerializer)
-checkout_observer.register()
+checkout_observer.register_model_saved()

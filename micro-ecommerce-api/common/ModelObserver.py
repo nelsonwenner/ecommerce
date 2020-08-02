@@ -1,5 +1,6 @@
-from core.models import CheckoutItem, Checkout
+from django.core.signals import request_finished
 from django.db.models.signals import post_save
+from core.serializers import CheckoutSerializer
 from config.celery import rabbitmq_producer
 from rest_framework import serializers
 from django.dispatch import receiver
@@ -12,11 +13,11 @@ class ModelObserver:
         self.serializer = serializer
     
     def register_model_saved(self):
-        receiver(post_save, sender=self.sender)(self.model_saved)
-    
-    def model_saved(self, instance, created, **kwargs):
-        pass
-        
+        receiver(request_finished)(self.model_saved)
+
+    def model_saved(self, sender, **kwargs):
+        print("\n[2] TEST => ", sender)
+     
     def _publish(self, message, routing_key):
         with rabbitmq_producer() as producer:
             producer.publish(
