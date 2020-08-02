@@ -109,7 +109,7 @@ class CheckoutSerializer(serializers.ModelSerializer):
                     'checkout_id': CheckoutSerializer(checkout).data['id'],
                     'card_hash': card_hash
                 }
-
+                
                 _publish(message=payload, routing_key='payment')
                 return checkout
         except IntegrityError as e:
