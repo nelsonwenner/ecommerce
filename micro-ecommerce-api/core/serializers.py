@@ -1,9 +1,11 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from payment_gateway.proccess_payment import proccess_payment_simulation
+from payment_gateway.serializers import PaymentMethodSerializer
 from django.db import transaction, IntegrityError
 from django.forms.models import model_to_dict
 from rest_framework.response import Response
 from rest_framework import serializers
+from config.celery import _publish
 from rest_framework import status
 from django.db import transaction
 from .models import *
@@ -90,11 +92,6 @@ class CheckoutSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         payment_method = validated_data['payment_method']
         card_hash = validated_data.pop('card_hash')
-        
-        validated_data['remote_id'] = proccess_payment_simulation(
-            payment_method=payment_method,
-            card_hash=card_hash
-        )
 
         try:
             with transaction.atomic():
@@ -105,6 +102,15 @@ class CheckoutSerializer(serializers.ModelSerializer):
                     item['checkout'] = checkout
                     checkout_items.append(CheckoutItem(**item))
                 checkout.items = checkout.checkout_items.bulk_create(checkout_items)
+
+                payload = {
+                    'customer': ClientSerializer(validated_data['customer']).data['id'],
+                    'payment_method': PaymentMethodSerializer(payment_method).data['name'],
+                    'checkout_id': CheckoutSerializer(checkout).data['id'],
+                    'card_hash': card_hash
+                }
+
+                _publish(message=payload, routing_key='payment')
                 return checkout
         except IntegrityError as e:
             raise serializers.ValidationError("Error: {}".format(e))

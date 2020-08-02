@@ -27,6 +27,14 @@ def rabbitmq_conn():
 def rabbitmq_producer():
   return app.producer_pool.acquire(block=True)
 
+def _publish(message, routing_key):
+  with rabbitmq_producer() as producer:
+    producer.publish(
+        body=message,
+        routing_key=routing_key,
+        exchange='checkout'
+    )
+
 with rabbitmq_conn() as conn:
   queue = kombu.Queue(
     name='queue-checkout',
