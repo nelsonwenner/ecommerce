@@ -29,7 +29,7 @@ def rabbitmq_producer():
 
 with rabbitmq_conn() as conn:
   queue = kombu.Queue(
-    name='queue',
+    name='queue-checkout',
     exchange='checkout',
     routing_key='payment',
     channel=conn,
