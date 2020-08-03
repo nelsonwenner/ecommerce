@@ -4,6 +4,10 @@ from celery import Celery
 import kombu
 import os
 
+#------------------------------------------------------#
+#                 PRODUCER SETTINGS                    #
+#------------------------------------------------------#
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 
 app = Celery('celeryapp')
@@ -33,6 +37,10 @@ def _publish(message, routing_key):
             routing_key=routing_key,
             exchange='checkout'
         )
+
+#------------------------------------------------------#
+#                 CONSUMER WORKER                      #
+#------------------------------------------------------#
 
 with rabbitmq_conn() as conn:
     queue = kombu.Queue(
