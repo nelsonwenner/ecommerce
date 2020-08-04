@@ -1,8 +1,12 @@
 import React from 'react';
 
+import Header from '../../components/theme/Header';
+
 const Home = () => {
   return (
-    <h1>Hello World</h1>
+    <div className="home">
+      <Header />
+    </div>
   )
 }
 
