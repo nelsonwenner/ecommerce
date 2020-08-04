@@ -12,3 +12,16 @@
   padding-left: 1rem;
   padding-right: 1rem;
 }
+
+/*Media query*/
+@media only screen and (max-width:779px) { 
+   
+  .drop-wrapper {
+    flex-direction: column;
+  }
+
+  .drop-main {
+    height: 11.5rem;
+  }
+
+}
