@@ -39,9 +39,19 @@
   height: 3rem;
   border: 1px solid #f5ca0d;
   background-color: #f5ca0d;
-  
+
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+/*Media query*/
+@media only screen and (max-width:779px) { 
+   
+  .search {
+    width: 100%;
+    margin-bottom: 0.4rem;
+  }
+
 }
