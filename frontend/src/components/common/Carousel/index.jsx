@@ -22,7 +22,7 @@ const CarouselBanner = () => {
       {
         banners.map((banner, index) => (
           <div key={index}>
-            <img src={ banner } />
+            <img src={ banner } alt={`banner-${index}`} />
           </div>
         ))
       } 

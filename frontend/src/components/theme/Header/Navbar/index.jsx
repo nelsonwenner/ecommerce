@@ -12,7 +12,6 @@ const Navbar = () => {
   }
 
   const closeModal = () => {
-    console.log("kkkkkkkk")
     setModalLogin(false);
   }
 

@@ -22,7 +22,7 @@ const LoginModal = ({ openModal, closeModal }) => {
             <span className="title">Client</span>
           <div className="line"></div>
         </div>
-
+        
         <div className="input-container">
           <CustomInput 
             classs={'wrapper-input' }
@@ -39,7 +39,7 @@ const LoginModal = ({ openModal, closeModal }) => {
             name={ 'password' }
             placeholder={ 'Password' }
           />
-
+          
           <button className="btn btn-rounded black-btn btn-outlined">Login</button>
         </div>
       </form>
