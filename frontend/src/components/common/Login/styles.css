@@ -1,22 +1,35 @@
 .ReactModal__Content_Login {
   position: absolute;
   width: 100%;
-  height: 100%;
+  outline: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+  background-color: rgba(255, 255, 255, 0);
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0);
 }
 
 .ReactModal__Overlay_Login {
-  z-index: 1600;
+  z-index: 150000;
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0) !important;
+  background-color: rgba(59, 56, 69, 0.664);
+  opacity: 0;
+  transition: opacity 1000ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open{
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close{
+  opacity: 0;
 }
 
 .login-welcome {
@@ -38,11 +51,19 @@
 .form-login {
   max-width: 50rem;
   width: 100%;
-  height: 45rem;
+  height: 40rem;
   border-radius: 2%;
-  background-color: red;
+  background: linear-gradient(-135deg, #f5ca0d, #fcfcf1);
+  box-shadow: 0 1px 10px 0 rgba(5, 5, 5, .13);
+}
+.card-hover,
+.card-hover:hover {
+  transition: all .3s
 }
 
+.card-hover:hover {
+  box-shadow: 0 11px 16px 0 rgba(5, 5, 5, .23)
+}
 .division {
   position: relative;
   overflow: hidden;
@@ -62,14 +83,73 @@
   border-top: 1px solid rgba(0,0,0,.2);
 }
 
-.wrapper-input {
+.input-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.wrapper-input .input-form {
+.wrapper-input {
   width: 80%;
 }
 
+.input-field {
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1.2rem;
+  line-height: 2;
+  border: 1px solid #cdd4da;
+  border-radius: 4px;
+  border-width: 1px;
+  color: #495057;
+  transition: all .2s ease;
+  background-color: #e9ecef;
+}
+
+.wrapper-input span:before {
+  cursor: pointer;
+  position: relative;
+  font-family: "Font Awesome 5 Free";
+  top: 2.6rem;
+  left: .6rem;
+  color: #212121;
+}
+
+.wrapper-input input[placeholder] {
+  padding-left: 35px;
+}
+
+.email-icon:before  {
+  content: '\f0e0';
+  font-weight: 900;
+}
+
+.password-icon:before  {
+  content: '\f023';
+  font-weight: 900;
+}
+
+.mb-16 {
+  margin-bottom: 2rem;
+}
+
+.wrapper-input input[type=email]:focus,
+.wrapper-input input[type=password]:focus {
+  border-color: #212121;
+  transition: all .2s ease
+}
+
+.btn {
+  width: 40%;
+  margin-top: 4rem;
+}
+
+/*Media query*/
+@media only screen and (max-width:536px) { 
+   
+  .form-login {
+    width: 90%;
+  }
+
+}

@@ -12,6 +12,7 @@ const Navbar = () => {
   }
 
   const closeModal = () => {
+    console.log("kkkkkkkk")
     setModalLogin(false);
   }
 
@@ -28,7 +29,7 @@ const Navbar = () => {
         </div>
       </div>
       <LoginModal 
-        openModal={ true }
+        openModal={ modalLogin }
         closeModal={ closeModal }
       />
     </div>
