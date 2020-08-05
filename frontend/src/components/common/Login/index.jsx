@@ -14,7 +14,7 @@ const LoginModal = ({ openModal, closeModal }) => {
       className={"ReactModal__Content_Login"}
       overlayClassName={"ReactModal__Overlay_Login"}
       contentLabel="Modal"
-    >
+    > 
       <form method="post" className="form-login card-hover">
         <h2 className="login-welcome">Welcome</h2>
         <div className="division">
