@@ -11,6 +11,7 @@ const Home = () => {
       <Header />
       <Carousel />
       <SectionInfoAll />
+      
     </div>
   )
 }
