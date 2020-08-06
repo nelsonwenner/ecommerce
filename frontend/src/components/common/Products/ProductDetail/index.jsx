@@ -1,9 +1,9 @@
 import React from 'react';
 import './styles.css';
 
-const Product = ({ title, price, image_path }) => {
+const ProductDetail = ({ title, price, image_path, onClick }) => {
   return (
-    <div className="card">
+    <div className="card" onClick={ onClick }>
       <div className="card-img">
         <img src={ `${process.env.REACT_APP_ECOMMERCE_API_URL}${image_path}` } alt={title} />
       </div>
@@ -15,4 +15,4 @@ const Product = ({ title, price, image_path }) => {
   )
 }
 
-export default Product;
+export default ProductDetail;
