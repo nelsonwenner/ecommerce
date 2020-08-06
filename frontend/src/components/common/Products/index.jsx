@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './styles.css';
 
+import { useCart } from '../../../providers/CartProvider';
 import ProductDetail from './ProductDetail';
 import api from '../../../services/Api';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
+  const [cart, addProduct] = useCart();
 
   useEffect(() => {
     api.get('/products').then(({ data }) => {
@@ -13,10 +15,8 @@ const Products = () => {
     });
   }, []);
   
-  const handlerClicked = (item) => {
-    console.log(item)
-  }
-  
+  console.log(cart);
+
   return (
     <div className="container wrapper-products">
       {products.map((product, index) => (
@@ -25,7 +25,7 @@ const Products = () => {
           title={ product.title }
           price={ product.price }
           image_path={ product.image_url }
-          onClick={ () => handlerClicked(product) }
+          onClick={ () => addProduct(product) }
         />
       ))}
     </div>
