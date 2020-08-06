@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './styles.css';
 
-import Header from '../../components/theme/Header';
-import Carousel from '../../components/common/Carousel';
 import SectionInfoAll from '../../components/common/SectionInfoAll';
-
+import Carousel from '../../components/common/Carousel';
 import Product from '../../components/common/Product';
+import Footer from '../../components/theme/Footer';
+import Header from '../../components/theme/Header';
 import api from '../../services/Api';
 
 const Home = () => {
@@ -33,6 +33,8 @@ const Home = () => {
           />
         ))}
       </div>
+      
+      <Footer />
     </div>
   )
 }
