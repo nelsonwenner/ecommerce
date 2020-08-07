@@ -2,21 +2,17 @@ import React from 'react';
 import './styles.css';
 
 import SectionInfoAll from '../../components/common/SectionInfoAll';
-import { CartProvider } from '../../providers/CartProvider';
 import Products from '../../components/common/Products';
 import Carousel from '../../components/common/Carousel';
-import Footer from '../../components/theme/Footer';
-import Header from '../../components/theme/Header';
+import Layout from '../../components/common/Layout';
 
 const Home = () => {
   return (
-    <CartProvider>
-      <Header />
+    <Layout>
       <Carousel />
       <SectionInfoAll />
       <Products />
-      <Footer />
-    </CartProvider>
+    </Layout>
   )
 }
 

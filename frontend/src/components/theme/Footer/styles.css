@@ -5,7 +5,6 @@
   flex-direction: row;
   justify-content: center;
   align-items: flex-end;
-  margin-top: 2rem;
   color: #ffffff;
   background-color: rgb(33, 33, 33);
 }
@@ -13,4 +12,5 @@
 .footer-main span {
   display: block;
   font-size: 1.7rem;
+  margin-bottom: 0.5rem;
 }

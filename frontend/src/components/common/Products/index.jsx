@@ -7,7 +7,7 @@ import api from '../../../services/Api';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
-  const [cart, addProduct] = useCart();
+  const [addProduct] = useCart();
 
   useEffect(() => {
     api.get('/products').then(({ data }) => {
@@ -15,8 +15,6 @@ const Products = () => {
     });
   }, []);
   
-  console.log(cart);
-
   return (
     <div className="container wrapper-products">
       {products.map((product, index) => (

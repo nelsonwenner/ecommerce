@@ -7,11 +7,13 @@ export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
   const addProduct = (product) => {
-
+    
     const productSerialized = {
+      image_url: product.image_url,
+      title: product.title,
       product: product.id,
       price: product.price,
-      quantity: 1
+      quantity: 1,
     }
     
     const alreadySelected = cart.find(item => item.product === product.id);
