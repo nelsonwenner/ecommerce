@@ -7,8 +7,8 @@ import api from '../../../services/Api';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
-  const [addProduct] = useCart();
-
+  const { addProduct } = useCart();
+  
   useEffect(() => {
     api.get('/products').then(({ data }) => {
       setProducts(data.results);

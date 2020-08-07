@@ -4,7 +4,7 @@ import './styles.css';
 import { useCart } from '../../../../../providers/CartProvider';
 
 const Cart = () => {
-  const [cart] = useCart();
+  const { cart } = useCart();
   
   return (
     <div className="cart">
