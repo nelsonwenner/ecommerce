@@ -1,0 +1,42 @@
+.cart-main {
+  height: 75vh;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.path-page {
+  font-size: 1.6rem;
+  margin-top: 3rem;
+  color: rgb(149, 143, 134);
+}
+
+.mt-30 {
+  margin-top: 3rem;
+}
+
+.cart-title {
+  font-size: 3rem;
+  margin-top: 2rem;
+  color: rgb(149, 143, 134);
+}
+
+.cart-table-header {
+  display: flex;
+  flex-direction: row;
+  margin-left: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 0.01rem solid rgb(204, 204, 204);
+}
+
+.product {
+  width: 75%;
+}
+
+.price {
+  width: 25%;
+}
+
+.order-summary {
+  margin-top: 2rem;
+  margin-left: 1rem;
+}
