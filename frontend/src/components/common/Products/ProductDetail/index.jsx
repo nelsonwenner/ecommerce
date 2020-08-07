@@ -11,6 +11,9 @@ const ProductDetail = ({ title, price, image_path, onClick }) => {
         <p>{ title }</p>
       </div>
       <span className="dolar-icon">{ price }</span>
+      <div className="overlay">
+        <div className="card-button">Add To Cart</div>
+      </div>
     </div>  
   )
 }

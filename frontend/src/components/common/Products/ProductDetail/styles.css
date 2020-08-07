@@ -22,11 +22,17 @@
   width: 90%;
   height: 31.5rem;
   display: block;
-  transition: all 0.5s ease;
+  outline: none;
+  transition: all 0.7s ease;
 }
 
 .card:hover .card-img img { 
-  transform: scale(1.1);
+  transform: scale(1.2);
+}
+
+.card:hover .card-img {
+  opacity: 0.3;
+  background-size:120%;
 }
 
 .card-title {
@@ -50,4 +56,37 @@
   margin-left: 1.2rem;
   margin-right: 0.7rem;
   color: rgba(33, 189, 41, 0.904);
+}
+
+.card:hover .overlay {
+  opacity: 1;
+  transition: all 0.8s ease;
+}
+
+.overlay {
+  position: relative;
+  bottom: 23rem;
+  opacity: 0;
+  text-align: center;
+  transition: .5s ease;
+  transition: all 0.8s ease;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.card .overlay .card-button {
+  width: 160px;
+  line-height: 38px;
+  background-color: black;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 50px;
+  transition: all 0.5s ease;
+}
+
+.card .overlay .card-button:hover {
+  color: #fff;
+  background-color: #57b846;
 }
