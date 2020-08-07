@@ -1,3 +1,7 @@
+.cart {
+  cursor: pointer;
+}
+
 .icon-cart::before {
   font-family: "Font Awesome 5 Free";
   cursor: pointer;
