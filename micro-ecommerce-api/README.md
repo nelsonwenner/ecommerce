@@ -1,17 +1,13 @@
 <h1 align="center">Ecommerce - API REST</h1>
 
 <p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/nelsonwenner/django-ecommerce-api?color=%2304D361">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/nelsonwenner/ecommerce/micro-ecommerce-api?color=%2304D361">
 
   <a href="https://github.com/nelsonwenner">
     <img alt="Made by @nelsonwenner" src="https://img.shields.io/badge/made%20by-%40nelsonwenner-%2304D361">
   </a>
 
   <img alt="License" src="https://img.shields.io/badge/license-MIT-%2304D361">
-
-  <a href="https://github.com/nelsonwenner/ecoleta/stargazers">
-    <img alt="Stargazers" src="https://img.shields.io/github/stars/nelsonwenner/django-ecommerce-api?style=social">
-  </a>
 </p>
 
 <div align="center">
@@ -21,14 +17,14 @@
 ## :rocket: Technologies
 * [Docker](https://www.docker.com/)
 * [DockerCompose](https://docs.docker.com/compose/)
+* [Celery](https://docs.celeryproject.org/en/latest/django/first-steps-with-django.html)
 * [Django rest framework](https://www.django-rest-framework.org/)
 * [Django](https://www.djangoproject.com/)
-
 
 ## :closed_lock_with_key: Getting Started
 
 1. Fork this repository and clone it on your machine.
-2. Change the directory to `django-ecommerce-api` where you cloned it.
+2. Change the directory to `micro-ecommerce-api` where you cloned it.
 
 ```shell
 $ docker-compose up -d
