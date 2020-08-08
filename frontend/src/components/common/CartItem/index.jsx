@@ -15,6 +15,7 @@ const CartItem = () => {
             <h4>{ product.title }</h4>
           </div>
           <span>$ { product.price }</span>
+          <span className="cart-item-remove">X</span>
         </div>
       ))}
     </div>

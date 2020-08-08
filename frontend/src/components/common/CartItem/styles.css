@@ -16,7 +16,7 @@
 }
 
 .cart-item .cart-img {
-  width: 74%;
+  width: 85%;
 } 
 
 .cart-item .cart-img img {
@@ -34,7 +34,36 @@
 }
 
 .cart-item span {
-  width: 26%;
+  width: 15%;
   position: relative;
   top: 1rem;
+}
+
+.cart-item .cart-item-remove {
+  position: relative;
+  width: 10%;
+  display: block;
+}
+
+/*Media query*/
+@media only screen and (max-width:378px) { 
+   
+  .cart-item {
+    flex-direction: column;
+  }
+
+  .cart-item span {
+    position: relative;
+    left: 11rem;
+    top: -9rem;
+  }
+
+  .cart-item .cart-item-remove {
+    position: relative;
+    top: -1.5rem;
+    left: 4rem;
+
+  }
+
+  
 }
