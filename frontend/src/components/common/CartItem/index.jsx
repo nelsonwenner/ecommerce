@@ -7,7 +7,7 @@ const CartItem = () => {
   const { cart } = useCart();
 
   return (
-    <>
+    <div className="cart-wrapper">
       {cart.map((product, index) => (
         <div className="cart-item" key={ index }>
           <div className="cart-img">
@@ -17,7 +17,7 @@ const CartItem = () => {
           <span>$ { product.price }</span>
         </div>
       ))}
-    </>
+    </div>
   )
 }
 

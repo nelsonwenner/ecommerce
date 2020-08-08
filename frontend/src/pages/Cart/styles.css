@@ -1,5 +1,4 @@
 .cart-main {
-  height: 75vh;
   padding-left: 1rem;
   padding-right: 1rem;
 }
@@ -39,4 +38,11 @@
 .order-summary {
   margin-top: 2rem;
   margin-left: 1rem;
+}
+
+/*Media query*/
+@media only screen and (max-width:1200px) { 
+   
+  
+
 }

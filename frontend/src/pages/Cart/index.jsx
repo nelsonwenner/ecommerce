@@ -1,6 +1,7 @@
 import React from 'react';
 import './styles.css';
 
+import CartSummary from '../../components/common/CartSummary';
 import CartItem from '../../components/common/CartItem';
 import Layout from '../../components/common/Layout';
 
@@ -20,9 +21,7 @@ const Cart = () => {
               <CartItem />
             </div>
             <div className="column xlarge-4 large-12 medium-12 small-12">
-              <div className="cart-summary mt-30">
-                <h4 className="order-summary">Order Summary</h4>
-              </div>
+              <CartSummary />
             </div>
           </div>
         </div>
