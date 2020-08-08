@@ -14,10 +14,6 @@ const Cart = () => {
           <h4 className="cart-title">Cart</h4>
           <div className="row">
             <div className="column xlarge-8 large-12 medium-12 small-12" >
-              <div className="cart-table-header mt-30">
-                <div className="product">Product</div>
-                <div className="price">Price</div>
-              </div>
               <CartItem />
             </div>
             <div className="column xlarge-4 large-12 medium-12 small-12">

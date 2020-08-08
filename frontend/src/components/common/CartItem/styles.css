@@ -6,6 +6,22 @@
   overflow-x: hidden;
 }
 
+.cart-table-header {
+  display: flex;
+  flex-direction: row;
+  margin-left: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 0.01rem solid rgb(204, 204, 204);
+}
+
+.product {
+  width: 75%;
+}
+
+.price {
+  width: 25%;
+}
+
 .cart-item {
   width: 100%;
   display: flex;
