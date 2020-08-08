@@ -25,6 +25,15 @@ const CartSummary = () => {
             </div>
           ))}
         </div>
+        <div className="summary-total">
+          <div className="summary-wrapper">
+            <span className="summary-total-title">Total</span>
+            <span className="summary-total-value">
+              $ 400.00
+            </span>
+          </div>
+          <p>in 12x installments</p>
+        </div>
       </div>
     </div>
   )

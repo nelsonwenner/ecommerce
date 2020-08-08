@@ -33,6 +33,7 @@
   text-align: center;
   margin-top: 1rem;
   margin-bottom: 1.6rem;
+  color: rgb(84, 84, 84);
 }
 
 .summary-items .summary-item-title {
@@ -63,6 +64,41 @@
   display: block;
   font-size: 1.2rem;
   font-weight: 700;
+  color: rgb(149, 143, 134);
+}
+
+.summary-total {
+  margin-top: 1.2rem;
+  margin-left: 0.5rem;
+}
+
+.summary-total .summary-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.summary-total .summary-wrapper .summary-total-title {
+  width: 80%;
+  display: block;
+  font-size: 1.4rem;
+  letter-spacing: 0.1rem;
+  font-weight: 600;
+}
+
+.summary-total .summary-wrapper .summary-total-value {
+  width: 20%;
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.summary-total p {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-right: 1.7rem;
+  font-size: 1.1rem;
   color: rgb(149, 143, 134);
 }
 
