@@ -27,3 +27,12 @@
 <div align="center">
   <img alt="system-architecture" src="./screens/system-ecommerce.png" />
 </div>
+
+## :rocket: Technologies
+
+* [Docker](https://www.docker.com/)
+* [Django](https://www.djangoproject.com/)
+* [Celery](https://docs.celeryproject.org/en/latest/django/first-steps-with-django.html)
+* [Node](https://nodejs.org/en/)
+* [ReactJS](https://reactjs.org/)
+* [RabbitMQ](https://www.cloudamqp.com/)
