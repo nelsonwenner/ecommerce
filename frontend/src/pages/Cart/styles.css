@@ -1,4 +1,6 @@
 .cart-main {
+  min-height: calc(100% - 200rem);
+  height: auto;
   padding-left: 1rem;
   padding-right: 1rem;
 }
