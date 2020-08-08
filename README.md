@@ -30,18 +30,19 @@
 
 ## :rocket: Technologies
 * [Docker](https://www.docker.com/)
+* [DockerCompose](https://docs.docker.com/compose/)
 * [Django](https://www.djangoproject.com/)
 * [Celery](https://docs.celeryproject.org/en/latest/django/first-steps-with-django.html)
 * [Node](https://nodejs.org/en/)
 * [ReactJS](https://reactjs.org/)
 * [RabbitMQ](https://www.cloudamqp.com/)
 
-## :toolbox: Prerequisites
-* Docker Compose version (1.25.4)
-* Docker version (19.03.12)
-* Node version (12.18.1)
-* Npm version (6.14.5)
-* Python (3.x)
+## :electric_plug: Prerequisites
+* Docker Compose version (>= 1.25.4)
+* Docker version (>= 19.03.12)
+* Node version (>= 12.18.1)
+* Npm version (>= 6.14.5)
+* Python (>= 3.x)
 
 ## :information_source: Getting Started
 The application was built using the concepts of microservices and architected with Docker. To run, it will be necessary to run or command the docker-compose up.
