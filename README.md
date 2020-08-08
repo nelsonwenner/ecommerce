@@ -29,7 +29,6 @@
 </div>
 
 ## :rocket: Technologies
-
 * [Docker](https://www.docker.com/)
 * [Django](https://www.djangoproject.com/)
 * [Celery](https://docs.celeryproject.org/en/latest/django/first-steps-with-django.html)
@@ -43,3 +42,11 @@
 * Node version (12.18.1)
 * Npm version (6.14.5)
 * Python (3.x)
+
+## :information_source: Getting Started
+The application was built using the concepts of microservices and architected with Docker. To run, it will be necessary to run or command the docker-compose up.
+Access each microservice respectively and read **README.md** to see more details on how to run.
+
+1. [Queue rabbitMQ](https://github.com/nelsonwenner/ecommerce/tree/master/rabbitmq)
+2. [Microservice ecommerce and worker](https://github.com/nelsonwenner/ecommerce/tree/master/micro-ecommerce-api)
+3. [Frontend ecommerce](https://github.com/nelsonwenner/ecommerce/tree/master/frontend)
