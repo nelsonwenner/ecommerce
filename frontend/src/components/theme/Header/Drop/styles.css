@@ -1,0 +1,27 @@
+.drop-main {
+  width: 100%;
+  height: 4.5rem;
+  background-color: rgb(33, 33, 33);
+}
+
+.drop-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/*Media query*/
+@media only screen and (max-width:779px) { 
+   
+  .drop-wrapper {
+    flex-direction: column;
+  }
+
+  .drop-main {
+    height: 12rem;
+  }
+
+}

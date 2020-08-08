@@ -1,0 +1,37 @@
+.drop-wrapper .info-category {
+  width: 17.2rem;
+  height: 4.5rem;
+  background-color: #f5ca0d;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.drop-wrapper .info-category p {
+  position: relative;
+  font-size: 1.7rem;
+  left: 25px;
+  color: white;
+}
+
+.icon-hamburger::before {
+  font-family: "Font Awesome 5 Free";
+  cursor: pointer;
+  content: '\f0c9';
+  font-weight: 900;
+  font-size: 2.2rem;
+  position: relative;
+  left: 8px;
+  color: white;
+}
+
+/*Media query*/
+@media only screen and (max-width:779px) { 
+   
+  .drop-wrapper .info-category {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+}

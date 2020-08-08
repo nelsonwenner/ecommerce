@@ -1,0 +1,47 @@
+.cart {
+  cursor: pointer;
+}
+
+.icon-cart::before {
+  font-family: "Font Awesome 5 Free";
+  cursor: pointer;
+  content: '\f07a';
+  font-weight: 900;
+  font-size: 2.2rem;
+  color: white;
+  position: relative;
+  left: -3px;
+  top: 6px;
+}
+
+.cart .count-cart {
+  position: relative;
+  left: -8px;
+  top: -4px;
+  bottom: 9px;
+  height: 19px;
+  width: 19px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: white;
+  text-align: center;
+  font-size: 1.5rem;
+  color: rgb(84, 84, 84);
+}
+
+.cart .name {
+  position: relative;
+  left: -3px;
+  top: -5px;
+  font-weight: 600;
+  bottom: 10px;
+  color: white;
+}
+
+.cart .total {
+  position: relative;
+  left: 45px;
+  bottom: 4px;
+  font-size: 1rem;
+  color: white;
+}

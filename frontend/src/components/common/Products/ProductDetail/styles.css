@@ -1,0 +1,92 @@
+.card {
+  max-width: 30rem;
+  height: 38rem;
+  width: 100%;
+  margin: 1rem 1rem;
+  border: 1px solid #e4e3e3;
+  background: #f8f9fa;
+}
+
+.card .card-img {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1rem;
+  
+  position: relative;
+  overflow: hidden;
+}
+
+.card .card-img img {
+  width: 90%;
+  height: 31.5rem;
+  display: block;
+  outline: none;
+  transition: all 0.7s ease;
+}
+
+.card:hover .card-img img { 
+  transform: scale(1.2);
+}
+
+.card:hover .card-img {
+  opacity: 0.3;
+  background-size:120%;
+}
+
+.card-title {
+  margin-top: 0.5rem;
+  margin-left: 1.2rem;
+  margin-bottom: 0.4rem;
+}
+
+.card-title p { 
+  font-size: 1.8rem;
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dolar-icon::before {
+  font-family: "Font Awesome 5 Free";
+  cursor: pointer;
+  content: '\f155';
+  font-weight: 600;
+  margin-left: 1.2rem;
+  margin-right: 0.7rem;
+  color: rgba(33, 189, 41, 0.904);
+}
+
+.card:hover .overlay {
+  opacity: 1;
+  transition: all 0.8s ease;
+}
+
+.overlay {
+  position: relative;
+  bottom: 23rem;
+  opacity: 0;
+  text-align: center;
+  transition: .5s ease;
+  transition: all 0.8s ease;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.card .overlay .card-button {
+  width: 160px;
+  line-height: 38px;
+  background-color: black;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 50px;
+  transition: all 0.5s ease;
+}
+
+.card .overlay .card-button:hover {
+  color: #fff;
+  background-color: #57b846;
+}

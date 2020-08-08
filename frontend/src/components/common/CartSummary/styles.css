@@ -1,0 +1,147 @@
+.cart-summary {
+  width: 100%;
+  margin-top: 3rem;
+  margin-left: 2rem;
+}
+
+.summary-wrapper {
+  max-height: 13rem;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.cart-summary-item {
+  max-width: 30rem;
+  width: 100%;
+  height: 32.3rem;
+  padding-top: 0.002rem;
+  background-color: #fafafa;
+}
+
+.summary-items {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.cart-summary .cart-summary-item .summary-title {
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 1.6rem;
+  color: rgb(84, 84, 84);
+}
+
+.summary-items .summary-item-title {
+  width: 80%;
+  font-size: 1.3rem;
+  line-height: 1.2;
+  margin-left: 1.2rem;
+}
+
+.summary-items .summary-item-title p {
+  letter-spacing: .1rem;
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: rgb(149, 143, 134);
+}
+
+.summary-items .summary-item-title p span {
+  display: inline-block;
+  margin-left: 5px;
+  font-size: .76923em;
+  font-weight: 400;
+}
+
+.summary-item-price {
+  width: 20%;
+
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: rgb(149, 143, 134);
+}
+
+.summary-total {
+  margin-top: 1.6rem;
+  margin-left: 0.5rem;
+}
+
+.summary-total .summary-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.summary-total .summary-wrapper .summary-total-title {
+  width: 80%;
+  display: block;
+  font-size: 1.4rem;
+  letter-spacing: 0.1rem;
+  font-weight: 600;
+}
+
+.summary-total .summary-wrapper .summary-total-value {
+  width: 20%;
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.summary-total p {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-right: 1.7rem;
+  font-size: 1.1rem;
+  color: rgb(149, 143, 134);
+}
+
+.cart-summary .cart-summary-item .summary-line {
+  display: block;
+  margin-top: 1rem;
+  border-bottom: 0.01rem solid rgb(204, 204, 204);
+}
+
+.cart-summary-item .btn {
+  margin-top: 2.2rem;
+  text-align: center;
+  padding: 1.5rem;
+  background-color: #ff5722;
+}
+
+.cart-summary-item .btn:hover {
+  background-color: #ff3c00;
+}
+
+/* Overwrite the default to keep the scrollbar always visible */
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0,0,0,.5);
+  -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+
+/*Media query*/
+@media only screen and (max-width:1200px) { 
+   
+  .cart-summary {
+    margin: 0;
+    margin-top: 4rem;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+}

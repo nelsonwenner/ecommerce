@@ -1,0 +1,25 @@
+.section-info-all-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.mt-30 {
+  margin-top: 3rem;
+}
+.section-title {
+  font-size: 2.2rem;
+  font-weight: 600;
+  border-left: 5px solid #f5ca0d;
+  padding-left: 0.5rem;
+}
+
+.section-button span.btn {
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  text-transform: capitalize;
+}

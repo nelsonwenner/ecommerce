@@ -1,7 +1,10 @@
-<h1 align="center">Ecommerce - API REST</h1>
+<h1 align="center">
+  System E-commerce
+</h1>
 
 <p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/nelsonwenner/django-ecommerce-api?color=%2304D361">
+  
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/nelsonwenner/ecommerce?color=%2304D361">
 
   <a href="https://github.com/nelsonwenner">
     <img alt="Made by @nelsonwenner" src="https://img.shields.io/badge/made%20by-%40nelsonwenner-%2304D361">
@@ -9,68 +12,45 @@
 
   <img alt="License" src="https://img.shields.io/badge/license-MIT-%2304D361">
 
-  <a href="https://github.com/nelsonwenner/ecoleta/stargazers">
-    <img alt="Stargazers" src="https://img.shields.io/github/stars/nelsonwenner/django-ecommerce-api?style=social">
+  <a href="https://github.com/nelsonwenner/ecommerce/stargazers">
+    <img alt="Stargazers" src="https://img.shields.io/github/stars/nelsonwenner/ecommerce?style=social">
   </a>
 </p>
 
+<p align="center">
+  <a href="#technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#getting-started">Getting Started</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#license">License</a>
+</p>
+
+## :telescope: System architecture
 <div align="center">
-  <img alt="dashboard" src="./screens/dashboard.png" />
+  <img alt="system-architecture" src="./screens/system-ecommerce.png" />
 </div>
 
 ## :rocket: Technologies
-
-* [Django rest framework](https://www.django-rest-framework.org/)
+* [Docker](https://www.docker.com/)
+* [DockerCompose](https://docs.docker.com/compose/)
 * [Django](https://www.djangoproject.com/)
+* [Celery](https://docs.celeryproject.org/en/latest/django/first-steps-with-django.html)
+* [Node](https://nodejs.org/en/)
+* [ReactJS](https://reactjs.org/)
+* [RabbitMQ](https://www.cloudamqp.com/)
 
 ## :electric_plug: Prerequisites
+* Docker Compose version (>= 1.25.4)
+* Docker version (>= 19.03.12)
+* Node version (>= 12.18.1)
+* Npm version (>= 6.14.5)
+* Python (>= 3.x)
 
-- [Python3 (>= 3.x)](https://www.python.org/downloads/)
+## :information_source: Getting Started
+The application was built using the concepts of microservices and architected with Docker. To run, it will be necessary to run or command the docker-compose up.
+Access each microservice respectively and read **README.md** to see more details on how to run.
 
-## :closed_lock_with_key: Getting Started
-
-1. Fork this repository and clone it on your machine.
-2. Change the directory to `django-ecommerce-api` where you cloned it.
-
-```shell
-/* Install Virtualenv */
-$ pip install virtualenv
-
-/* Creating the project env */
-$ virtualenv env
-
-/* Using the project env */
-$ source env/bin/activate
-
-/* Installing dependencies */
-$ pip install -r requirements.txt
-
-/* Run the migrations */
-$ python3 manage.py migrate
-
-/* Run the fake data */
-$ python3 manage.py loaddata fake_data
-
-/* Run the initial data */
-$ python3 manage.py loaddata initial_data
-
-/* Run server /*
-$ python3 manage.py runserver
-```
-
-## :telescope: Diagram Database
-
-<p align="center">
-  <img alt="diagram" src="./screens/diagram.png" />
-</p>
-
-## :shield: Admin Access dashboard
-
-```
-Email: admin@user.com
-Password: 123456
-```
-  * Open the host [localhost:8000/admin](http://localhost:8000/admin) 
+1. [Queue rabbitMQ](https://github.com/nelsonwenner/ecommerce/tree/master/rabbitmq)
+2. [Microservice ecommerce and worker](https://github.com/nelsonwenner/ecommerce/tree/master/micro-ecommerce-api)
+3. [Frontend ecommerce](https://github.com/nelsonwenner/ecommerce/tree/master/frontend)
 
 ## :memo: License
 This project is under the MIT license. See the [LICENSE](LICENSE.md) for more information.

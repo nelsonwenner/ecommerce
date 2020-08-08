@@ -1,0 +1,27 @@
+.cart-main {
+  min-height: calc(100% - 200rem);
+  height: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.path-page {
+  font-size: 1.6rem;
+  margin-top: 3rem;
+  color: rgb(149, 143, 134);
+}
+
+.mt-30 {
+  margin-top: 3rem;
+}
+
+.cart-title {
+  font-size: 3rem;
+  margin-top: 2rem;
+  color: rgb(149, 143, 134);
+}
+
+.order-summary {
+  margin-top: 2rem;
+  margin-left: 1rem;
+}
