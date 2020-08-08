@@ -50,3 +50,8 @@ Access each microservice respectively and read **README.md** to see more details
 1. [Queue rabbitMQ](https://github.com/nelsonwenner/ecommerce/tree/master/rabbitmq)
 2. [Microservice ecommerce and worker](https://github.com/nelsonwenner/ecommerce/tree/master/micro-ecommerce-api)
 3. [Frontend ecommerce](https://github.com/nelsonwenner/ecommerce/tree/master/frontend)
+
+## :memo: License
+This project is under the MIT license. See the [LICENSE](LICENSE.md) for more information.
+
+---
