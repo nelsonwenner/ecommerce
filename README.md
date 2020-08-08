@@ -36,3 +36,10 @@
 * [Node](https://nodejs.org/en/)
 * [ReactJS](https://reactjs.org/)
 * [RabbitMQ](https://www.cloudamqp.com/)
+
+## :toolbox: Prerequisites
+* Docker Compose version (1.25.4)
+* Docker version (19.03.12)
+* Node version (12.18.1)
+* Npm version (6.14.5)
+* Python (3.x)
