@@ -22,3 +22,8 @@
   <a href="#getting-started">Getting Started</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#license">License</a>
 </p>
+
+## :telescope: System architecture
+<div align="center">
+  <img alt="system-architecture" src="./screens/system-ecommerce.png" />
+</div>
