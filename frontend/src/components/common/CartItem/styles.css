@@ -43,6 +43,7 @@
   position: relative;
   width: 10%;
   display: block;
+  cursor: pointer;
 }
 
 /*Media query*/
@@ -64,6 +65,4 @@
     left: 4rem;
 
   }
-
-  
 }

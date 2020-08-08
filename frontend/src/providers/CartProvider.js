@@ -29,8 +29,19 @@ export const CartProvider = ({ children }) => {
     }
   }
 
+  const removeProduct = (product) => {
+    const filteredProducts = cart.filter(item => item.product !== product.product);
+
+    if (product.quantity > 1) {
+      product.quantity -= 1;
+      setCart([...filteredProducts, product]);
+    } else {
+      setCart([...filteredProducts]);
+    }
+  }
+
   return (
-    <CartContext.Provider value={ {cart, addProduct} } >
+    <CartContext.Provider value={ {cart, addProduct, removeProduct} } >
       { children }
     </CartContext.Provider>
   )

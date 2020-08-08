@@ -4,7 +4,7 @@ import './styles.css';
 import { useCart } from '../../../providers/CartProvider';
 
 const CartItem = () => {
-  const { cart } = useCart();
+  const { cart, removeProduct } = useCart();
 
   return (
     <div className="cart-wrapper">
@@ -15,7 +15,7 @@ const CartItem = () => {
             <h4>{ product.title }</h4>
           </div>
           <span>$ { product.price }</span>
-          <span className="cart-item-remove">X</span>
+          <span className="cart-item-remove" onClick={ () => removeProduct(product) }>X</span>
         </div>
       ))}
     </div>
