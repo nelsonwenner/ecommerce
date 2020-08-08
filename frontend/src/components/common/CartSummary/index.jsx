@@ -29,11 +29,13 @@ const CartSummary = () => {
           <div className="summary-wrapper">
             <span className="summary-total-title">Total</span>
             <span className="summary-total-value">
-              $ 400.00
+              $ { cart.reduce((acc, current) => acc + (current.price * current.quantity), 0) },00
             </span>
           </div>
           <p>in 12x installments</p>
         </div>
+        <span className="summary-line"></span>
+        <div className="btn btn-primary btn-black">Checkout</div>
       </div>
     </div>
   )
