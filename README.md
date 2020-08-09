@@ -23,6 +23,10 @@
   <a href="#license">License</a>
 </p>
 
+## :warning: About the project
+
+#### Warning, this project is an example where it can be used as a basis for building a more complex system.
+
 ## :telescope: System architecture
 <div align="center">
   <img alt="system-architecture" src="./screens/system-ecommerce.png" />
