@@ -1,7 +1,10 @@
+
 .progress-bar {
   width: 100%;
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .progress-bar li .circle {
@@ -55,15 +58,35 @@
 .progress-bar li {  
   width: 25%;
   position: relative;
-  display: inline-block;
+  display: block;
   text-align: center;
 }
 
 .progress-bar li h4 {
   margin-top: 1.2rem;
-}
-
-.progress-bar li h4 {
   font-size: 1.4rem;
   color: rgb(149, 143, 134);
+}
+
+/*Media query*/
+@media only screen and (max-width:377px) { 
+
+  .progress-bar {
+    flex-direction: column;
+  }
+
+  .progress-bar li {  
+    height: 10rem;
+  }
+
+  .progress-bar li::before {  
+    height: 100%;
+    width: 3px;
+  }
+
+  .progress-bar li h4 {
+    position: relative;
+    bottom: 4rem;
+    right: 8.5rem;
+  }
 }
