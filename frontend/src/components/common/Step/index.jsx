@@ -1,17 +1,31 @@
-import React from 'react';
+import React,{ useEffect } from 'react';
 import './styles.css';
 
-import { Link } from 'react-router-dom';
+import { useCart } from '../../../providers/CartProvider';
+import { Link, useHistory } from 'react-router-dom';
 
 const Step = () => {
+  const history = useHistory();
+  const { cart } = useCart();
+
+  useEffect(() => {
+
+    if (!cart.length) {
+      history.push('/');
+    }
+    
+  })
+
   return (
     <div className="step-main">
       <ul className="progress-bar">
-        <li className="active">
+        <li className={ `${cart.length ? 'active' : ''}` }>
           <span className="circle">
             <span className="icon-v"></span>
           </span>
-          <h4>My Cart</h4>
+          <Link to={ '/cart' }>
+            <h4>My Cart</h4>
+          </Link>
         </li>
         <li>
           <span className="circle">

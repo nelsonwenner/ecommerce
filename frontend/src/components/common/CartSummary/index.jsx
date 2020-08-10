@@ -2,6 +2,7 @@ import React from 'react';
 import './styles.css';
 
 import { useCart } from '../../../providers/CartProvider';
+import { Link } from 'react-router-dom';
 
 const CartSummary = () => {
   const { cart } = useCart();
@@ -35,7 +36,10 @@ const CartSummary = () => {
           <p>in 12x installments</p>
         </div>
         <span className="summary-line"></span>
-        <div className="btn btn-primary btn-black">Checkout</div>
+        
+        <Link to={ '/checkout' }>
+          <div className="btn btn-primary btn-black">Checkout</div>
+        </Link>
       </div>
     </div>
   )
