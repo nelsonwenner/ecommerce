@@ -1,0 +1,69 @@
+.progress-bar {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.progress-bar li .circle {
+  position: relative;
+  height: 3.2rem;
+  width: 3.2rem;
+  line-height: 3rem;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 2px solid #e2e2e2;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.progress-bar .active .circle {
+  background-color: #ec1839;
+  border: #ec1839;
+}
+
+.progress-bar .active::before {
+  background-color: #ec1839;
+}
+
+.progress-bar li .circle .icon-v::before {  
+  content: '\f00c';
+  font-family: "Font Awesome 5 Free";
+  font-size: 1.8rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: #e2e2e2;
+}
+
+.progress-bar li::before {  
+  content: '';
+  height: 3px;
+  width: 100%;
+  position: absolute;
+  top: 1.5rem;
+  background-color: #e2e2e2;
+}
+
+.progress-bar li:last-child::before {  
+  content: none;
+}
+
+.progress-bar li {  
+  width: 25%;
+  position: relative;
+  display: inline-block;
+  text-align: center;
+}
+
+.progress-bar li h4 {
+  margin-top: 1.2rem;
+}
+
+.progress-bar li h4 {
+  font-size: 1.4rem;
+  color: rgb(149, 143, 134);
+}

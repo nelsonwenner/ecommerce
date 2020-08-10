@@ -2,11 +2,18 @@ import React from 'react';
 import './styles.css';
 
 import Layout from '../../components/common/Layout';
+import Step from '../../components/common/Step';
 
 const Checkout = () => {
   return (
     <Layout>
-      <h4>Checkout</h4>
+      <div className="checkout-main">
+        <div className="container">
+          <div className="step-wrapper">
+            <Step />
+          </div>
+        </div>
+      </div>
     </Layout>
   )
 }
