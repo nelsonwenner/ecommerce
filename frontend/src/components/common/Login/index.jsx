@@ -1,12 +1,42 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import './styles.css';
 
-import Modal from 'react-modal';
+import { useAuth } from '../../../providers/AuthProvider';
 import { CustomInput } from '../CustomInput';
+import Modal from 'react-modal';
 
 Modal.setAppElement('body');
 
 const LoginModal = ({ openModal, closeModal }) => {
+  const { signIn } = useAuth();
+  
+  const [data, setData] = useState({
+    email: '',
+    password: '',
+    error: null
+  });
+
+  const handleChange = (event) => {
+    event.preventDefault();
+    setData({...data, [event.target.name]: event.target.value});
+  }
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    
+    const { email, password } = data;
+    
+    if (!email || !password) {
+      setData(() => ({error: 'Fill in all the fields'}));
+    } else {
+      const error = await signIn({email, password});
+      
+      if (error) {
+        setData(() => ({error: error}));
+      }
+    }
+  }
+  
   return (
     <Modal
       isOpen={ openModal }
@@ -15,7 +45,7 @@ const LoginModal = ({ openModal, closeModal }) => {
       overlayClassName={"ReactModal__Overlay_Login"}
       contentLabel="Modal"
     > 
-      <form method="post" className="form-login card-hover">
+      <form onSubmit={ onSubmit } method="post" className="form-login card-hover">
         <h2 className="login-welcome">Welcome</h2>
         <div className="division">
           <div className="line"></div>
@@ -30,6 +60,7 @@ const LoginModal = ({ openModal, closeModal }) => {
             icon={ 'email' }
             name={ 'email' }
             placeholder={ 'Email' }
+            onChange={ handleChange }
           />
 
           <CustomInput 
@@ -38,6 +69,7 @@ const LoginModal = ({ openModal, closeModal }) => {
             icon={ 'password' }
             name={ 'password' }
             placeholder={ 'Password' }
+            onChange={ handleChange }
           />
           
           <button className="btn btn-rounded black-btn btn-outlined">Login</button>

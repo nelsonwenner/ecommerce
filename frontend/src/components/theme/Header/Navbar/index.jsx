@@ -14,7 +14,7 @@ const Navbar = () => {
   const closeModal = () => {
     setModalLogin(false);
   }
-
+  
   return (
     <div className="navbar-main">
       <div className="container">
