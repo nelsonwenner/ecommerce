@@ -7,10 +7,17 @@ const usePersistedAuth = (key) => {
     if (storageValue) {
       return JSON.parse(storageValue);
     } else {
-      return {};
+      return {
+        auth: false, 
+        token: null,
+        id: null, 
+        name: '', 
+        email: '', 
+        address: {}
+      };
     } 
   });
-
+  
   useEffect(() => {
     localStorage.setItem(key, JSON.stringify(auth));
   }, [key, auth]);

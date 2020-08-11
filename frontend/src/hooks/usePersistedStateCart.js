@@ -10,7 +10,7 @@ const usePersistedStateCart = (key) => {
       return [];
     } 
   });
-
+  
   useEffect(() => {
     localStorage.setItem(key, JSON.stringify(cart));
   }, [key, cart]);
