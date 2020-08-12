@@ -37,6 +37,12 @@
   color: #6C6C80;
 }
 
+.form-register .field-group .field input.disabled {
+  pointer-events:none;
+  color:#AAA;
+  background:#F5F5F5;
+}
+
 .form-register .field-group .field input::placeholder {
   color: #A0A0B2;
 }
@@ -67,6 +73,38 @@
   margin-top: 2rem;
   text-align: center;
   background-color: #ff5722;
+}
+
+.field-select {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2.4rem;
+}
+
+.field-select select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+  background: #fafafa;
+  border-radius: 8px;
+  border: 0;
+  padding: 1.6rem 2.4rem;
+  font-size: 1.6rem;
+  color: #6C6C80;
+}
+
+.field-select label {
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
+  color: rgb(84, 84, 84);
+}
+
+.line-address {
+  border-bottom: 0.01rem solid rgb(204, 204, 204);
+  margin-bottom: 2.5rem;
 }
 
 /*Media query*/
