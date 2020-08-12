@@ -1,13 +1,13 @@
 import React, { createContext, useContext } from 'react';
 
-import useProviderAuth from '../hooks/usePersistedAuth';
+import usePersistedAuth from '../hooks/usePersistedAuth';
 import api from '../services/Api';
 
 const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useProviderAuth('@Auth');
+  const [auth, setAuth] = usePersistedAuth('@Auth');
 
   const signIn = async (data) => {
     try { 
@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       const dataSerialized = {
-        auth: true,
+        authorized: true,
         token: res.data.access,
         id: res.data.id,
         name: res.data.username,

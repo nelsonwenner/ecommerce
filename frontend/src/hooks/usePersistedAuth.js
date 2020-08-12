@@ -8,7 +8,7 @@ const usePersistedAuth = (key) => {
       return JSON.parse(storageValue);
     } else {
       return {
-        auth: false, 
+        authorized: false, 
         token: null,
         id: null, 
         name: '', 
