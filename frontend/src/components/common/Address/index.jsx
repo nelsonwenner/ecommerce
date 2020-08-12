@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles.css';
 
+import { useAuth } from '../../../providers/AuthProvider';
 import Checkout from '../../../pages/Checkout';
+import ApiAuth from '../../../services/ApiAuth';
 
 const Address = () => {
+  const [address, setAddress] = useState([]);
+  const { auth } = useAuth();
+  
+  useEffect(() => {
+    //ApiAuth(auth.token).post(`/address/${}`)
+  }, []);
+
   return (
     <Checkout>
       <div className="address-main">

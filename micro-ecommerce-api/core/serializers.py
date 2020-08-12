@@ -30,7 +30,7 @@ class ClientSerializer(serializers.ModelSerializer):
 
 class AddressSerializer(serializers.ModelSerializer):
     customer = serializers.CharField(write_only=True)
-
+    
     class Meta:
         model = Address
         fields = ['id', 'customer', 'street', 'suite', 'city', 'zipcode']
@@ -40,7 +40,7 @@ class AddressSerializer(serializers.ModelSerializer):
         user_id = validated_data.pop('customer')
         customer = Customer.objects.get(id=user_id)
         return Address.objects.create(customer=customer, **validated_data)
-    
+
 class StatusSerializer(serializers.ModelSerializer):
 
     class Meta:

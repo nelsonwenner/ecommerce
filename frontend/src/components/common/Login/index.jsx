@@ -20,7 +20,7 @@ const LoginModal = ({ openModal, closeModal }) => {
     event.preventDefault();
     setData({...data, [event.target.name]: event.target.value});
   }
-
+  
   const onSubmit = async (event) => {
     event.preventDefault();
     

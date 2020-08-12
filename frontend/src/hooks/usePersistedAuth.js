@@ -13,7 +13,7 @@ const usePersistedAuth = (key) => {
         id: null, 
         name: '', 
         email: '', 
-        address: {}
+        address: []
       };
     } 
   });
