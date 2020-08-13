@@ -41,7 +41,7 @@ const Step = () => {
             
             <h4>Identification</h4>
           </li>
-          <li className={ `${ JSON.parse(localStorage.getItem('address')) ? 'active' : ''}` }>
+          <li className={ `${ JSON.parse(localStorage.getItem('address')) && auth.authorized ? 'active' : ''}` }>
             <span className="circle">
               <span className="icon-v"></span>
             </span>
