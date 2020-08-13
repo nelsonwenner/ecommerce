@@ -9,7 +9,7 @@ const Step = () => {
   const history = useHistory();
   const { auth } = useAuth();
   const { cart } = useCart();
-
+  
   useEffect(() => {
 
     if (!cart.length) {
@@ -19,7 +19,7 @@ const Step = () => {
     if (auth.authorized) {
       history.push('/checkout/address');
     }
-
+    
   }, [auth]);
   
   return (
