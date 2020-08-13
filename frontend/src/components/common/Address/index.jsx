@@ -1,14 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import './styles.css';
 
+import usePersistedState from '../../../hooks/usePersistedState';
 import { useAuth } from '../../../providers/AuthProvider';
+import { useHistory } from 'react-router-dom';
 import Checkout from '../../../pages/Checkout';
 import ApiAuth from '../../../services/ApiAuth';
 
 const Address = () => {
+  const [statePersisted, setStatePersisted] = usePersistedState('address', null);
   const [selectedAddress, setSelectedAddress] = useState();
   const [address, setAddress] = useState([]);
+  const history = useHistory();
   const { auth } = useAuth();
+
+  const [formData, setFormData] = useState({
+    street: '',
+    suite: '',
+    city: '',
+    zipcode: '',
+    error: null
+  });
   
   useEffect(() => {
     ApiAuth(auth.token).get(`/address`)
@@ -20,6 +32,32 @@ const Address = () => {
   const handlerSelectAddress = (event) => {
     const currentAddresSelected = JSON.parse(event.target.value);
     setSelectedAddress(currentAddresSelected);
+  }
+
+  const handlerChange = (event) => {
+    setFormData({...formData, [event.target.name]: event.target.value});
+  }
+
+  const handlerClicked = async (event) => {
+    event.preventDefault();
+    
+    if (selectedAddress) {
+      setStatePersisted(selectedAddress.id);
+      //history.push('/checkout/payment');
+    }
+    
+    const { street, suite, city, zipcode } = formData;
+
+    if (!street | !suite | !city | !zipcode) {
+      setFormData({error: 'Fill in all the fields'});
+    } else {
+      ApiAuth(auth.token).post('/address', 
+      {customer: auth.id, street, suite, city, zipcode})
+      .then(({ data }) => {
+        setStatePersisted(data.id);
+        //history.push('/checkout/payment');
+      });
+    }
   }
   
   return (
@@ -57,6 +95,7 @@ const Address = () => {
                     placeholder={ selectedAddress ? selectedAddress.street : 'Street' }
                     id="street"
                     className={ selectedAddress ? 'disabled' : '' }
+                    onChange={ handlerChange }
                   />
                 </div>
                 
@@ -64,9 +103,10 @@ const Address = () => {
                   <label htmlFor="zipcode">Zipcode</label>
                   <input 
                     type="text"
-                    name="zipecode"
+                    name="zipcode"
                     placeholder={ selectedAddress ? selectedAddress.zipcode : 'Zipcode' }
                     className={ selectedAddress ? 'disabled' : '' }
+                    onChange={ handlerChange }
                   />
                 </div>
               </div>
@@ -79,6 +119,7 @@ const Address = () => {
                     name="city"
                     placeholder={ selectedAddress ? selectedAddress.city : 'City' }
                     className={ selectedAddress ? 'disabled' : '' }
+                    onChange={ handlerChange }
                   />
                 </div>
 
@@ -89,10 +130,11 @@ const Address = () => {
                     name="suite"
                     placeholder={ selectedAddress ? selectedAddress.suite : 'Suite' }
                     className={ selectedAddress ? 'disabled' : '' }
+                    onChange={ handlerChange }
                   />
                 </div>
               </div>
-              <div className="btn btn-primary">Next</div>
+              <div className="btn btn-primary" onClick={ handlerClicked }>Next</div>
             </form>
           </div>
         </div>

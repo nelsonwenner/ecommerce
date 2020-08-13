@@ -1,13 +1,20 @@
 import React, { createContext, useContext } from 'react';
 
-import usePersistedAuth from '../hooks/usePersistedAuth';
+import usePersistedState from '../hooks/usePersistedState';
 import api from '../services/Api';
 
 const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = usePersistedAuth('@Auth');
+  const [auth, setAuth] = usePersistedState('@Auth', {
+    authorized: false, 
+    token: null,
+    id: null, 
+    name: '', 
+    email: '', 
+    address: []
+  });
 
   const signIn = async (data) => {
     try { 

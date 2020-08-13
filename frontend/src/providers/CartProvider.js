@@ -1,13 +1,13 @@
 import React, { createContext, useContext } from 'react';
 
-import usePersistedStateCart from '../hooks/usePersistedStateCart';
+import usePersistedState from '../hooks/usePersistedState';
 
 const CartContext = createContext();
 export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = usePersistedStateCart('cart');
-
+  const [cart, setCart] = usePersistedState('cart', []);
+  
   const addProduct = (product) => {
     
     const productSerialized = {
