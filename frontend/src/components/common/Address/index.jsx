@@ -23,11 +23,12 @@ const Address = () => {
   });
   
   useEffect(() => {
+    
     ApiAuth(auth.token).get(`/address`)
     .then(({ data }) => {
       setAddress(data);
     })
-  }, []);
+  }, [auth]);
   
   const handlerSelectAddress = (event) => {
     const currentAddresSelected = JSON.parse(event.target.value);
