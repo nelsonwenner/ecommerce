@@ -2,14 +2,13 @@ import React,{ useState } from 'react';
 import './styles.css';
 
 import { useAuth } from '../../../providers/AuthProvider';
-import { useHistory, Redirect } from 'react-router-dom';
+import redirect from '../../../routes/redirect';
 import { CustomInput } from '../CustomInput';
 import Modal from 'react-modal';
 
 Modal.setAppElement('body');
 
 const LoginModal = ({ openModal, closeModal, path }) => {
-  const history = useHistory();
   const { signIn } = useAuth();
   
   const [data, setData] = useState({
@@ -37,7 +36,7 @@ const LoginModal = ({ openModal, closeModal, path }) => {
         setData(() => ({error: error}));
       }
 
-      history.push(path);
+      redirect(path);
     }
   }
   

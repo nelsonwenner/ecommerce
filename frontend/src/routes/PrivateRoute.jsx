@@ -1,15 +1,16 @@
 import React from 'react';
 
 import { Route, Redirect } from 'react-router-dom';
+import { useAuth } from '../providers/AuthProvider';
 
 const PrivateRoute = ({ component: Component, ...otherProps }) => {
-  const isAuth = JSON.parse(localStorage.getItem('@Auth')).authorized;
+  const { isAuth } = useAuth();
 
   return (
     <Route 
       { ...otherProps }
       render={props => (
-        isAuth
+        isAuth()
         ?
         <Component { ...props } />
         :

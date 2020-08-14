@@ -28,7 +28,7 @@ const Address = () => {
     .then(({ data }) => {
       setAddress(data);
     })
-  }, [auth]);
+  }, []);
   
   const handlerSelectAddress = (event) => {
     const currentAddresSelected = JSON.parse(event.target.value);
