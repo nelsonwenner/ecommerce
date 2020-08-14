@@ -3,6 +3,7 @@ import './styles.css';
 
 import logo from '../../../../assets/logo-nav.png';
 import LoginModal from '../../../common/Login';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [modalLogin, setModalLogin] = useState(false);
@@ -19,9 +20,9 @@ const Navbar = () => {
     <div className="navbar-main">
       <div className="container">
         <div className="navbar">
-          <a href="/" className="logo">
+          <Link to={ '/' } className="logo">
             <img alt="logo" src={ logo } />
-          </a>
+          </Link>
           <div className="icon-user" onClick={ openModal }>
             <span>Login</span>
           </div>
