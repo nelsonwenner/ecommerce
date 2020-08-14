@@ -7,7 +7,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 const Step = () => {
   const history = useHistory();
-  const { auth } = useAuth();
+  const { isAuth } = useAuth();
   const { cart } = useCart();
   
   useEffect(() => {
@@ -16,11 +16,11 @@ const Step = () => {
       history.push('/');
     }
     
-    if (auth.authorized) {
+    if (isAuth()) {
       history.push('/checkout/address');
     }
     
-  }, [auth]);
+  }, []);
   
   return (
     <div className="step-main">
@@ -34,14 +34,14 @@ const Step = () => {
               <h4>My Cart</h4>
             </Link>
           </li>
-          <li className={ `${auth.authorized ? 'active' : ''}` }>
+          <li className={ `${ isAuth() ? 'active' : ''}` }>
             <span className="circle">
               <span className="icon-v"></span>
             </span>
             
             <h4>Identification</h4>
           </li>
-          <li className={ `${ JSON.parse(localStorage.getItem('address')) && auth.authorized ? 'active' : ''}` }>
+          <li className={ `${ JSON.parse(localStorage.getItem('address')) && isAuth() ? 'active' : ''}` }>
             <span className="circle">
               <span className="icon-v"></span>
             </span>

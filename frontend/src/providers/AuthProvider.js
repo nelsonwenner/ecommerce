@@ -7,15 +7,10 @@ const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = usePersistedState('@Auth', {
-    authorized: false, 
-    token: null,
-    id: null, 
-    name: '', 
-    email: '', 
-    address: []
-  });
+  const [auth, setAuth] = usePersistedState('@Auth', {});
 
+  const isAuth = () => auth.authorized;
+  
   const signIn = async (data) => {
     try { 
       const res = await api.post('/api-token', data);
@@ -43,7 +38,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={ {auth, signIn} }>
+    <AuthContext.Provider value={ {auth, signIn , isAuth} }>
       { children }
     </AuthContext.Provider>
   )
