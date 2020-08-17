@@ -20,6 +20,10 @@ const Step = () => {
       history.push('/checkout/address');
     }
     
+    if (JSON.parse(localStorage.getItem('address')) && isAuth()) {
+      history.push('/checkout/payment');
+    }
+    
   }, []);
   
   return (

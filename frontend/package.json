@@ -10,6 +10,7 @@
     "rainbowed": "^1.10.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-hook-form": "^6.4.0",
     "react-modal": "^3.11.2",
     "react-responsive-carousel": "^3.2.9",
     "react-router-dom": "^5.2.0",

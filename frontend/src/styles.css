@@ -37,9 +37,35 @@ li {
   list-style: none;
 }
 
+button {
+  background-color: unset;
+  border: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none
+}
+
+fieldset {
+  margin-top: 6.4rem;
+  min-inline-size: auto;
+  border: 0;
+}
+
 button:focus,
 input:focus,
 select:focus,
 textarea:focus {
   outline: none
+}
+
+/* Effects */
+.btn-effect {
+  background-color: #ff5722;
+  transition: all .5s;
+}
+
+.btn-effect:hover {
+  background-color: #ff3c00;
+  transition: all .5s;
 }

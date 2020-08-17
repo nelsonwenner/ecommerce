@@ -39,12 +39,12 @@ const Address = () => {
     setFormData({...formData, [event.target.name]: event.target.value});
   }
   
-  const handlerClicked = async (event) => {
+  const handlerSubmit = async (event) => {
     event.preventDefault();
     
     if (selectedAddress) {
       setStatePersisted(selectedAddress.id);
-      //history.push('/checkout/payment');
+      history.push('/checkout/payment');
     }
     
     const { street, suite, city, zipcode } = formData;
@@ -66,7 +66,7 @@ const Address = () => {
       <div className="address-main">
         <div className="container">
           <div className="register">
-            <form className="form-register">
+            <form onSubmit={ handlerSubmit } className="form-register">
               <h2>Register Address</h2>
 
               <div className="field-select">
@@ -135,7 +135,7 @@ const Address = () => {
                   />
                 </div>
               </div>
-              <div className="btn btn-primary" onClick={ handlerClicked }>Next</div>
+              <div className="btn btn-primary btn-effect">Next</div>
             </form>
           </div>
         </div>
