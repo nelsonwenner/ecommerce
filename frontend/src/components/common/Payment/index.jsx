@@ -14,10 +14,9 @@ import { useForm } from "react-hook-form";
 const Payment = () => {
   const [paymentMethod, setPaymentMethod] = useState([]);
   const { register, handleSubmit, errors, watch } = useForm({});
-  const { cart } = useCart();
+  const { cart, getCartTotal } = useCart();
   const { auth } = useAuth();
-  const cartTotal = cart.reduce((acc, current) => acc + (current.price * current.quantity), 0);
-
+  
   useEffect(() => {
     ApiAuth(auth.token).get('/paymentmethods')
     .then(({ data }) => {
@@ -92,7 +91,7 @@ const Payment = () => {
                       <option value="0">Select Installments</option>
                       
                       {Array.from(Array(12).keys()).map(i => (
-                        <option key={i} value={i+1}>{i+1} x {(cartTotal/(i+1)).toFixed(2)}</option>
+                        <option key={i} value={i+1}>{i+1} x {(getCartTotal()/(i+1)).toFixed(2)}</option>
                       ))}
                       </select>
                     </div>

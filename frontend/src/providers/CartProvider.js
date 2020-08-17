@@ -8,6 +8,8 @@ export const useCart = () => useContext(CartContext);
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = usePersistedState('cart', []);
   
+  const getCartTotal = () => (cart.reduce((acc, current) => acc + (current.price * current.quantity), 0)).toFixed(2);
+
   const addProduct = (product) => {
     
     const productSerialized = {
@@ -41,7 +43,7 @@ export const CartProvider = ({ children }) => {
   }
 
   return (
-    <CartContext.Provider value={ {cart, addProduct, removeProduct} } >
+    <CartContext.Provider value={ {cart, getCartTotal, addProduct, removeProduct} } >
       { children }
     </CartContext.Provider>
   )
