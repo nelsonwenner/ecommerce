@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 const Payment = () => {
   const [paymentMethod, setPaymentMethod] = useState([]);
   const { register, handleSubmit, errors, watch } = useForm({});
-  const { cart, getCartTotal } = useCart();
+  const { cart, getCartTotal, getProductQuantity } = useCart();
   const { auth } = useAuth();
   
   useEffect(() => {
@@ -108,7 +108,20 @@ const Payment = () => {
           </div>
           <div className="column xlarge-4 large-12 medium-12 small-12">
             <div className="payment-summary">
-
+              <div className="payment-detail">
+                <h4>Detail Payment</h4>
+                
+                <div className="list-info">
+                  <p>{ getProductQuantity() } products</p>
+                  <p>$ { getCartTotal() } </p>
+                </div>
+                
+                <div className="list-info-total">
+                  <p>Total</p>
+                  <p>$ { getCartTotal() } </p>
+                  <span>in 12x without interest</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

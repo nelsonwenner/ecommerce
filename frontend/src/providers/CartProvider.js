@@ -10,6 +10,8 @@ export const CartProvider = ({ children }) => {
   
   const getCartTotal = () => (cart.reduce((acc, current) => acc + (current.price * current.quantity), 0)).toFixed(2);
 
+  const getProductQuantity = () => cart.map(product => product.quantity).reduce((accum, curr) => accum + curr);
+
   const addProduct = (product) => {
     
     const productSerialized = {
@@ -43,7 +45,7 @@ export const CartProvider = ({ children }) => {
   }
 
   return (
-    <CartContext.Provider value={ {cart, getCartTotal, addProduct, removeProduct} } >
+    <CartContext.Provider value={ {cart, getCartTotal, getProductQuantity, addProduct, removeProduct} } >
       { children }
     </CartContext.Provider>
   )
