@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useEffect, useState } from 'react';
 import './styles.css';
 
 import Checkout from '../../../pages/Checkout';
@@ -6,13 +6,24 @@ import card from '../../../assets/card.png';
 import slip from '../../../assets/slip.png';
 
 import { useCart } from '../../../providers/CartProvider';
+import { useAuth } from '../../../providers/AuthProvider';
+import ApiAuth from '../../../services/ApiAuth';
 import PaymentMethod from './PaymentMethod';
 import { useForm } from "react-hook-form";
 
 const Payment = () => {
+  const [paymentMethod, setPaymentMethod] = useState([]);
   const { register, handleSubmit, errors, watch } = useForm({});
   const { cart } = useCart();
+  const { auth } = useAuth();
   const cartTotal = cart.reduce((acc, current) => acc + (current.price * current.quantity), 0);
+
+  useEffect(() => {
+    ApiAuth(auth.token).get('/paymentmethods')
+    .then(({ data }) => {
+      setPaymentMethod(data.results);
+    });
+  }, []);
 
   return (
     <Checkout>
@@ -29,7 +40,7 @@ const Payment = () => {
                       value={ "credit_card" }
                       img={ card }
                     />
-          
+
                     <PaymentMethod 
                       register={ register }
                       value={ "bank_slip" }
