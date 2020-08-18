@@ -2,6 +2,7 @@ import React,{ useEffect, useState } from 'react';
 import * as yup from 'yup';
 import './styles.css';
 
+import usePersistedState from '../../../hooks/usePersistedState';
 import { useCart } from '../../../providers/CartProvider';
 import { useAuth } from '../../../providers/AuthProvider';
 import ApiAuth from '../../../services/ApiAuth';
@@ -12,6 +13,7 @@ import slip from '../../../assets/slip.png';
 import PaymentMethod from './PaymentMethod';
 import { useForm } from "react-hook-form";
 import Select from './Select';
+import pagarme from 'pagarme';
 import Field from './Field';
 
 const validationSchema = yup.object().shape({
@@ -31,21 +33,23 @@ const validationSchema = yup.object().shape({
     is: 'credit_card',
     then: yup.string().label('Expiration').required(),
   }),
-  installments: yup.number().when('payment_method', {
+  installments: yup.string().when('payment_method', {
     is: 'credit_card',
-    then: yup.number().label('Installments').required(),
+    then: yup.string().label('Installments').required(),
   }),
 });
 
 const Payment = () => {
+  const [addressId, setStatePersisted] = usePersistedState('address', null);
+  const [paymentGateway, setPaymentGateway] = useState([]);
   const [paymentMethod, setPaymentMethod] = useState([]);
-  const { getCartTotal, getProductQuantity } = useCart();
-  const { auth } = useAuth();
+  const { cart, getCartTotal, getProductQuantity } = useCart();
+  const { auth, getUserId } = useAuth();
 
   const { register, handleSubmit, errors, watch } = useForm({
     validationSchema: validationSchema,
   });
-
+  
   useEffect(() => {
     ApiAuth(auth.token).get('/paymentmethods')
     .then(({ data }) => {
@@ -53,8 +57,41 @@ const Payment = () => {
     });
   }, []);
 
+  useEffect(() => {
+    ApiAuth(auth.token).get('/paymentgateways')
+    .then(({ data }) => {
+      setPaymentGateway(data.results);
+    });
+  }, []);
+  
   const onSubmit = async(data) => {
-    console.log(data)
+
+    const sendData = {
+      customer: getUserId(),
+      payment_method: null,
+      address: addressId,
+      installments: parseInt(data.installments),
+      items: cart.map(item => ({
+        product: item.product,
+        quantity: item.quantity,
+        price: item.price
+      }))
+    }
+    
+    if (data.payment_method === 'credit_card') {
+      const card = {
+        card_number: data.card_number,
+        card_holder_name: data.card_name,
+        card_expiration_date: data.card_expiration.split('/').join(''),
+        card_cvv: data.card_cvv,
+      }
+      const gatewayPayment = paymentGateway.find(gateway => gateway.resourcetype === 'PagarmeGateway');
+      const client = await pagarme.client.connect({encryption_key: gatewayPayment.encryption_key});
+      sendData['card_hash'] = await client.security.encrypt(card);
+      console.log(sendData['card_hash']);
+    }
+
+   //console.log(sendData)
   }
 
   return (
@@ -87,7 +124,7 @@ const Payment = () => {
                         errors={ errors.card_number }
                         name={ "card_number" }
                         placeholder={ "number" }
-                        ref={ register }
+                        register={ register }
                       />
 
                       <Field
@@ -95,7 +132,7 @@ const Payment = () => {
                         errors={ errors.card_cvv }
                         name={ "card_cvv" }
                         placeholder={ "cvv" }
-                        ref={ register }
+                        register={ register }
                       />
                     </div>
                   
@@ -105,7 +142,7 @@ const Payment = () => {
                         errors={ errors.card_name }
                         name={ "card_name" }
                         placeholder={ "card holder" }
-                        ref={ register }
+                        register={ register }
                       />
 
                       <Field 
@@ -113,16 +150,16 @@ const Payment = () => {
                         errors={ errors.card_expiration }
                         name={ "card_expiration" }
                         placeholder={ "MM/AA" }
-                        ref={ register }
+                        register={ register }
                       />
                     </div>
 
                     <Select 
                       classs={ "field-select mt-20" }
                       errors={ errors.installments }
-                      name={ "select-installments" }
+                      name={ "installments" }
                       cartTotal={ getCartTotal() }
-                      ref={ register }
+                      register={ register }
                     />
 
                     <button type="submit" className="btn btn-primary btn-effect">Save</button>

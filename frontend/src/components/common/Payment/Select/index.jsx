@@ -1,14 +1,15 @@
 import React from 'react';
 
-const Select = ({ errors, classs, name, ref, cartTotal }) => {
+const Select = ({ errors, classs, name, register, cartTotal }) => {
   return (
     <div className={ classs }>
       <select
         className={'form-controll' + (errors ? ' is-invalid' : '') }  
+        defaultValue=""
         name={ name }
-        ref={ ref }
+        ref={ register }
       >
-        <option value="0" >Select Installments</option>
+        <option value="" disabled="disabled" >Select Installments</option>
       
         {Array.from(Array(12).keys()).map(i => (
           <option key={ i } value={ i+1 }> 

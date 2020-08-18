@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles.css';
 
-const Field = ({ errors, name, placeholder, ref , classs }) => {
+const Field = ({ errors, name, placeholder, register, classs }) => {
   return (
     <div className={ classs }>
       <input
@@ -9,7 +9,7 @@ const Field = ({ errors, name, placeholder, ref , classs }) => {
         type="text"
         name={ name }
         placeholder={ placeholder }
-        ref={ ref }
+        ref={ register }
       />
       <div className="invalid-feedback">
         { errors && errors.message }

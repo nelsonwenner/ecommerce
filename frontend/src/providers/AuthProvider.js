@@ -11,6 +11,8 @@ export const AuthProvider = ({ children }) => {
 
   const isAuth = () => auth.authorized;
   
+  const getUserId = () => auth.id;
+
   const signIn = async (data) => {
     try { 
       const res = await api.post('/api-token', data);
@@ -38,7 +40,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={ {auth, signIn , isAuth} }>
+    <AuthContext.Provider value={ {auth, signIn , isAuth, getUserId} }>
       { children }
     </AuthContext.Provider>
   )
