@@ -115,10 +115,6 @@
   background-color: #ff5722;
 }
 
-.cart-summary-item .btn:hover {
-  background-color: #ff3c00;
-}
-
 /* Overwrite the default to keep the scrollbar always visible */
 
 ::-webkit-scrollbar {

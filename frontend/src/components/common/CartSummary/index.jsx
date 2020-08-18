@@ -38,7 +38,7 @@ const CartSummary = () => {
         <span className="summary-line"></span>
         
         <Link to={ '/checkout' }>
-          <div className="btn btn-primary btn-black">Checkout</div>
+          <div className="btn btn-primary btn-effect">Checkout</div>
         </Link>
       </div>
     </div>

@@ -30,6 +30,10 @@ const validationSchema = yup.object().shape({
     is: 'credit_card',
     then: yup.string().label('Expiration').required(),
   }),
+  installments: yup.number().when('payment_method', {
+    is: 'credit_card',
+    then: yup.number().label('Installments').required(),
+  }),
 });
 
 const Payment = () => {
@@ -130,15 +134,22 @@ const Payment = () => {
                     </div>
 
                     <div className="field-select mt-20">
-                      <select 
-                        name="select-installments" 
+                      <select
+                        className={'form-controll' + (errors.installments ? ' is-invalid' : '') }  
+                        name="select-installments"
+                        ref={ register }
                       >
-                      <option value="0">Select Installments</option>
+                        <option value="0" >Select Installments</option>
                       
-                      {Array.from(Array(12).keys()).map(i => (
-                        <option key={i} value={i+1}>{i+1} x {(getCartTotal()/(i+1)).toFixed(2)}</option>
-                      ))}
+                        {Array.from(Array(12).keys()).map(i => (
+                          <option key={ i } value={ i+1 }> 
+                            { i+1 } x { (getCartTotal()/(i+1)).toFixed(2) }
+                          </option>
+                        ))}
                       </select>
+                      <div className="invalid-feedback">
+                        { errors.installments && errors.installments.message }
+                      </div>
                     </div>
                     
                     <button type="submit" className="btn btn-primary btn-effect">Save</button>
