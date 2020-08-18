@@ -73,6 +73,7 @@ const Payment = () => {
       payment_method: methodPayment.id,
       address: addressId,
       installments: parseInt(data.installments) || 0,
+      status: "e1182812-d1b0-4585-99bf-6510497602ab",
       items: cart.map(item => ({
         product: item.product,
         quantity: item.quantity,
@@ -92,7 +93,8 @@ const Payment = () => {
       sendData['card_hash'] = await client.security.encrypt(card);
     }
 
-   console.log(sendData)
+    ApiAuth(auth.token).post('/checkouts', sendData)
+    .then((res) => console.log(res.status));
   }
 
   return (
