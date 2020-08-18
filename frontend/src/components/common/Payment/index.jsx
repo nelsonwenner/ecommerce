@@ -1,4 +1,5 @@
 import React,{ useEffect, useState } from 'react';
+import * as yup from 'yup';
 import './styles.css';
 
 import Checkout from '../../../pages/Checkout';
@@ -12,18 +13,44 @@ import ApiAuth from '../../../services/ApiAuth';
 import PaymentMethod from './PaymentMethod';
 import { useForm } from "react-hook-form";
 
+const validationSchema = yup.object().shape({
+  card_number: yup.string().when('payment_method', {
+    is: 'credit_card',
+    then: yup.string().label('Number card').required(),
+  }),
+  card_cvv: yup.string().when('payment_method', {
+    is: 'credit_card',
+    then: yup.string().label('CVV').required(),
+  }),
+  card_name: yup.string().when('payment_method', {
+    is: 'credit_card',
+    then: yup.string().label('Card Holder').required(),
+  }),
+  card_expiration: yup.string().when('payment_method', {
+    is: 'credit_card',
+    then: yup.string().label('Expiration').required(),
+  }),
+});
+
 const Payment = () => {
   const [paymentMethod, setPaymentMethod] = useState([]);
-  const { register, handleSubmit, errors, watch } = useForm({});
   const { getCartTotal, getProductQuantity } = useCart();
   const { auth } = useAuth();
-  
+
+  const { register, handleSubmit, errors, watch } = useForm({
+    validationSchema: validationSchema,
+  });
+
   useEffect(() => {
     ApiAuth(auth.token).get('/paymentmethods')
     .then(({ data }) => {
       setPaymentMethod(data.results);
     });
   }, []);
+
+  const onSubmit = async(data) => {
+    console.log(data)
+  }
 
   return (
     <Checkout>
@@ -33,7 +60,7 @@ const Payment = () => {
             <div className="payment-wrapper">
               <div className="payment-card">
                 <h4>Payment Methods</h4>
-                <form>
+                <form onSubmit={ handleSubmit(onSubmit) }>
                   <div className="form-check-wrapper">
                     <PaymentMethod 
                       register={ register }
@@ -51,37 +78,54 @@ const Payment = () => {
                   <fieldset hidden={ watch('payment_method') !== 'credit_card' }>
                     <div className="field-group-payment">
                       <div className="field-payment">
-                        <input 
+                        <input
+                          className={'form-controll' + (errors.card_number ? ' is-invalid' : '') } 
                           type="text"
-                          name=""
+                          name="card_number"
                           placeholder="number"
+                          ref={ register }
                         />
+                        <div className="invalid-feedback">
+                          { errors.card_number && errors.card_number.message }
+                        </div>
                       </div>
 
                       <div className="field-payment">
-                        <input 
+                        <input
+                          className={'form-controll' + (errors.card_cvv ? ' is-invalid' : '') } 
                           type="text"
-                          name="suite"
+                          name="card_cvv"
                           placeholder="cvv"
                         />
+                        <div className="invalid-feedback">
+                          { errors.card_cvv && errors.card_cvv.message }
+                        </div>
                       </div>
                     </div>
                   
                     <div className="field-group-payment mt-15">
                       <div className="field-payment">
-                        <input 
+                        <input
+                          className={'form-controll' + (errors.card_name ? ' is-invalid' : '') } 
                           type="text"
-                          name=""
+                          name="card_name"
                           placeholder="card holder"
                         />
+                        <div className="invalid-feedback">
+                          { errors.card_name && errors.card_name.message }
+                        </div>
                       </div>
 
                       <div className="field-payment">
-                        <input 
+                        <input
+                          className={'form-controll' + (errors.card_expiration ? ' is-invalid' : '') } 
                           type="text"
-                          name="suite"
-                          placeholder="expiration"
+                          name="card_expiration"
+                          placeholder="MM/AA"
                         />
+                        <div className="invalid-feedback">
+                          { errors.card_expiration && errors.card_expiration.message }
+                        </div>
                       </div>
                     </div>
 
@@ -96,7 +140,7 @@ const Payment = () => {
                       ))}
                       </select>
                     </div>
-
+                    
                     <button type="submit" className="btn btn-primary btn-effect">Save</button>
                   </fieldset>
 
