@@ -63,14 +63,16 @@ const Payment = () => {
       setPaymentGateway(data.results);
     });
   }, []);
-  
+ 
   const onSubmit = async(data) => {
+
+    const methodPayment = paymentMethod.find(item => item.name === data.payment_method);
 
     const sendData = {
       customer: getUserId(),
-      payment_method: null,
+      payment_method: methodPayment.id,
       address: addressId,
-      installments: parseInt(data.installments),
+      installments: parseInt(data.installments) || 0,
       items: cart.map(item => ({
         product: item.product,
         quantity: item.quantity,
@@ -88,10 +90,9 @@ const Payment = () => {
       const gatewayPayment = paymentGateway.find(gateway => gateway.resourcetype === 'PagarmeGateway');
       const client = await pagarme.client.connect({encryption_key: gatewayPayment.encryption_key});
       sendData['card_hash'] = await client.security.encrypt(card);
-      console.log(sendData['card_hash']);
     }
 
-   //console.log(sendData)
+   console.log(sendData)
   }
 
   return (
