@@ -1,43 +1,38 @@
 import React,{ useState } from 'react';
+import * as yup from 'yup';
 import './styles.css';
 
 import { useAuth } from '../../../providers/AuthProvider';
 import redirect from '../../../routes/redirect';
 import { CustomInput } from '../CustomInput';
+import { useForm } from "react-hook-form";
 import Modal from 'react-modal';
 
 Modal.setAppElement('body');
 
+const validationSchema = yup.object().shape({
+  email: yup.string().label('Email').required().max(50),
+  password: yup.string().label('Password').required().max(25),
+})
+
 const LoginModal = ({ openModal, closeModal, path }) => {
-  const { signIn } = useAuth();
-  
-  const [data, setData] = useState({
-    email: '',
-    password: '',
-    error: null
+  const { register, handleSubmit, errors, watch } = useForm({
+    validationSchema: validationSchema,
   });
 
-  const handleChange = (event) => {
-    event.preventDefault();
-    setData({...data, [event.target.name]: event.target.value});
-  }
+  const [error, setError] = useState('');
+  const { signIn } = useAuth();
   
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    
-    const { email, password } = data;
-    
-    if (!email || !password) {
-      setData(() => ({error: 'Fill in all the fields'}));
-    } else {
-      const error = await signIn({email, password});
-      
-      if (error) {
-        setData(() => ({error: error}));
-      }
+  const onSubmit = async (data) => {
 
-      redirect(path);
+    const error = await signIn(data);
+    
+    if (error) {
+      setError('authentication failure');
+      return;
     }
+
+    redirect(path);
   }
   
   return (
@@ -48,7 +43,7 @@ const LoginModal = ({ openModal, closeModal, path }) => {
       overlayClassName={"ReactModal__Overlay_Login"}
       contentLabel="Modal"
     > 
-      <form onSubmit={ onSubmit } method="post" className="form-login card-hover">
+      <form onSubmit={ handleSubmit(onSubmit) } className="form-login card-hover">
         <h2 className="login-welcome">Welcome</h2>
         <div className="division">
           <div className="line"></div>
@@ -63,7 +58,8 @@ const LoginModal = ({ openModal, closeModal, path }) => {
             icon={ 'email' }
             name={ 'email' }
             placeholder={ 'Email' }
-            onChange={ handleChange }
+            errors={ errors.email }
+            register={ register }
           />
 
           <CustomInput 
@@ -72,10 +68,19 @@ const LoginModal = ({ openModal, closeModal, path }) => {
             icon={ 'password' }
             name={ 'password' }
             placeholder={ 'Password' }
-            onChange={ handleChange }
+            errors={ errors.password }
+            register={ register }
           />
-          
+
           <button className="btn btn-rounded black-btn btn-outlined">Login</button>
+
+          { 
+            error && (
+              <div className="error-login">
+                <p style={{color: 'red'}}>{ error }</p>
+              </div>
+            )
+          }
         </div>
       </form>
     </Modal>

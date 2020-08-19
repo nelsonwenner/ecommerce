@@ -31,6 +31,7 @@ const Navbar = () => {
       <LoginModal 
         openModal={ modalLogin }
         closeModal={ closeModal }
+        path={ '/' }
       />
     </div>
   )
