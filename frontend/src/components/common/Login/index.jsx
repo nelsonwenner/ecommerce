@@ -28,8 +28,7 @@ const LoginModal = ({ openModal, closeModal, path }) => {
     const error = await signIn(data);
     
     if (error) {
-      setError('authentication failure');
-      return;
+      return setError('authentication failure');
     }
 
     redirect(path);

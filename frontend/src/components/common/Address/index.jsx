@@ -45,9 +45,9 @@ const Address = () => {
     
     if (selectedAddress) {
       setStatePersisted(selectedAddress.id);
-      history.push('/checkout/payment');
+      return history.push('/checkout/payment');
     }
-
+    
     ApiAuth(auth.token).post('/address', 
     {customer: auth.id, ...data})
     .then(({ data }) => {
