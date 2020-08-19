@@ -2,6 +2,7 @@ import React from "react";
 import { Route, BrowserRouter, Switch } from "react-router-dom";
 
 import Identification from '../components/common/Identification';
+import PaymentSuccess from '../components/common/PaymentSuccess';
 import PopUpLogin from '../components/common/PopUpLogin';
 import { CartProvider } from '../providers/CartProvider';
 import { AuthProvider } from '../providers/AuthProvider';
@@ -19,7 +20,8 @@ const Routes = () => {
           <Route component={ Home } path="/" exact />
           <Route component={ Cart } path="/cart" exact />
           <Route component={ PopUpLogin } path="/login" exact />
-          
+          <Route component={ PaymentSuccess } path="/success" exact />
+
           <Switch>
             <Route component={ Identification } path="/checkout" exact />
             <PrivateRoute component={ Address } path="/checkout/address" exact />

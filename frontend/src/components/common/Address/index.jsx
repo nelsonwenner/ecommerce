@@ -25,7 +25,7 @@ const Address = () => {
   const history = useHistory();
   const { auth } = useAuth();
 
-  const { register, handleSubmit, errors, watch } = useForm({
+  const { register, handleSubmit, errors } = useForm({
     validationSchema: validationSchema,
   });
 

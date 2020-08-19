@@ -16,7 +16,7 @@ const validationSchema = yup.object().shape({
 })
 
 const LoginModal = ({ openModal, closeModal, path }) => {
-  const { register, handleSubmit, errors, watch } = useForm({
+  const { register, handleSubmit, errors } = useForm({
     validationSchema: validationSchema,
   });
 
