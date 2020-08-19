@@ -1,11 +1,13 @@
 import React,{ useEffect, } from 'react';
 import './styles.css';
 
+import usePersistedState from '../../../hooks/usePersistedState';
 import { useAuth } from '../../../providers/AuthProvider';
 import { useCart } from '../../../providers/CartProvider';
 import { Link, useHistory } from 'react-router-dom';
 
 const Step = () => {
+  const [checkoutState, setStatePersistedCheckout] = usePersistedState('checkout_status', null);
   const history = useHistory();
   const { isAuth } = useAuth();
   const { cart } = useCart();
@@ -53,13 +55,13 @@ const Step = () => {
             </span>
             <h4>Address</h4>
           </li>
-          <li>
+          <li className={ `${ checkoutState ? 'active' : ''}` }>
             <span className="circle">
               <span className="icon-v"></span>
             </span>
             <h4>Payment</h4>
           </li>
-          <li>
+          <li className={ `${ checkoutState ? 'active' : ''}` }>
             <span className="circle">
               <span className="icon-v"></span>
             </span>
