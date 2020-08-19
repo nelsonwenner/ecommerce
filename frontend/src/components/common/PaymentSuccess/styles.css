@@ -1,0 +1,52 @@
+.container .title-checkout-success {
+  font-size: 3rem;
+  margin-top: 1rem;
+  margin-bottom: 1.6rem;
+  text-align: center;
+  color: rgb(84, 84, 84);
+}
+
+.order-summary-wrapper {
+  width: 100%;
+  max-height: 41rem;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.order-summary-wrapper .card-resume {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 1.6rem;
+  padding-bottom: 1.6rem;
+  border-bottom: 0.01rem solid rgb(204, 204, 204);
+}
+
+.order-summary-wrapper .card-resume {
+  width: 100%;
+} 
+
+.order-summary-wrapper .card-resume .card-img img {
+  width: 9.5rem;
+  height: 11rem;
+  display: block;
+  outline: none;
+}
+
+.card-resume .card-details {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.card-resume .card-details p {
+  font-weight: 500;
+  letter-spacing: .1rem;
+  color: rgb(149, 143, 134);
+}

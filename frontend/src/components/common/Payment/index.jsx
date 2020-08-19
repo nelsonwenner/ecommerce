@@ -40,6 +40,7 @@ const validationSchema = yup.object().shape({
 });
 
 const Payment = () => {
+  const [checkout, setStatePersistedCheckout] = usePersistedState('checkout_status', false);
   const [addressId, setStatePersisted] = usePersistedState('address', null);
   const [paymentGateway, setPaymentGateway] = useState([]);
   const [paymentMethod, setPaymentMethod] = useState([]);
