@@ -17,7 +17,7 @@
 
 .form-register h2 {
   text-align: center;
-  margin-bottom: 6rem;
+  margin-bottom: 4rem;
   color: rgb(84, 84, 84);
 }
 
@@ -70,6 +70,7 @@
 
 .form-register .btn {
   width: 25%;
+  height: 4rem;
   margin-top: 2rem;
   text-align: center;
   background-color: #ff5722;
