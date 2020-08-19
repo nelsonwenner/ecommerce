@@ -1,0 +1,117 @@
+.payment-wrapper {
+ width: 100%;
+ display: flex;
+ flex-direction: row;
+ justify-content: center;
+ align-items: center;
+}
+
+.mt {
+  margin-top: 4rem;
+}
+
+.mt-15 {
+  margin-top: 1.5rem;
+}
+
+.mt-20 {
+  margin-top: 2rem;
+}
+
+.payment-wrapper .payment-card {
+  max-width: 55rem;
+  width: 100%;
+  height: 40rem;
+  margin-bottom: 3.1rem;
+}
+
+.payment-wrapper .payment-card h4 {
+  font-size: 2.8rem;
+  color: rgb(84, 84, 84);
+}
+
+.payment-wrapper .payment-card form {
+  width: 100%;
+}
+
+.form-check-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 2rem;
+  margin-bottom: 3.5rem;
+}
+
+.form-check-wrapper .form-check {
+  width: 60%;
+  height: 3.5rem;
+}
+
+.form-check-wrapper .form-check:last-child {
+  width: 30%;
+}
+
+.form-check-wrapper .form-check label img {
+  width: auto;
+  height: 100%;
+}
+
+.form-check-wrapper .form-check label {
+  position: relative;
+  left: 2rem;
+  top: 1rem;
+}
+
+.field-group-payment {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.field-group-payment .field-payment input[type=text] {
+  width: 100%;
+  background: #fafafa;
+  border-radius: 8px;
+  border: 0;
+  padding: 1.6rem 2.4rem;
+  font-size: 1.6rem;
+  color: #6C6C80;
+}
+
+.field-group-payment .field-payment {
+  width: 65%;
+}
+
+.field-group-payment .field-payment:last-child {
+  width: 40%;
+}
+
+.field-group-payment .field-payment + .field-payment {
+  margin-left: 2.4rem;
+}
+
+.payment-card form .btn {
+  width: 50%;
+  text-align: center;
+  font-size: 1.6rem;
+}
+
+/*Media query*/
+@media only screen and (max-width:552px) { 
+  
+  .form-check-wrapper {
+    flex-direction: column;
+  }
+
+  .form-check-wrapper .form-check {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .form-check-wrapper .form-check:last-child {
+    width: 100%;
+    position: relative;
+    right: 9rem;
+  }
+}

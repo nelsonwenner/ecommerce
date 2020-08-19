@@ -145,6 +145,11 @@
   margin-top: 4rem;
 }
 
+.error-login {
+  position: relative;
+  top: 1rem;
+}
+
 /*Media query*/
 @media only screen and (max-width:536px) { 
    

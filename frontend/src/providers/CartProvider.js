@@ -1,12 +1,16 @@
 import React, { createContext, useContext } from 'react';
 
-import usePersistedStateCart from '../hooks/usePersistedStateCart';
+import usePersistedState from '../hooks/usePersistedState';
 
 const CartContext = createContext();
 export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = usePersistedStateCart('cart');
+  const [cart, setCart] = usePersistedState('cart', []);
+  
+  const getCartTotal = () => (cart.reduce((acc, current) => acc + (current.price * current.quantity), 0)).toFixed(2);
+
+  const getProductQuantity = () => cart.map(product => product.quantity).reduce((accum, curr) => accum + curr);
 
   const addProduct = (product) => {
     
@@ -41,7 +45,7 @@ export const CartProvider = ({ children }) => {
   }
 
   return (
-    <CartContext.Provider value={ {cart, addProduct, removeProduct} } >
+    <CartContext.Provider value={ {cart, getCartTotal, getProductQuantity, addProduct, removeProduct} } >
       { children }
     </CartContext.Provider>
   )

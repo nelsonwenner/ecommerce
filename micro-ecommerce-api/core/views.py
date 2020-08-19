@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from rest_framework import serializers
 from rest_framework import permissions
 from rest_framework.generics import *
+from rest_framework import status
 from .permissions import *
 from .serializers import *
 from .models import *
@@ -46,16 +47,23 @@ class ClientDetail(RetrieveUpdateAPIView):
     serializer_class = ClientSerializer
     permission_classes = [permissions.IsAuthenticated, IsClientOwner]
 
-class AddressListView(CreateAPIView):
+class AddressListView(ListCreateAPIView):
     name = 'address-list-view'
     queryset = Address.objects.get_queryset()
     serializer_class = AddressSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def list(self, request, *args, **kwargs):
+        current_user = request.user
+        address = Address.objects.filter(customer=current_user.id)
+        address_serializer = AddressSerializer(address, many=True)
+        return Response(address_serializer.data, status=status.HTTP_200_OK)
 
 class AddressDetail(RetrieveUpdateDestroyAPIView):
     name = 'address-detail'
     queryset = Address.objects.get_queryset()
     serializer_class = AddressSerializer
-    permission_classes = [permissions.IsAuthenticated, IsAddressOwner]
+    permission_classes = [permissions.IsAuthenticated, IsAddressOwnerDetail]
 
 class StatusListView(ListAPIView):
     name = 'status-list-view'

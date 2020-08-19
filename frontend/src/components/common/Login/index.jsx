@@ -1,12 +1,40 @@
-import React from 'react';
+import React,{ useState } from 'react';
+import * as yup from 'yup';
 import './styles.css';
 
-import Modal from 'react-modal';
+import { useAuth } from '../../../providers/AuthProvider';
+import redirect from '../../../routes/redirect';
 import { CustomInput } from '../CustomInput';
+import { useForm } from "react-hook-form";
+import Modal from 'react-modal';
 
 Modal.setAppElement('body');
 
-const LoginModal = ({ openModal, closeModal }) => {
+const validationSchema = yup.object().shape({
+  email: yup.string().label('Email').required().max(50),
+  password: yup.string().label('Password').required().max(25),
+})
+
+const LoginModal = ({ openModal, closeModal, path }) => {
+  const { register, handleSubmit, errors, watch } = useForm({
+    validationSchema: validationSchema,
+  });
+
+  const [error, setError] = useState('');
+  const { signIn } = useAuth();
+  
+  const onSubmit = async (data) => {
+
+    const error = await signIn(data);
+    
+    if (error) {
+      setError('authentication failure');
+      return;
+    }
+
+    redirect(path);
+  }
+  
   return (
     <Modal
       isOpen={ openModal }
@@ -15,7 +43,7 @@ const LoginModal = ({ openModal, closeModal }) => {
       overlayClassName={"ReactModal__Overlay_Login"}
       contentLabel="Modal"
     > 
-      <form method="post" className="form-login card-hover">
+      <form onSubmit={ handleSubmit(onSubmit) } className="form-login card-hover">
         <h2 className="login-welcome">Welcome</h2>
         <div className="division">
           <div className="line"></div>
@@ -30,6 +58,8 @@ const LoginModal = ({ openModal, closeModal }) => {
             icon={ 'email' }
             name={ 'email' }
             placeholder={ 'Email' }
+            errors={ errors.email }
+            register={ register }
           />
 
           <CustomInput 
@@ -38,9 +68,19 @@ const LoginModal = ({ openModal, closeModal }) => {
             icon={ 'password' }
             name={ 'password' }
             placeholder={ 'Password' }
+            errors={ errors.password }
+            register={ register }
           />
-          
+
           <button className="btn btn-rounded black-btn btn-outlined">Login</button>
+
+          { 
+            error && (
+              <div className="error-login">
+                <p style={{color: 'red'}}>{ error }</p>
+              </div>
+            )
+          }
         </div>
       </form>
     </Modal>

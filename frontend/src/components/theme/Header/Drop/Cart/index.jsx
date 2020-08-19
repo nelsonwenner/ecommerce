@@ -5,7 +5,7 @@ import { useCart } from '../../../../../providers/CartProvider';
 import { Link } from 'react-router-dom';
 
 const Cart = () => {
-  const { cart } = useCart();
+  const { cart, getCartTotal } = useCart();
   
   return (
     <Link to='/cart' >
@@ -13,7 +13,7 @@ const Cart = () => {
         <span className="icon-cart"></span>
         <span className="count-cart">{ cart.length }</span>
         <span className="name">Cart</span>
-        <td className="total">$ { cart.reduce((acc, current) => acc + (current.price * current.quantity), 0) } ,00</td>
+        <p className="total">$ { getCartTotal() }</p>
       </div>
     </Link>
   )
