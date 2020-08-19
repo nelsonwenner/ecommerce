@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom';
 import Checkout from '../../../pages/Checkout';
 import ApiAuth from '../../../services/ApiAuth';
 import { useForm } from "react-hook-form";
+import Select from './Select';
 import Field from './Field';
 
 const validationSchema = yup.object().shape({
@@ -32,7 +33,7 @@ const Address = () => {
     ApiAuth(auth.token).get(`/address`)
     .then(({ data }) => {
       setAddress(data);
-    })
+    });
   }, []);
   
   const handlerSelectAddress = (event) => {
@@ -63,22 +64,14 @@ const Address = () => {
             <form onSubmit={ handleSubmit(onSubmit) } className="form-register">
               <h2>Register Address</h2>
 
-              <div className="field-select">
-                <label htmlFor="select-address">Selected Address</label>
-                
-                <select 
-                  name="select-address" 
-                  onChange={ handlerSelectAddress }
-                >
-                  <option value="0">Select a Address Exists</option>
-                  {address.map((addrr, index) => (
-                    <option key={index} value={JSON.stringify(addrr)}>
-                      { `Address #${index + 1} Zipcode: ${addrr.zipcode}` }
-                    </option>
-                  ))}
-                </select>
-              </div>
-              
+              <Select 
+                classs={ 'field-select' }
+                address={ address }
+                name={ 'select-address' }
+                htmlFor={ 'select-address' }
+                handlerSelectAddress={ handlerSelectAddress }
+              />
+
               <div className="line-address"></div>
 
               <div className="field-group">
