@@ -12,7 +12,7 @@ export const CartProvider = ({ children }) => {
 
   const getProductQuantity = () => cart.length ? cart.map(product => product.quantity).reduce((accum, curr) => accum + curr) : 0;
 
-  const cleanCart = () => setCart([]);
+  const cleanCart = () => localStorage.removeItem('cart');
 
   const addProduct = (product) => {
     

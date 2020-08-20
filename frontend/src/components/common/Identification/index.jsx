@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './styles.css';
 
 import { useAuth } from '../../../providers/AuthProvider';
 import Checkout from '../../../pages/Checkout';
+import { useHistory } from 'react-router-dom';
 import LoginModal from '../Login';
 
 const Identification = () => {
+  const history = useHistory();
   const { isAuth } = useAuth();
+
+  useEffect(() => {
+
+    if (isAuth()) {
+      history.push('/checkout/address');
+    }
+    
+  });
 
   return (
     <Checkout>

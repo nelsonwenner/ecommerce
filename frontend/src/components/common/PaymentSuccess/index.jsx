@@ -7,6 +7,7 @@ import Checkout from '../../../pages/Checkout';
 
 const PaymentSuccess = () => {
   const [checkoutState, setStatePersistedCheckout] = usePersistedState('checkout_status', null);
+  const [address, setStatePersistedAddress] = usePersistedState('address', null);
   const [resumeCart, setResumeCart] = useState([]);
   const { cart, cleanCart } = useCart();
 
@@ -14,7 +15,8 @@ const PaymentSuccess = () => {
     
     if (checkoutState) {
       setResumeCart(cart);
-      setStatePersistedCheckout(false);
+      localStorage.removeItem('checkout_status');
+      setStatePersistedAddress(null);
       cleanCart();
     }
 

@@ -25,7 +25,7 @@ const Routes = () => {
             <Route component={ Identification } path="/checkout" exact />
             <PrivateRoute component={ Address } path="/checkout/address" exact />
             <PrivateRoute component={ Payment } path="/checkout/payment" exact />
-            <PrivateRoute component={ PaymentSuccess } path="/checkout/payment/success" exact />
+            <PrivateRoute component={ PaymentSuccess } path="/checkout/success" exact />
           </Switch>
         </BrowserRouter>
       </CartProvider>

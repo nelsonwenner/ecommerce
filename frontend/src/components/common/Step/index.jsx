@@ -1,33 +1,16 @@
-import React,{ useEffect, } from 'react';
+import React from 'react';
 import './styles.css';
 
 import usePersistedState from '../../../hooks/usePersistedState';
 import { useAuth } from '../../../providers/AuthProvider';
 import { useCart } from '../../../providers/CartProvider';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Step = () => {
-  const [checkoutState, setStatePersistedCheckout] = usePersistedState('checkout_status', null);
-  const history = useHistory();
+  const [checkoutState, setStatePersistedCheckout] = usePersistedState('checkout_status', false);
   const { isAuth } = useAuth();
   const { cart } = useCart();
-  
-  useEffect(() => {
-
-    if (!cart.length) {
-      history.push('/');
-    }
     
-    if (isAuth()) {
-      history.push('/checkout/address');
-    }
-    
-    if (JSON.parse(localStorage.getItem('address')) && isAuth()) {
-      history.push('/checkout/payment');
-    }
-    
-  }, []);
-  
   return (
     <div className="step-main">
       <div className="container">

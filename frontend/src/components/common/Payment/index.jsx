@@ -99,7 +99,7 @@ const Payment = () => {
     ApiAuth(auth.token).post('/checkouts', sendData)
     .then((res) => {
       setStatePersistedCheckout(true);
-      history.push('/checkout/payment/success');
+      history.push('/checkout/success');
     });
   }
 
