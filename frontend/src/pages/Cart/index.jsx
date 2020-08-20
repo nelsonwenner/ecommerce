@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './styles.css';
 
 import CartSummary from '../../components/common/CartSummary';
 import CartItem from '../../components/common/CartItem';
+import { useCart } from '../../providers/CartProvider';
 import Layout from '../../components/common/Layout';
+import { useHistory } from 'react-router-dom';
 
 const Cart = () => {
+  const history = useHistory();
+  const { cart } = useCart();
+
+  useEffect(() => {
+
+    if (!cart.length) {
+      history.push('/');
+    }
+
+  });
+
   return (
     <Layout>
       <div className="cart-main">

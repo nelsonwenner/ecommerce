@@ -5,7 +5,7 @@ const Field = ({ errors, name, placeholder, register, classs }) => {
   return (
     <div className={ classs }>
       <input
-        className={'form-controll' + (errors ? ' is-invalid' : '') } 
+        className={ `form-controll ${(errors ? ' is-invalid' : '')}` } 
         type="text"
         name={ name }
         placeholder={ placeholder }

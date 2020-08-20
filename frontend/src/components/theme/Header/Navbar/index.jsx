@@ -1,12 +1,16 @@
 import React,{ useState } from 'react';
 import './styles.css';
 
+import { useAuth } from '../../../../providers/AuthProvider';
 import logo from '../../../../assets/logo-nav.png';
 import LoginModal from '../../../common/Login';
 import { Link } from 'react-router-dom';
+import DropDown from '../Dropdown';
 
 const Navbar = () => {
   const [modalLogin, setModalLogin] = useState(false);
+  const [openDropDown, setOpenDropDown] = useState(false);
+  const { auth, isAuth } = useAuth();
 
   const openModal = () => {
     setModalLogin(true);
@@ -23,9 +27,23 @@ const Navbar = () => {
           <Link to={ '/' } className="logo">
             <img alt="logo" src={ logo } />
           </Link>
-          <div className="icon-user" onClick={ openModal }>
-            <span>Login</span>
-          </div>
+          {
+            isAuth() 
+            ? (
+              <div className="box-user">
+                <div className="icon-user">
+                  <span>{ auth.name }</span>
+                </div>
+
+                <DropDown />
+              </div>
+            )
+            : (
+              <div className="icon-user-lock" onClick={ openModal }>
+                <span>Login</span>
+              </div>
+            ) 
+          }
         </div>
       </div>
       <LoginModal 

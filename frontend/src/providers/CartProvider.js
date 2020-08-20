@@ -7,10 +7,12 @@ export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = usePersistedState('cart', []);
-  
-  const getCartTotal = () => (cart.reduce((acc, current) => acc + (current.price * current.quantity), 0)).toFixed(2);
 
-  const getProductQuantity = () => cart.map(product => product.quantity).reduce((accum, curr) => accum + curr);
+  const getCartTotal = () => cart.length ? (cart.reduce((acc, current) => acc + (current.price * current.quantity), 0)).toFixed(2) : 0;
+
+  const getProductQuantity = () => cart.length ? cart.map(product => product.quantity).reduce((accum, curr) => accum + curr) : 0;
+
+  const cleanCart = () => localStorage.removeItem('cart');
 
   const addProduct = (product) => {
     
@@ -45,7 +47,7 @@ export const CartProvider = ({ children }) => {
   }
 
   return (
-    <CartContext.Provider value={ {cart, getCartTotal, getProductQuantity, addProduct, removeProduct} } >
+    <CartContext.Provider value={ {cart, getCartTotal, getProductQuantity, addProduct, removeProduct, cleanCart} } >
       { children }
     </CartContext.Provider>
   )

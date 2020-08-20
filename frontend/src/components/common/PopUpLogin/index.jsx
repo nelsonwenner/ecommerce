@@ -4,11 +4,11 @@ import { useAuth } from '../../../providers/AuthProvider';
 import LoginModal from '../Login';
 
 const PopUpLogin = () => {
-  const { auth } = useAuth();
+  const { isAuth } = useAuth();
   
   return (
     <LoginModal 
-      openModal={ !auth.authorized }
+      openModal={ !isAuth() }
       path={ '/' }
     />
   )

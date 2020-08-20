@@ -1,0 +1,59 @@
+.dropdown {
+  width: 100%;
+  position: relative;
+  margin-top: 10px;
+}
+
+.dropdown .dropdown-wrapper {
+  position: absolute;
+  width: 20rem;
+  padding: 1rem;
+  overflow: hidden;
+  transform: translateX(-45%);
+  border-radius: 2px;
+  background-color: #f9f9f9;
+  border-color: rgb(246, 246, 246);
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1000;
+
+  display: none;
+}
+
+.dropdown .dropdown-wrapper .dropdown-item {
+  padding: 1rem;
+  height: 5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: rgb(84, 84, 84);
+  font-size: 1.4rem;
+  cursor: pointer;
+  outline: none;
+  font-weight: 400;
+  font-weight: bold;
+  transition: all .5s;
+}
+
+.dropdown .dropdown-wrapper .dropdown-item:hover {
+  background: rgba(236, 234, 234, 0.507);
+  transition: all .5s;
+}
+
+.icon-account::before {
+  font-family: "Font Awesome 5 Free";
+  cursor: pointer;
+  content: '\f4fe';
+  font-weight: 600;
+  color: rgb(84, 84, 84);
+  font-size: 1.8rem;
+}
+
+.icon-logout::before {
+  font-family: "Font Awesome 5 Free";
+  cursor: pointer;
+  content: '\f5eb';
+  font-weight: 600;
+  color: rgb(84, 84, 84);
+  font-size: 1.8rem;
+}
