@@ -1,6 +1,7 @@
 import React, { createContext, useContext } from 'react';
 
 import usePersistedState from '../hooks/usePersistedState';
+import redirect from '../routes/redirect';
 import api from '../services/Api';
 
 const AuthContext = createContext();
@@ -8,6 +9,11 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = usePersistedState('@Auth', {});
+
+  const logout = () => {
+    localStorage.removeItem('@Auth');
+    redirect('/');
+  }
 
   const isAuth = () => auth.authorized;
   
@@ -40,7 +46,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={ {auth, signIn , isAuth, getUserId} }>
+    <AuthContext.Provider value={ {auth, signIn, logout, isAuth, getUserId} }>
       { children }
     </AuthContext.Provider>
   )
