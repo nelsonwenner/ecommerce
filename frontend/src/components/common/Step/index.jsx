@@ -14,7 +14,6 @@ const Step = () => {
   
   useEffect(() => {
 
-    /*
     if (!cart.length) {
       history.push('/');
     }
@@ -26,7 +25,6 @@ const Step = () => {
     if (JSON.parse(localStorage.getItem('address')) && isAuth()) {
       history.push('/checkout/payment');
     }
-    */
     
   }, []);
   

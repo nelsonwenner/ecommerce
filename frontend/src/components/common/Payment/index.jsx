@@ -7,6 +7,7 @@ import { useCart } from '../../../providers/CartProvider';
 import { useAuth } from '../../../providers/AuthProvider';
 import ApiAuth from '../../../services/ApiAuth';
 import Checkout from '../../../pages/Checkout';
+import { useHistory } from 'react-router-dom';
 import SummaryDetail from './SummaryDetail';
 import card from '../../../assets/card.png';
 import slip from '../../../assets/slip.png';
@@ -46,6 +47,7 @@ const Payment = () => {
   const [paymentMethod, setPaymentMethod] = useState([]);
   const { cart, getCartTotal, getProductQuantity } = useCart();
   const { auth, getUserId } = useAuth();
+  const history = useHistory();
 
   const { register, handleSubmit, errors, watch } = useForm({
     validationSchema: validationSchema,
@@ -95,7 +97,10 @@ const Payment = () => {
     }
 
     ApiAuth(auth.token).post('/checkouts', sendData)
-    .then((res) => console.log(res.status));
+    .then((res) => {
+      setStatePersistedCheckout(true);
+      history.push('/checkout/payment/success');
+    });
   }
 
   return (

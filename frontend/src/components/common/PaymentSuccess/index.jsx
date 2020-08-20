@@ -8,13 +8,14 @@ import Checkout from '../../../pages/Checkout';
 const PaymentSuccess = () => {
   const [checkoutState, setStatePersistedCheckout] = usePersistedState('checkout_status', null);
   const [resumeCart, setResumeCart] = useState([]);
-  const { cart } = useCart();
+  const { cart, cleanCart } = useCart();
 
   useEffect(() => {
     
     if (checkoutState) {
       setResumeCart(cart);
-      /* clean cart, and add checkout_status false. */
+      setStatePersistedCheckout(false);
+      cleanCart();
     }
 
   }, []);
@@ -24,7 +25,7 @@ const PaymentSuccess = () => {
       <div className="container">
         <h4 className="title-checkout-success">Purchase completed successfully</h4>
         <div className="order-summary-wrapper">
-          {cart.map((product, index) => (
+          {resumeCart.map((product, index) => (
             <div className="card-resume" key={ index }>
               <div className="card-img">
                 <img src={ `${process.env.REACT_APP_ECOMMERCE_API_URL}${ product.image_url }` } alt="cart-item" />
