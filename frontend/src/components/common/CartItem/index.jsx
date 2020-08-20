@@ -14,12 +14,12 @@ const CartItem = () => {
       </div>
       {cart.map((product, index) => (
         <div className="cart-item" key={ index }>
-          <div className="cart-img">
-            <img src={ `${process.env.REACT_APP_ECOMMERCE_API_URL}${ product.image_url }` } alt="cart-item" />
-            <h4>{ product.title }</h4>
+          <img src={ `${process.env.REACT_APP_ECOMMERCE_API_URL}${ product.image_url }` } alt="cart-item" />
+          <div className="cart-detail">
+            <p>{ product.title }</p>
+            <p>$ { product.price }</p>
+            <p onClick={ () => removeProduct(product) }>X</p>
           </div>
-          <span>$ { product.price }</span>
-          <span className="cart-item-remove" onClick={ () => removeProduct(product) }>X</span>
         </div>
       ))}
     </div>

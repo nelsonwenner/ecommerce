@@ -29,9 +29,7 @@ const PaymentSuccess = () => {
         <div className="order-summary-wrapper">
           {resumeCart.map((product, index) => (
             <div className="card-resume" key={ index }>
-              <div className="card-img">
-                <img src={ `${process.env.REACT_APP_ECOMMERCE_API_URL}${ product.image_url }` } alt="cart-item" />
-              </div>
+              <img src={ `${process.env.REACT_APP_ECOMMERCE_API_URL}${ product.image_url }` } alt="cart-item" />
               <div className="card-details">
                 <p>{ product.title }</p>
                 <p>x{ product.quantity }</p>
