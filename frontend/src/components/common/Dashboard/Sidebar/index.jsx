@@ -10,7 +10,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="profile">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvUSsKmg8eAXt7AMn4YNFMLROT_yLtb3kKjatqSL3FGTWkcxTC" />
+        <span className="icon-profile"></span>
         <p className="hello">Hello,</p>
         <p className="profile-name">{ auth.name }</p>
       </div>

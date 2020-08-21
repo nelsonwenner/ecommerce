@@ -21,11 +21,8 @@
   align-items: center;
 }
 
-.sidebar .profile img {
+.sidebar .profile .icon-profile {
   position: absolute;
-  overflow: hidden;
-  width: 4rem;
-  height: 4rem;
   margin-left: 1rem;
 
   display: block;
@@ -58,6 +55,16 @@
   margin-top: 2.7rem;
   border-radius: 2px;
   background-color: #ffff;
+}
+
+.icon-profile::before {
+  font-family: "Font Awesome 5 Free";
+  cursor: pointer;
+  content: '\f2bd';
+  font-weight: 600;
+  color: rgb(84, 84, 84);
+  font-size: 2.7rem;
+  margin-left: 1rem;
 }
 
 .icon-suitcase::before {
@@ -103,11 +110,12 @@
   width: 100%;
   height: 5rem;
   margin-bottom: 1.6rem;
+  transition: all .5s;
+  cursor: pointer;
 
   display: flex;
   flex-direction: row;
   align-items: center;
-  transition: all .5s;
 }
 
 .sidebar-options .sidebar-options-item p {
