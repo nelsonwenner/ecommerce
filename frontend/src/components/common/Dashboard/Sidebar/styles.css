@@ -1,0 +1,130 @@
+.sidebar {
+  position: relative;
+  max-width: 35rem;
+  width: 100%;
+  height: 55rem;
+  border-radius: 2px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar .profile {
+  position: relative;
+  width: 100%;
+  height: 5.5rem;
+  background-color: #ffff;
+  border-radius: 2px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.sidebar .profile img {
+  position: absolute;
+  overflow: hidden;
+  width: 4rem;
+  height: 4rem;
+  margin-left: 1rem;
+
+  display: block;
+}
+
+.sidebar .profile .hello {
+  position: absolute;
+  left: 6rem;
+  bottom: 3rem;
+  font-size: 1.1rem;
+  color: rgb(84, 84, 84);
+
+  display: block;
+}
+
+.sidebar .profile .profile-name {
+  position: absolute;
+  left: 6rem;
+  bottom: 1rem;
+  font-size: 1.6rem;
+  color: rgb(84, 84, 84);
+
+  display: block;
+}
+
+.sidebar .sidebar-options {
+  position: relative;
+  width: 100%;
+  height: 85%;
+  margin-top: 2.7rem;
+  border-radius: 2px;
+  background-color: #ffff;
+}
+
+.icon-suitcase::before {
+  font-family: "Font Awesome 5 Free";
+  cursor: pointer;
+  content: '\f0f2';
+  font-weight: 600;
+  color: rgb(84, 84, 84);
+  font-size: 1.8rem;
+  margin-left: 1rem;
+}
+
+.icon-user-settings::before {
+  font-family: "Font Awesome 5 Free";
+  cursor: pointer;
+  content: '\f4fe';
+  font-weight: 600;
+  color: rgb(84, 84, 84);
+  font-size: 1.8rem;
+  margin-left: 1rem;
+}
+
+.icon-user-logout::before {
+  font-family: "Font Awesome 5 Free";
+  cursor: pointer;
+  content: '\f011';
+  font-weight: 600;
+  color: rgb(84, 84, 84);
+  font-size: 1.8rem;
+  margin-left: 1rem;
+}
+
+.icon-arrow::before {
+  font-family: "Font Awesome 5 Free";
+  cursor: pointer;
+  content: '\f105';
+  font-weight: 600;
+  color: rgb(84, 84, 84);
+  font-size: 1.8rem;
+}
+
+.sidebar-options .sidebar-options-item {
+  width: 100%;
+  height: 5rem;
+  margin-bottom: 1.6rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  transition: all .5s;
+}
+
+.sidebar-options .sidebar-options-item p {
+  color: rgb(84, 84, 84);
+}
+
+.option-left-icon {
+  width: 30%;
+}
+.option-title-center {
+  width: 55%;
+}
+.option-right-icon {
+  width: 15%;
+}
+
+.option-effect:hover {
+  background: #f5faff;
+  transition: all .5s;
+}

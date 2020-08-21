@@ -11,7 +11,7 @@
   overflow: hidden;
   transform: translateX(-45%);
   border-radius: 2px;
-  background-color: #f9f9f9;
+  background-color: #ffff;
   border-color: rgb(246, 246, 246);
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1000;
@@ -36,7 +36,7 @@
 }
 
 .dropdown .dropdown-wrapper .dropdown-item:hover {
-  background: rgba(236, 234, 234, 0.507);
+  background: #f5faff;
   transition: all .5s;
 }
 
@@ -52,7 +52,7 @@
 .icon-logout::before {
   font-family: "Font Awesome 5 Free";
   cursor: pointer;
-  content: '\f5eb';
+  content: '\f011';
   font-weight: 600;
   color: rgb(84, 84, 84);
   font-size: 1.8rem;
