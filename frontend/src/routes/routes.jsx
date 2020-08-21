@@ -6,6 +6,7 @@ import PaymentSuccess from '../components/common/PaymentSuccess';
 import PopUpLogin from '../components/common/PopUpLogin';
 import { CartProvider } from '../providers/CartProvider';
 import { AuthProvider } from '../providers/AuthProvider';
+import Dashboard from '../components/common/Dashboard';
 import Address from '../components/common/Address';
 import Payment from '../components/common/Payment';
 import PrivateRoute from './PrivateRoute';
@@ -20,6 +21,7 @@ const Routes = () => {
           <Route component={ Home } path="/" exact />
           <Route component={ Cart } path="/cart" exact />
           <Route component={ PopUpLogin } path="/login" exact />
+          <Route component={ Dashboard } path="/dashboard" exact />
           
           <Switch>
             <Route component={ Identification } path="/checkout" exact />
