@@ -9,7 +9,6 @@ import DropDown from '../Dropdown';
 
 const Navbar = () => {
   const [modalLogin, setModalLogin] = useState(false);
-  const [openDropDown, setOpenDropDown] = useState(false);
   const { auth, isAuth } = useAuth();
 
   const openModal = () => {
