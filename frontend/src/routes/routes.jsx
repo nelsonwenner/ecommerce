@@ -21,13 +21,16 @@ const Routes = () => {
           <Route component={ Home } path="/" exact />
           <Route component={ Cart } path="/cart" exact />
           <Route component={ PopUpLogin } path="/login" exact />
-          <Route component={ Dashboard } path="/dashboard" exact />
-          
+  
           <Switch>
             <Route component={ Identification } path="/checkout" exact />
             <PrivateRoute component={ Address } path="/checkout/address" exact />
             <PrivateRoute component={ Payment } path="/checkout/payment" exact />
             <PrivateRoute component={ PaymentSuccess } path="/checkout/success" exact />
+          </Switch>
+
+          <Switch>
+            <PrivateRoute component={ Dashboard } path="/dashboard"exact />
           </Switch>
         </BrowserRouter>
       </CartProvider>
