@@ -2,11 +2,16 @@
   position: relative;
   max-width: 35rem;
   width: 100%;
-  height: 55rem;
+  height: 59.3rem;
   border-radius: 2px;
 
   display: flex;
   flex-direction: column;
+  z-index: 1000;
+}
+
+.sidebar.toolbar-open {
+  transform: translateX(32%);
 }
 
 .sidebar .profile {
@@ -135,4 +140,15 @@
 .option-effect:hover {
   background: #f5faff;
   transition: all .5s;
+}
+
+/*Media query*/
+@media only screen and (max-width:992px) { 
+   
+  .sidebar {
+    position: absolute;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-out;
+  }
+
 }

@@ -4,11 +4,11 @@ import './styles.css';
 import { useAuth } from '../../../../providers/AuthProvider';
 import Option from './Option';
 
-const Sidebar = () => {
+const Sidebar = ({ isToolbar }) => {
   const { auth } = useAuth();
 
   return (
-    <div className="sidebar">
+    <div className={ `sidebar ${ isToolbar ? 'toolbar-open' : ''}` }>
       <div className="profile">
         <span className="icon-profile"></span>
         <p className="hello">Hello,</p>

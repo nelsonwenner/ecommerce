@@ -8,21 +8,24 @@ import Layout from '../Layout';
 const Dashboard = () => {
   const [sidebar, setSidebar] = useState(false);
 
+  const showSidebar = () => setSidebar(!sidebar);
+  
   return (
     <Layout>
-      <Overlay sidebar={ sidebar } />
+      <Overlay sidebar={ sidebar } onClick={ showSidebar } />
       <div className="dashboard-main">
         <div className="container">
-
           <div className="row">
-            <div className="hidden column xlarge-4 large-5 medium-12 small-12">
+            <div className="column xlarge-4 large-5 medium-0 small-0">
               <div className="wrapper-dashboard">
-                <Sidebar />
+                <Sidebar
+                  isToolbar={ sidebar }
+                />
               </div>
             </div>
             <div className="column xlarge-8 large-7 medium-12 small-12" style={{ background: 'blue' }}>
               <div className="wrapper-dashboard-content">
-                <span className="icon-hamburger-sidebar" onClick={ () => setSidebar(!sidebar) } ></span>
+                <span className="icon-hamburger-sidebar" onClick={ showSidebar } ></span>
               </div>
             </div>
           </div>
