@@ -3,6 +3,7 @@ import './styles.css';
 
 import { useAuth } from '../../../../providers/AuthProvider';
 import ApiAuth from '../../../../services/ApiAuth';
+import Item from './Item';
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
@@ -14,13 +15,18 @@ const Order = () => {
       setOrders(data)
     });
   }, []);
-  
+
   return (
     <div className="order-wrapper">
       <h4 className="order-title">Past orders</h4>
-      <div className="order-box-item">
-
-      </div>
+      {orders.map((order, index) => (
+        <Item 
+          key={ index } 
+          date={ order.created_at }
+          items_checkout={ order.items }
+          
+        />
+      ))}
     </div>
   )
 }
