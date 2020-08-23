@@ -115,6 +115,16 @@ class CheckoutSerializer(serializers.ModelSerializer):
         except IntegrityError as e:
             raise serializers.ValidationError("Error: {}".format(e))
 
+class CheckoutDetailSerializer(serializers.ModelSerializer):
+    items = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = Checkout
+        fields = '__all__'
+
+    def get_items(self, obj):
+        return [model_to_dict(check_item) for check_item in obj.checkout_items.all()]
+
 class TokenObtainPairSerializer(TokenObtainPairSerializer):
 
     def validate(self, attrs):
