@@ -6,9 +6,13 @@ import ApiAuth from '../../../../services/ApiAuth';
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
+  const { auth } = useAuth();
 
   useEffect(() => {
-    ApiAuth()
+    ApiAuth(auth.token).get('/checkouts')
+    .then(({ data }) => {
+      setOrders(data)
+    });
   }, []);
   
   return (
