@@ -117,13 +117,17 @@ class CheckoutSerializer(serializers.ModelSerializer):
 
 class CheckoutDetailSerializer(serializers.ModelSerializer):
     items = serializers.SerializerMethodField(read_only=True)
-
+    status = serializers.SerializerMethodField(read_only=True)
+    
     class Meta:
         model = Checkout
         fields = '__all__'
 
     def get_items(self, obj):
         return [model_to_dict(check_item) for check_item in obj.checkout_items.all()]
+
+    def get_status(self, obj):
+        return model_to_dict(Status.objects.get(id=obj.status.id))
 
 class TokenObtainPairSerializer(TokenObtainPairSerializer):
 
