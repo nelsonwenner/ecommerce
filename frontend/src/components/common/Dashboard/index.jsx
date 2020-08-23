@@ -4,6 +4,7 @@ import './styles.css';
 import { Overlay } from './styles';
 import Sidebar from './Sidebar';
 import Layout from '../Layout';
+import Order from './Order';
 
 const Dashboard = () => {
   const [sidebar, setSidebar] = useState(false);
@@ -23,9 +24,10 @@ const Dashboard = () => {
                 />
               </div>
             </div>
-            <div className="column xlarge-8 large-7 medium-12 small-12" style={{ background: 'blue' }}>
+            <div className="column xlarge-8 large-7 medium-12 small-12">
               <div className="wrapper-dashboard-content">
                 <span className="icon-hamburger-sidebar" onClick={ showSidebar } ></span>
+                <Order />
               </div>
             </div>
           </div>

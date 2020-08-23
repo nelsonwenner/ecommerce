@@ -1,0 +1,10 @@
+.order-wrapper {
+  width: 100%;
+}
+
+.order-wrapper .order-title {
+  font-size: 1.8rem;
+  color: rgb(84, 84, 84);
+  margin-left: 1rem;
+  padding-top: 1rem;
+}
