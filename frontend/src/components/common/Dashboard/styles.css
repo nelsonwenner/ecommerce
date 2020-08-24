@@ -1,5 +1,4 @@
 .dashboard-main {
-  position: relative;
   width: 100%;
   margin-top: 14.4rem;
 }
@@ -23,7 +22,7 @@
 
 .icon-hamburger-sidebar:before {
   position: absolute;
-  top: 1rem;
+  top: 0.5rem;
   left: 1rem;
   font-family: "Font Awesome 5 Free";
   cursor: pointer;
