@@ -16,6 +16,7 @@
   position: relative;
   width: 100%;
   height: 58.6rem;
+  margin-left: 1rem;
   background-color: #ffff;
   border-radius: 2px;
 }
@@ -37,12 +38,12 @@
 /*Media query*/
 @media only screen and (max-width:992px) { 
    
-  .hidden {
-    display: none;
-  }
-
   .icon-hamburger-sidebar:before {
     display: block;
+  }
+
+  .wrapper-dashboard-content {
+    margin-left: 0;
   }
 }
 
