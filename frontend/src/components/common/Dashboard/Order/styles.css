@@ -11,6 +11,13 @@
   padding-top: 1rem;
 }
 
+.order-wrapper .order-wrapper-content-scroll {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
 .order-box-item {
   width: 100%;
   border-bottom: 1px solid #e1e1e1;
@@ -29,7 +36,7 @@
   position: relative;
   margin-top: 2.2rem;
   margin-bottom: 2rem;
-  width: 100%;
+  width: 98%;
   max-height: 10rem;
   height: 100%;
   overflow-y: scroll;
@@ -89,4 +96,45 @@
   margin-left: 0.5rem;
 }
 
+.order-box-item 
+.order-content
+.order-product-total {
+  color: rgb(84, 84, 84);
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
 
+.icon-status:before {
+  font-family: "Font Awesome 5 Free";
+  cursor: pointer;
+  content: '\f058';
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.status-default {
+  color: rgb(255, 166, 0);
+}
+
+.status-success {
+  color: green;
+}
+
+.order-box-item 
+.order-content
+.order-status {
+  display: flex;
+  flex-direction: row;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.order-box-item 
+.order-content
+.order-status p {
+  position: relative;
+  top: 3px;
+  font-size: 1.2rem;
+  margin-left: 1rem;
+  color: rgb(84, 84, 84);
+}

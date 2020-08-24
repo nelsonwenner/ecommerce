@@ -19,14 +19,17 @@ const Order = () => {
   return (
     <div className="order-wrapper">
       <h4 className="order-title">Past orders</h4>
-      {orders.map((order, index) => (
-        <Item 
-          key={ index } 
-          date={ order.created_at }
-          items_checkout={ order.items }
-          
-        />
-      ))}
+      <div className="order-wrapper-content-scroll">
+        {orders.map((order, index) => (
+          <Item 
+            key={ index } 
+            date={ order.created_at }
+            items_checkout={ order.items }
+            total={ order.total }
+            status={ order.status.message }
+          />
+        ))}
+      </div>
     </div>
   )
 }
