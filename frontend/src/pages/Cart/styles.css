@@ -1,9 +1,8 @@
 .cart-main {
-  min-height: calc(100% - 200rem);
-  height: auto;
+  height: 100vh;
   padding-left: 1rem;
   padding-right: 1rem;
-  margin-top: 13.5rem;
+  padding-top: 7rem;
 }
 
 .path-page {

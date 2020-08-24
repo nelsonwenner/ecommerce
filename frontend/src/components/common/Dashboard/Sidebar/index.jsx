@@ -5,10 +5,10 @@ import { useAuth } from '../../../../providers/AuthProvider';
 import Option from './Option';
 
 const Sidebar = ({ isToolbar }) => {
-  const { auth } = useAuth();
+  const { auth, logout } = useAuth();
 
   return (
-    <div className={ `sidebar ${ isToolbar ? 'toolbar-open' : ''}` }>
+    <div className={ `sidebar ${ isToolbar ? 'toolbar-open' : ''}` } >
       <div className="profile">
         <span className="icon-profile"></span>
         <p className="hello">Hello,</p>
@@ -24,6 +24,7 @@ const Sidebar = ({ isToolbar }) => {
           name={ 'Account Settings' }
         />
         <Option 
+          onClick={ () => logout() }
           icon={ 'user-logout' }
           name={ 'Logout' }
         />

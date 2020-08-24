@@ -1,3 +1,8 @@
+.payment-success-main {
+  height: 70vh;
+  margin-top: 4rem;
+}
+
 .container .title-checkout-success {
   font-size: 3rem;
   margin-top: 1rem;
