@@ -64,6 +64,6 @@
   margin-top: 10px;
 }
 
-.box-user:hover .dropdown .dropdown-wrapper {
-  display: block;
+.box-user:hover .dropdown {
+  transform: translateX(5%);
 }

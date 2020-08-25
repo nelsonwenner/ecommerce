@@ -100,7 +100,7 @@ class Checkout(AutoCreateUpdatedMixin):
     
     class Meta:
         verbose_name = 'checkout'
-    
+        
     @property
     def total(self):
         sum = 0

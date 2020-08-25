@@ -1,5 +1,6 @@
 from rest_framework_simplejwt.views import TokenObtainPairView
 from payment_gateway.models import PaymentGateway
+from django.forms.models import model_to_dict
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from payment_gateway.serializers import *
@@ -11,7 +12,6 @@ from rest_framework import status
 from .permissions import *
 from .serializers import *
 from .models import *
-
 
 class ApiRoot(APIView):
     name = 'api-root'
@@ -97,11 +97,17 @@ class ProductDetail(RetrieveAPIView):
     queryset = Product.objects.get_queryset()
     serializer_class = ProductSerializer
 
-class CheckoutListView(CreateAPIView):
+class CheckoutListView(ListCreateAPIView):
     name = 'checkout-list-view'
     queryset = Checkout.objects.get_queryset()
     serializer_class = CheckoutSerializer
     permission_classes = [permissions.IsAuthenticated]
+    
+    def list(self, request, *args, **kwargs):
+        current_user = request.user
+        checkouts = Checkout.objects.filter(customer=current_user.id)
+        serializer_checkout = CheckoutDetailSerializer(checkouts, many=True)
+        return Response(serializer_checkout.data, status=status.HTTP_200_OK)
 
 class CheckoutDetail(RetrieveAPIView):
     name = 'checkout-detail'

@@ -24,34 +24,15 @@
       "password": "pbkdf2_sha256$180000$YDGrT1pcKb4Y$ZXgiacltNEw55sWrPRlyQ5INNQx4zCzo3xiUw3qZ6Hs=",
       "last_login": null,
       "is_superuser": false,
-      "username": "felipe",
+      "username": "test",
       "first_name": "",
       "last_name": "",
-      "email": "felipe@gmail.com",
+      "email": "test@gmail.com",
       "is_staff": false,
       "is_active": true,
       "date_joined": "2020-01-01T00:00:01.000Z",
       "groups": [],
       "user_permissions": []
     }
-  },
-  {
-    "model": "auth_core.user",
-    "pk": "62be0292-9c83-4a37-a753-1cf7b46156a1",
-    "fields": {
-      "password": "pbkdf2_sha256$180000$YDGrT1pcKb4Y$ZXgiacltNEw55sWrPRlyQ5INNQx4zCzo3xiUw3qZ6Hs=",
-      "last_login": null,
-      "is_superuser": false,
-      "username": "luan",
-      "first_name": "",
-      "last_name": "",
-      "email": "luan@gmail.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2020-01-01T00:00:02.000Z",
-      "groups": [],
-      "user_permissions": []
-    }
   }
-  
 ]

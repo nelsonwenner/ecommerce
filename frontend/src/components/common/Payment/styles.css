@@ -1,3 +1,8 @@
+.payment-main {
+  height: 70vh;
+  margin-top: 6rem;
+}
+
 .payment-wrapper {
  width: 100%;
  display: flex;

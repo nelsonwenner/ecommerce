@@ -1,0 +1,154 @@
+.order-wrapper {
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.order-wrapper .order-title {
+  font-size: 1.8rem;
+  color: rgb(84, 84, 84);
+  margin-bottom: 1.6rem;
+  padding-top: 1rem;
+}
+
+.order-wrapper .order-wrapper-content-scroll {
+  width: 100%;
+  max-height: 54rem;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.order-box-item {
+  width: 100%;
+  border-bottom: 1px solid #e1e1e1;
+  margin-bottom: 2rem;
+}
+
+.order-box-item .order-content .order-date p {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: rgb(84, 84, 84);
+}
+
+.order-box-item 
+.order-content
+.order-products-wrapper {
+  position: relative;
+  margin-top: 2.2rem;
+  margin-bottom: 2rem;
+  width: 98%;
+  max-height: 10rem;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.order-box-item 
+.order-content
+.order-products-wrapper
+.order-product {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1rem;
+}
+
+.icon-product:before {
+  font-family: "Font Awesome 5 Free";
+  cursor: pointer;
+  content: '\f02d';
+  font-weight: 600;
+  color: rgb(84, 84, 84);
+  font-size: 2.1rem;
+}
+
+.order-box-item 
+.order-content
+.order-products-wrapper
+.order-product
+.product-quantity {
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+  height: 2.2rem;
+  width: 2.2rem;
+  border: 1px solid #e1e1e1;
+  color: rgb(84, 84, 84);
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  margin-left: 0.5rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.order-box-item 
+.order-content
+.order-products-wrapper
+.order-product
+.product-title {
+  position: relative;
+  top: 2px;
+  display: block;
+  color: rgb(84, 84, 84);
+  font-size: 1.5rem;
+  margin-left: 0.5rem;
+}
+
+.order-box-item 
+.order-content
+.order-product-total {
+  color: rgb(84, 84, 84);
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.icon-status:before {
+  font-family: "Font Awesome 5 Free";
+  cursor: pointer;
+  content: '\f058';
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.status-default {
+  color: rgb(255, 166, 0);
+}
+
+.status-success {
+  color: green;
+}
+
+.order-box-item 
+.order-content
+.order-status {
+  display: flex;
+  flex-direction: row;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.order-box-item 
+.order-content
+.order-status p {
+  position: relative;
+  top: 3px;
+  font-size: 1.2rem;
+  margin-left: 1rem;
+  color: rgb(84, 84, 84);
+}
+
+/*Media query*/
+@media only screen and (max-width:992px) { 
+   
+  .order-wrapper .order-wrapper-content-scroll {
+    max-height: 50rem;
+  }
+
+  .order-wrapper .order-title {
+    padding-top: 4rem;
+    margin-top: 2rem;
+  }
+}

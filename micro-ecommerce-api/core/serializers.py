@@ -71,11 +71,15 @@ class ProductSerializer(serializers.ModelSerializer):
         return obj.image.url
 
 class CheckoutItemSerializer(serializers.ModelSerializer):
+    title = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = CheckoutItem
         fields = '__all__'
         read_only_fields = ['checkout']
+
+    def get_title(self, obj):
+        return obj.product.title
 
 class CheckoutSerializer(serializers.ModelSerializer):
     items = CheckoutItemSerializer(many=True)
@@ -114,6 +118,28 @@ class CheckoutSerializer(serializers.ModelSerializer):
                 return checkout
         except IntegrityError as e:
             raise serializers.ValidationError("Error: {}".format(e))
+
+class CheckoutDetailSerializer(serializers.ModelSerializer):
+    items = serializers.SerializerMethodField(read_only=True)
+    status = serializers.SerializerMethodField(read_only=True)
+    total = serializers.SerializerMethodField(read_only=True)
+    
+    class Meta:
+        model = Checkout
+        fields = '__all__'
+
+    def get_total(self, obj):
+        return obj.total
+
+    def get_items(self, obj):
+        return [{
+            'title': check_item.product.title,
+            'quantity': check_item.quantity,
+            'price': check_item.price
+        } for check_item in obj.checkout_items.all()]
+
+    def get_status(self, obj):
+        return model_to_dict(Status.objects.get(id=obj.status.id))
 
 class TokenObtainPairSerializer(TokenObtainPairSerializer):
 

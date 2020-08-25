@@ -1,4 +1,72 @@
-[
+[ 
+  {
+    "model": "payment_gateway.paymentgateway",
+    "pk": "e1182700-d1b0-4585-99bf-6510497602ab",
+    "fields": {
+      "name": "Pagarme",
+      "default": true,
+      "polymorphic_ctype_id": 8,
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "payment_gateway.pagarmegateway",
+    "pk": "e2282812-d1b0-4585-99bf-6510497602ab",
+    "fields": {
+      "api_key": "ak_test_grXijQ4GicOa2BLGZrDRTR5qNQxJW0",
+      "encryption_key": "ek_test_aHGru3d5a7qweiftqXg1bQvbN1c7K0",
+      "paymentgateway_ptr_id": "e1182700-d1b0-4585-99bf-6510497602ab"
+    }
+  },
+
+  {
+    "model": "payment_gateway.paymentmethod",
+    "pk": "e0182812-d1b0-4585-99bf-6510497602ab",
+    "fields": {
+      "name": "billet",
+      "allow_installments": false,
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "payment_gateway.paymentmethod",
+    "pk": "e0282812-d1b0-4585-99bf-6510497602ab",
+    "fields": {
+      "name": "credit_card",
+      "allow_installments": true,
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
+  {
+    "model": "payment_gateway.paymentmethodconfig",
+    "pk": "e0188888-d1b0-4585-99bf-6510497602ab",
+    "fields": {
+      "max_installments": 12,
+      "discount_percentage": 0,
+      "payment_method_id": "e0282812-d1b0-4585-99bf-6510497602ab",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+  
+  {
+    "model": "payment_gateway.paymentmethodconfig",
+    "pk": "e0199999-d1b0-4585-99bf-6510497602ab",
+    "fields": {
+      "max_installments": 0,
+      "discount_percentage": 10,
+      "payment_method_id": "e0182812-d1b0-4585-99bf-6510497602ab",
+      "created_at": "2020-01-01T00:01:00.000Z",
+      "updated_at": "2020-01-01T00:01:00.000Z"
+    }
+  },
+
   {
     "model": "core.status",
     "pk": "e1182812-d1b0-4585-99bf-6510497602ab",

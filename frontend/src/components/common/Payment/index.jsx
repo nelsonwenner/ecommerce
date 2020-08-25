@@ -105,87 +105,89 @@ const Payment = () => {
 
   return (
     <Checkout>
-      <div className="container mt">
-        <div className="row">
-          <div className="column xlarge-8 large-12 medium-12 small-12" >
-            <div className="payment-wrapper">
-              <div className="payment-card">
-                <h4>Payment Methods</h4>
-                <form onSubmit={ handleSubmit(onSubmit) }>
-                  <div className="form-check-wrapper">
-                    <PaymentMethod 
-                      register={ register }
-                      value={ "credit_card" }
-                      img={ card }
-                    />
-
-                    <PaymentMethod 
-                      register={ register }
-                      value={ "bank_slip" }
-                      img={ slip }
-                    />
-                  </div>
-
-                  <fieldset hidden={ watch('payment_method') !== 'credit_card' }>
-                    <div className="field-group-payment">
-                      <Field 
-                        classs={ "field-payment" }
-                        errors={ errors.card_number }
-                        name={ "card_number" }
-                        placeholder={ "number" }
+      <div className="payment-main">
+        <div className="container">
+          <div className="row">
+            <div className="column xlarge-8 large-12 medium-12 small-12" >
+              <div className="payment-wrapper">
+                <div className="payment-card">
+                  <h4>Payment Methods</h4>
+                  <form onSubmit={ handleSubmit(onSubmit) }>
+                    <div className="form-check-wrapper">
+                      <PaymentMethod 
                         register={ register }
+                        value={ "credit_card" }
+                        img={ card }
                       />
 
-                      <Field
-                        classs={ "field-payment" } 
-                        errors={ errors.card_cvv }
-                        name={ "card_cvv" }
-                        placeholder={ "cvv" }
+                      <PaymentMethod 
                         register={ register }
-                      />
-                    </div>
-                  
-                    <div className="field-group-payment mt-15">
-                      <Field
-                        classs={ "field-payment" } 
-                        errors={ errors.card_name }
-                        name={ "card_name" }
-                        placeholder={ "card holder" }
-                        register={ register }
-                      />
-
-                      <Field 
-                        classs={ "field-payment" }
-                        errors={ errors.card_expiration }
-                        name={ "card_expiration" }
-                        placeholder={ "MM/AA" }
-                        register={ register }
+                        value={ "bank_slip" }
+                        img={ slip }
                       />
                     </div>
 
-                    <Select 
-                      classs={ "field-select mt-20" }
-                      errors={ errors.installments }
-                      name={ "installments" }
-                      cartTotal={ getCartTotal() }
-                      register={ register }
-                    />
+                    <fieldset hidden={ watch('payment_method') !== 'credit_card' }>
+                      <div className="field-group-payment">
+                        <Field 
+                          classs={ "field-payment" }
+                          errors={ errors.card_number }
+                          name={ "card_number" }
+                          placeholder={ "number" }
+                          register={ register }
+                        />
 
-                    <button type="submit" className="btn btn-primary btn-effect">Save</button>
-                  </fieldset>
+                        <Field
+                          classs={ "field-payment" } 
+                          errors={ errors.card_cvv }
+                          name={ "card_cvv" }
+                          placeholder={ "cvv" }
+                          register={ register }
+                        />
+                      </div>
+                    
+                      <div className="field-group-payment mt-15">
+                        <Field
+                          classs={ "field-payment" } 
+                          errors={ errors.card_name }
+                          name={ "card_name" }
+                          placeholder={ "card holder" }
+                          register={ register }
+                        />
 
-                  <fieldset hidden={ watch('payment_method') !== 'bank_slip' }>
-                    <button type="submit" className="btn btn-primary btn-effect">pay with bank slip</button>
-                  </fieldset>
-                </form>
+                        <Field 
+                          classs={ "field-payment" }
+                          errors={ errors.card_expiration }
+                          name={ "card_expiration" }
+                          placeholder={ "MM/AA" }
+                          register={ register }
+                        />
+                      </div>
+
+                      <Select 
+                        classs={ "field-select mt-20" }
+                        errors={ errors.installments }
+                        name={ "installments" }
+                        cartTotal={ getCartTotal() }
+                        register={ register }
+                      />
+
+                      <button type="submit" className="btn btn-primary btn-effect">Save</button>
+                    </fieldset>
+
+                    <fieldset hidden={ watch('payment_method') !== 'bank_slip' }>
+                      <button type="submit" className="btn btn-primary btn-effect">pay with bank slip</button>
+                    </fieldset>
+                  </form>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="column xlarge-4 large-12 medium-12 small-12">
-            <SummaryDetail 
-              quantity={ getProductQuantity() }
-              total={ getCartTotal() }
-            />
+            <div className="column xlarge-4 large-12 medium-12 small-12">
+              <SummaryDetail 
+                quantity={ getProductQuantity() }
+                total={ getCartTotal() }
+              />
+            </div>
           </div>
         </div>
       </div>
