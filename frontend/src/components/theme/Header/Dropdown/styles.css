@@ -3,7 +3,7 @@
   position: relative;
   margin-top: 10px;
   z-index: 1000;
-  transform: translateX(655%);
+  transform: translateX(1000%);
   transition: transform 0.3s ease-out;
 }
 
