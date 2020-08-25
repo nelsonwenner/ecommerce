@@ -6,6 +6,7 @@ import { useAuth } from '../../../providers/AuthProvider';
 import redirect from '../../../routes/redirect';
 import { CustomInput } from '../CustomInput';
 import { useForm } from "react-hook-form";
+import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
 
 Modal.setAppElement('body');
@@ -81,6 +82,13 @@ const LoginModal = ({ openModal, closeModal, path }) => {
             )
           }
         </div>
+        
+        <Link to={ '/register' }>
+          <div className="link-register">
+            <p>Sign up</p> 
+            <span>&rarr;</span>
+          </div>
+        </Link>
       </form>
     </Modal>
   )
