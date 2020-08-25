@@ -1,37 +1,3 @@
-.ReactModal__Content_Login {
-  position: absolute;
-  width: 100%;
-  outline: none;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) !important;
-  background-color: rgba(255, 255, 255, 0);
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.ReactModal__Overlay_Login {
-  z-index: 150000;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0);
-  opacity: 0;
-  transition: opacity 1000ms ease-in-out;
-}
-
-.ReactModal__Overlay--after-open{
-  opacity: 1;
-}
-
-.ReactModal__Overlay--before-close{
-  opacity: 0;
-}
-
 .login-welcome {
   text-align: center;
   margin-bottom: 3rem;
@@ -51,7 +17,8 @@
 .form-login {
   max-width: 50rem;
   width: 100%;
-  height: 40rem;
+  height: 100%;
+  padding-bottom: 6.5rem;
   border-radius: 2%;
   background: linear-gradient(-135deg, #f5ca0d, #fcfcf1);
   box-shadow: 0 1px 10px 0 rgba(5, 5, 5, .13);
@@ -130,6 +97,21 @@
   font-weight: 900;
 }
 
+.user-signup-icon:before  {
+  content: '\f406';
+  font-weight: 900;
+}
+
+.document-icon:before  {
+  content: '\f2bb';
+  font-weight: 900;
+}
+
+.phone-user-icon:before  {
+  content: '\f3cd';
+  font-weight: 900;
+}
+
 .mb-16 {
   margin-bottom: 2rem;
 }
@@ -148,6 +130,29 @@
 .error-login {
   position: relative;
   top: 1rem;
+}
+
+.link-register {
+  position: absolute;
+  bottom: 1.2rem;
+  margin-left: 4rem;
+  cursor: pointer;
+  transition: all .5s;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.link-register span {
+  position: relative;
+  bottom: 0.7rem;
+  left: 0.5rem;
+  font-size: 2.5rem;
+}
+
+.link-register:hover {
+  transition: all .5s;
+  color: #f5ca0d;
 }
 
 /*Media query*/

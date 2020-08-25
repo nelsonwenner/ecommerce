@@ -45,8 +45,12 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  const signUp = async (data) => {
+    return await api.post('/clients', data);
+  }
+
   return (
-    <AuthContext.Provider value={ {auth, signIn, logout, isAuth, getUserId} }>
+    <AuthContext.Provider value={ {auth, signIn, signUp, logout, isAuth, getUserId} }>
       { children }
     </AuthContext.Provider>
   )

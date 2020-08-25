@@ -2,8 +2,8 @@ import React,{ useState } from 'react';
 import './styles.css';
 
 import { useAuth } from '../../../../providers/AuthProvider';
+import WrapperAuth from '../../../common/WrapperAuth';
 import logo from '../../../../assets/logo-nav.png';
-import LoginModal from '../../../common/Login';
 import { Link } from 'react-router-dom';
 import DropDown from '../Dropdown';
 
@@ -45,10 +45,9 @@ const Navbar = () => {
           }
         </div>
       </div>
-      <LoginModal 
+      <WrapperAuth 
         openModal={ modalLogin }
         closeModal={ closeModal }
-        path={ '/' }
       />
     </div>
   )

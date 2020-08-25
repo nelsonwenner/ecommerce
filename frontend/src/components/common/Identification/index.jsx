@@ -4,7 +4,7 @@ import './styles.css';
 import { useAuth } from '../../../providers/AuthProvider';
 import Checkout from '../../../pages/Checkout';
 import { useHistory } from 'react-router-dom';
-import LoginModal from '../Login';
+import WrapperAuth from '../WrapperAuth';
 
 const Identification = () => {
   const history = useHistory();
@@ -21,7 +21,7 @@ const Identification = () => {
   return (
     <Checkout>
       <div className="identification-main"></div>
-      <LoginModal 
+      <WrapperAuth 
         openModal={ !isAuth() }
         path={ '/checkout/address' }
       />
