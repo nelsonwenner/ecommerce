@@ -7,13 +7,13 @@ import Login from '../Login';
 
 Modal.setAppElement('body');
 
-const WrapperAuth = ({ openModal, closeModal }) => {
+const WrapperAuth = ({ openModal, closeModal, path }) => {
   const [signUp, setSignUp] = useState(false);
 
   const activeSignUp = () => {
     setSignUp(!signUp);
   }
-
+  
   return (
     <Modal
       isOpen={ openModal }
@@ -27,6 +27,7 @@ const WrapperAuth = ({ openModal, closeModal }) => {
         ? (
           <Login 
             activeSignUp={ activeSignUp }
+            path={ path }
           />
         )
         : (

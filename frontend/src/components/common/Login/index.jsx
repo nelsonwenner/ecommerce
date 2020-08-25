@@ -12,7 +12,7 @@ const validationSchema = yup.object().shape({
   password: yup.string().label('Password').required().max(25),
 })
 
-const Login = ({ activeSignUp }) => {
+const Login = ({ activeSignUp, path }) => {
   const { register, handleSubmit, errors } = useForm({
     validationSchema: validationSchema,
   });
@@ -27,8 +27,8 @@ const Login = ({ activeSignUp }) => {
     if (error) {
       return setError('authentication failure');
     }
-
-    redirect('/');
+    
+    redirect(path);
   }
   
   return (

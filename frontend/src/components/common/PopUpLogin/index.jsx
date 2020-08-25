@@ -9,6 +9,7 @@ const PopUpLogin = () => {
   return (
     <WrapperAuth 
       openModal={ !isAuth() }
+      path={ '/' }
     />
   )
 }
