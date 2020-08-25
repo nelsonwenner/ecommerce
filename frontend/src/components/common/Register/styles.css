@@ -1,0 +1,9 @@
+.form-signup {
+  max-width: 50rem;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 3rem;
+  border-radius: 2%;
+  background: linear-gradient(-135deg, #f5ca0d, #fcfcf1);
+  box-shadow: 0 1px 10px 0 rgba(5, 5, 5, .13);
+}

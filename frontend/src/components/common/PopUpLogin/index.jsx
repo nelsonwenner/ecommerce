@@ -1,15 +1,14 @@
 import React from 'react';
 
 import { useAuth } from '../../../providers/AuthProvider';
-import LoginModal from '../Login';
+import WrapperAuth from '../WrapperAuth';
 
 const PopUpLogin = () => {
   const { isAuth } = useAuth();
   
   return (
-    <LoginModal 
+    <WrapperAuth 
       openModal={ !isAuth() }
-      path={ '/' }
     />
   )
 }
