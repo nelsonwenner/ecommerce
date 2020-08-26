@@ -48,6 +48,7 @@ const Navbar = () => {
       <WrapperAuth 
         openModal={ modalLogin }
         closeModal={ closeModal }
+        path={ '/' }
       />
     </div>
   )
