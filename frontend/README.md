@@ -24,7 +24,7 @@ $ cp .env.example .env
 /* Install dependencies */
 $ npm install
 
-# Run the project
+/* Run the project */
 $ npm start
 ```
   * Open frontend, the host [localhost:3000](http://localhost:3000) 
