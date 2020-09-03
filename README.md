@@ -4,6 +4,8 @@
 
 <p align="center">
   
+  <img alt="Workflow" src="https://github.com/nelsonwenner/ecommerce/workflows/CI/badge.svg">
+
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/nelsonwenner/ecommerce?color=%2304D361">
 
   <a href="https://github.com/nelsonwenner">
@@ -15,12 +17,6 @@
   <a href="https://github.com/nelsonwenner/ecommerce/stargazers">
     <img alt="Stargazers" src="https://img.shields.io/github/stars/nelsonwenner/ecommerce?style=social">
   </a>
-</p>
-
-<p align="center">
-  <a href="#technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#getting-started">Getting Started</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#license">License</a>
 </p>
 
 ## :warning: About the project
