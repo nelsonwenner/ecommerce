@@ -23,7 +23,7 @@ jobs:
         cd ..
     - name: Test container micro-ecommerce-api
       run: |
-        docker run --network container:micro-ecommerce-app jwilder/dockerize -wait http://localhost:8000/admin -timeout 120s -wait-retry-interval 5s
+        docker run --network container:micro-ecommerce-app jwilder/dockerize -wait http://localhost:8000 -timeout 600s -wait-retry-interval 10s
     - name: Execute Frontend
       run: |
         cd frontend
