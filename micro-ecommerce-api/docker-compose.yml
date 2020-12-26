@@ -11,10 +11,10 @@ services:
     ports:
       - "8000:8000"
     depends_on:
+      - rabbitmq
       - database
     networks:
       - default
-      - rabbitmq_broker-ecommerce
   
   worker:
     build: .
@@ -27,7 +27,6 @@ services:
       - app
     networks:
       - default
-      - rabbitmq_broker-ecommerce
   
   database:
     container_name: "ecommerce-database"
@@ -44,7 +43,22 @@ services:
     tty: true
     networks:
       - default
-
+    
+  rabbitmq:
+    image: 'rabbitmq:3.8-management-alpine'
+    container_name: ecommerce-rabbitmq
+    hostname: rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    volumes:
+      - './.docker/rabbitmq/data:/var/lib/rabbitmq/mnesia'
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin 
+      - RABBITMQ_DEFAULT_PASS=admin
+    networks:
+      - default
+  
   adminer:
     container_name: adminer-container
     image: adminer
@@ -57,5 +71,3 @@ services:
 networks:
   default:
     driver: bridge
-  rabbitmq_broker-ecommerce:
-    external: true
