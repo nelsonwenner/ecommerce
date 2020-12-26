@@ -23,9 +23,8 @@
   <a href="#license">License</a>
 </p>
 
-## :warning: About the project
-
-#### Warning, this project is an example where it can be used as a basis for building a more complex system.
+## :bulb: About the project
+#### The application was built using the concepts of microservices and architected with Docker.
 
 ## :telescope: System architecture
 <div align="center">
@@ -43,19 +42,40 @@
 * [RabbitMQ](https://www.cloudamqp.com/)
 
 ## :electric_plug: Prerequisites
-* Docker Compose version (>= 1.25.4)
-* Docker version (>= 19.03.12)
-* Node version (>= 12.18.1)
-* Npm version (>= 6.14.5)
+* Docker Compose version (>= 1.25.x)
+* Docker version (>= 19.03.x)
+* PostgreSql (>= 9.x)
+* Node version (>= 12.18.x)
+* Npm version (>= 6.14.x)
 * Python (>= 3.x)
 
 ## :information_source: Getting Started
-The application was built using the concepts of microservices and architected with Docker. To run, it will be necessary to run or command the docker-compose up.
-Access each microservice respectively and read **README.md** to see more details on how to run.
+  1. Fork this repository and clone it on your machine.
+  2. Change the directory to ecommerce where you cloned it.
+  
+## :closed_lock_with_key: Backend Getting Started 
 
-1. [Queue rabbitMQ](https://github.com/nelsonwenner/ecommerce/tree/master/rabbitmq)
-2. [Microservice ecommerce and worker](https://github.com/nelsonwenner/ecommerce/tree/master/micro-ecommerce-api)
-3. [Frontend ecommerce](https://github.com/nelsonwenner/ecommerce/tree/master/frontend)
+```shell
+/* After clone this repo, enter in the micro-ecommerce-api folder */
+$ docker-compose up
+```
+
+## :computer: Web Application Getting Started
+
+```shell
+/* After clone this repo, enter in the Web folder */
+$ cd frontend
+
+/* Create `.env` of the system */
+$ cp .env.example .env
+
+/* Install dependencies */
+$ npm install
+
+/* Run the project */
+$ npm start
+```
+  * Certify yourself that the backend is running on [localhost:8000](http://localhost:8000), Open frontend, the host [localhost:3000](http://localhost:3000) 
 
 ## :memo: License
 This project is under the MIT license. See the [LICENSE](LICENSE.md) for more information.
