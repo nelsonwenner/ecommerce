@@ -35,6 +35,7 @@
 ## :rocket: Technologies
 * [Docker](https://www.docker.com/)
 * [DockerCompose](https://docs.docker.com/compose/)
+* [PostgreSql](https://www.postgresql.org/)
 * [Django](https://www.djangoproject.com/)
 * [Celery](https://docs.celeryproject.org/en/latest/django/first-steps-with-django.html)
 * [Node](https://nodejs.org/en/)
