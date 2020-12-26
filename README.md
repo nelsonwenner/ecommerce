@@ -57,7 +57,10 @@
 
 ```shell
 /* After clone this repo, enter in the micro-ecommerce-api folder */
-$ docker-compose up
+$ ./container-setup or docker-compose up
+
+/* down all containers */
+$ docker-compose down
 ```
 
 ## :computer: Web Application Getting Started
