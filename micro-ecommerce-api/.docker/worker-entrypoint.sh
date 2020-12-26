@@ -1,5 +1,9 @@
 #!/bin/bash
 
-pip install -r requirements.txt
 cd /home/django/app
-dockerize -wait tcp://app:8000 -timeout 10s celery worker -B -l info -A config.celery -s /tmp/celerybeat-schedule
+
+pip install -r requirements.txt
+
+dockerize -wait tcp://app:8000 -timeout 2700s -wait-retry-interval 10s
+
+celery worker -B -l info -A config.celery -s /tmp/celerybeat-schedule
