@@ -20,11 +20,7 @@ jobs:
     - name: Test container rabbitmq
       run: |
         docker run --network container:ecommerce-rabbitmq jwilder/dockerize -wait http://rabbitmq:15672 -timeout 500s -wait-retry-interval 5s
-
+      
     - name: Test container app
       run: |
         docker run --network container:micro-ecommerce-app jwilder/dockerize -wait http://app:8000 -timeout 500s -wait-retry-interval 5s
-
-    - name: Test container worker
-      run: |
-        docker run --network container:micro-ecommerce-worker jwilder/dockerize -wait http://worker:8000 -timeout 500s -wait-retry-interval 5s

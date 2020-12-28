@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd /home/django/app
+
 if [ ! -f ".env" ]; then
   cp .env.example .env
 fi
