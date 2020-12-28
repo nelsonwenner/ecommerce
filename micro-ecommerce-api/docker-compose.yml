@@ -25,6 +25,7 @@ services:
       - .:/home/django/app
     depends_on:
       - app
+      - database
     networks:
       - default
   

@@ -4,6 +4,8 @@
 
 <p align="center">
   
+  <img alt="Workflow" src="https://github.com/nelsonwenner/ecommerce/workflows/CI/badge.svg">
+
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/nelsonwenner/ecommerce?color=%2304D361">
 
   <a href="https://github.com/nelsonwenner">
