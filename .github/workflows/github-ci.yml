@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-  
+
     - name: docker run
       run: |
         cd micro-ecommerce-api
@@ -15,12 +15,12 @@ jobs:
     
     - name: Test container database
       run: |
-        docker run --network container:ecommerce-database jwilder/dockerize -wait http://database:5432 -timeout 500s -wait-retry-interval 5s
+        docker run --network container:ecommerce-database jwilder/dockerize -wait http://localhost:5432 -timeout 500s -wait-retry-interval 5s
     
     - name: Test container rabbitmq
       run: |
-        docker run --network container:ecommerce-rabbitmq jwilder/dockerize -wait http://rabbitmq:15672 -timeout 500s -wait-retry-interval 5s
-      
+        docker run --network container:ecommerce-rabbitmq jwilder/dockerize -wait http://localhost:15672 -timeout 500s -wait-retry-interval 5s
+
     - name: Test container app
       run: |
-        docker run --network container:micro-ecommerce-app jwilder/dockerize -wait http://app:8000 -timeout 500s -wait-retry-interval 5s
+        docker run --network container:micro-ecommerce-app jwilder/dockerize -wait http://localhost:8000 -timeout 500s -wait-retry-interval 5s
