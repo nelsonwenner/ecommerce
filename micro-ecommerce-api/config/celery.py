@@ -10,7 +10,7 @@ import os
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 
-app = Celery('celeryapp')
+app = Celery('celery_app')
 
 '''
 Using a string here means the worker doesn't have to serialize
