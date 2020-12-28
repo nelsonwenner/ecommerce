@@ -3,7 +3,7 @@
 cd /home/django/app
 
 if [ ! -f ".env" ]; then
-  sudo cp .env.example .env
+  cp .env.example .env
 fi
 
 pip install -r requirements.txt
