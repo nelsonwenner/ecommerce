@@ -11,8 +11,7 @@ jobs:
     - name: docker run
       run: |
         cd micro-ecommerce
-        docker/build
-        docker/server
+        docker-compose up -d
     
     - name: Test container database
       run: |
