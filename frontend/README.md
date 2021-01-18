@@ -17,16 +17,31 @@
 
 ## :computer: Getting started the web application
 
+* Go at the root of the frontend app:
+
 ```shell
-/* Create `.env` of the system */
+$ cd frontend
+```
+
+* Create `.env` of the system 
+  
+```shell
 $ cp .env.example .env
+```
 
-/* Install dependencies */
+* Install dependencies
+
+```shell
 $ npm install
+```
 
-/* Run the project */
+* Run the project
+
+```shell
 $ npm start
 ```
-  * Open frontend, the host [localhost:3000](http://localhost:3000) 
+
+* Certify yourself that the backend is running on [localhost:8000](http://localhost:8000), Open frontend, the host [localhost:3000](http://localhost:3000) 
+Open frontend, the host [localhost:3000](http://localhost:3000) 
 
 ---

@@ -59,32 +59,7 @@
 * [GETTING_STARTED](micro-ecommerce/docker/README.md) Follow the instructions on how to run the infrastructure on the docker quickly.
 
 ## :computer: Web Application Getting Started
-
-* Go at the root of the frontend app:
-
-```shell
-$ cd frontend
-```
-
-* Create `.env` of the system 
-  
-```shell
-$ cp .env.example .env
-```
-
-* Install dependencies
-
-```shell
-$ npm install
-```
-
-* Run the project
-
-```shell
-$ npm start
-```
-
-* Certify yourself that the backend is running on [localhost:8000](http://localhost:8000), Open frontend, the host [localhost:3000](http://localhost:3000) 
+* [GETTING_STARTED](frontend/README.md) Follow the instructions on how to run the application frontend.
 
 ## :memo: License
 This project is under the MIT license. See the [LICENSE](LICENSE.md) for more information.
