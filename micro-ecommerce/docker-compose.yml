@@ -4,10 +4,10 @@ services:
   app:
     build: .
     container_name: micro-ecommerce-app
-    working_dir: /home/django/app
-    entrypoint: ./.docker/app-entrypoint.sh
+    working_dir: /usr/src/app
+    entrypoint: ./docker/app-entrypoint.sh
     volumes:
-      - .:/home/django/app
+      - .:/usr/src/app
     ports:
       - "8000:8000"
     depends_on:
@@ -20,9 +20,9 @@ services:
     build: .
     container_name: micro-ecommerce-worker
     restart: on-failure
-    entrypoint: ./.docker/worker-entrypoint.sh
+    entrypoint: ./docker/worker-entrypoint.sh
     volumes:
-      - .:/home/django/app
+      - .:/usr/src/app
     depends_on:
       - app
       - database
@@ -35,13 +35,12 @@ services:
     ports: 
       - "5431:5432"
     volumes: 
-      - ./.docker/postgres/data:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root@123
       - POSTGRES_DB=database
     restart: always
-    tty: true
     networks:
       - default
     
@@ -53,7 +52,7 @@ services:
       - "15672:15672"
       - "5672:5672"
     volumes:
-      - './.docker/rabbitmq/data:/var/lib/rabbitmq/mnesia'
+      - rabbitmq:/var/lib/rabbitmq/mnesia
     environment:
       - RABBITMQ_DEFAULT_USER=admin 
       - RABBITMQ_DEFAULT_PASS=admin
@@ -68,6 +67,10 @@ services:
     restart: always
     networks: 
       - default
+
+volumes:
+  postgres:
+  rabbitmq:
 
 networks:
   default:

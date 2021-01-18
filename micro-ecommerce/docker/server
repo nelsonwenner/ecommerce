@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -e
+
+# This script runs the Django server and logs the screen output.
+
+DATE=`date +%Y%m%d-%H%M%S-%3N`
+docker/server-log 2>&1 | tee log/server-$DATE.log
