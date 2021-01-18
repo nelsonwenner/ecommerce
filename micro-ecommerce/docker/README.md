@@ -31,7 +31,8 @@ $ docker/build
 ```sh
 $ docker/server
 ```
-* View the app in the browser at `http://localhost:8000`.
+* The default admin user is 'admin@user.com' with the password '123456'.
+* View the app in the browser at `http://localhost:8000/admin`.
 * You will then get the trace of the containers in the terminal. You can stop the containers using Ctrl-C in the terminal.
 
 ## :page_with_curl:	Script Summary
