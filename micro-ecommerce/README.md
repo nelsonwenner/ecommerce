@@ -1,4 +1,4 @@
-<h1 align="center">Ecommerce - API REST</h1>
+<h1 align="center">Ecommerce</h1>
 
 <p align="center">
 
@@ -27,13 +27,6 @@
   <img alt="diagram" src="./screens/diagram.png" />
 </p>
 
-## :shield: Admin Access dashboard
-
-```
-Email: admin@user.com
-Password: 123456
-```
-  * Open the host [localhost:8000/admin](http://localhost:8000/admin) 
 
 ## :memo: License
 This project is under the MIT license. See the [LICENSE](LICENSE.md) for more information.
