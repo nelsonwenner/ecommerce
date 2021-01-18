@@ -8,14 +8,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: docker build
-      run: |
-        cd micro-ecommerce
-        docker/build
-    
     - name: docker run
       run: |
         cd micro-ecommerce
+        docker/build
         docker/server
     
     - name: Test container database
