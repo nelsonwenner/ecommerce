@@ -7,11 +7,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-
+    
+    - name: docker build
+      run: |
+        cd micro-ecommerce
+        docker/build
+    
     - name: docker run
       run: |
-        cd micro-ecommerce-api
-        docker-compose up -d
+        cd micro-ecommerce
+        docker/server
     
     - name: Test container database
       run: |
