@@ -30,7 +30,7 @@
 
 ## :telescope: System architecture
 <div align="center">
-  <img alt="system-architecture" src="./screens/system-ecommerce.png" />
+  <img alt="system-architecture" src="./micro-ecommerce/screens/system-ecommerce.png" />
 </div>
 
 ## :rocket: Technologies
@@ -49,38 +49,17 @@
 * PostgreSql (>= 9.x)
 * Node version (>= 12.18.x)
 * Npm version (>= 6.14.x)
-* Python (>= 3.x)
+* Python (>= 3.7)
 
 ## :information_source: Getting Started
   1. Fork this repository and clone it on your machine.
   2. Change the directory to ecommerce where you cloned it.
   
 ## :closed_lock_with_key: Backend Getting Started 
-
-```shell
-/* After clone this repo, enter in the micro-ecommerce-api folder */
-$ ./container-setup or docker-compose up
-
-/* down all containers */
-$ docker-compose down
-```
+* [GETTING_STARTED](micro-ecommerce/docker/README.md) Follow the instructions on how to run the infrastructure on the docker quickly.
 
 ## :computer: Web Application Getting Started
-
-```shell
-/* After clone this repo, enter in the Web folder */
-$ cd frontend
-
-/* Create `.env` of the system */
-$ cp .env.example .env
-
-/* Install dependencies */
-$ npm install
-
-/* Run the project */
-$ npm start
-```
-  * Certify yourself that the backend is running on [localhost:8000](http://localhost:8000), Open frontend, the host [localhost:3000](http://localhost:3000) 
+* [GETTING_STARTED](frontend/README.md) Follow the instructions on how to run the application frontend.
 
 ## :memo: License
 This project is under the MIT license. See the [LICENSE](LICENSE.md) for more information.
