@@ -28,7 +28,7 @@ class CheckoutItemAdmin(ModelAdmin):
     list_display = ('get_customer', 'get_date')
     
     def get_customer(self, obj):
-        return obj.checkout.customer.email
+        return obj.checkout.customer.user.email
 
     get_customer.short_description = 'client'
 
@@ -46,7 +46,7 @@ class CheckoutAdmin(ModelAdmin):
     inlines = (CheckoutInline, )
 
     def get_customer(self, obj):
-        return obj.customer.email
+        return obj.customer.user.email
 
     get_customer.short_description = 'client'
 

@@ -104,4 +104,4 @@ class CheckoutItem(AutoCreateUpdatedMixin):
         verbose_name = 'checkout item'
 
     def __str__(self):
-        return "Email: {} Date: {}".format(self.checkout.customer.email, self.created_at)
+        return "Email: {} Date: {}".format(self.checkout.customer.user.email, self.created_at)
