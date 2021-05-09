@@ -1,58 +1,56 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from payment_gateway.proccess_payment import proccess_payment_simulation
 from payment_gateway.serializers import PaymentMethodSerializer
+from rest_framework.validators import UniqueValidator
 from django.db import transaction, IntegrityError
-from django.forms.models import model_to_dict
 from rest_framework.response import Response
 from rest_framework import serializers
 from config.celery import _publish
+from auth_core.models import User
 from rest_framework import status
 from django.db import transaction
 from .models import *
 
-class ClientSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(source='auth_core.user.password', write_only=True)
-    email = serializers.EmailField()
-
+class UserSerializer(serializers.ModelSerializer):  
     class Meta:
-        model = Customer
-        fields = ['id', 'name', 'email', 'password', 'phone', 'personal_document']
-    
-    def create(self, validated_data):
-        if Customer.objects.filter(email=validated_data['email']).exists():
-            raise serializers.ValidationError("Error: This email already exists")
-        user_data = validated_data.pop('auth_core')['user']
-        user_data['username'] = validated_data['name']
-        user_data['email'] = validated_data['email']
-        userClient = UserClient.objects.create_client(**user_data)
-        customer = Customer.objects.create(id=userClient.id, user=userClient, **validated_data)
-        return customer
+        model = User
+        fields = ['username', 'email']
 
-class AddressSerializer(serializers.ModelSerializer):
-    customer = serializers.CharField(write_only=True)
-    
+class AddressSerializer(serializers.ModelSerializer):  
     class Meta:
         model = Address
-        fields = ['id', 'customer', 'street', 'suite', 'city', 'zipcode']
-        read_only_fields = ['customer']
-    
-    def create(self, validated_data):
-        user_id = validated_data.pop('customer')
-        customer = Customer.objects.get(id=user_id)
-        return Address.objects.create(customer=customer, **validated_data)
-
-class StatusSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Status
         fields = '__all__'
+        read_only_fields = ['customer']
 
-class StatusDetailSerializer(serializers.ModelSerializer):
-    message = serializers.CharField(style={'input_type': 'charfild'})
-
+class ClientSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    username = serializers.CharField(write_only=True, required=True)
+    email = serializers.EmailField(write_only=True, 
+    validators=[UniqueValidator(queryset=User.objects.all())], required=True)
+    password = serializers.CharField(min_length=4, write_only=True, required=True)
+    address = AddressSerializer(required=True)
     class Meta:
-        model = Status
-        fields = ['url', 'message']
+        model = Customer
+        fields = [
+            'id', 'user', 'username', 
+            'email', 'password', 'phone', 
+            'personal_document', 'address'
+        ]
+
+    def create(self, validated_data):
+        user_fields = ['username', 'email', 'password']
+        user_data = {f: validated_data.get(f) for f in user_fields}
+
+        customer_fields = ['phone', 'personal_document']
+        customer_data = {f: validated_data.get(f) for f in customer_fields}
+
+        address = validated_data.pop('address')
+
+        user = User.objects.create_user(**user_data)
+        customer = Customer.objects.create(id=user.id, user=user, **customer_data)
+        customer_address = Address.objects.create(**address, customer=customer)
+        customer.address = customer_address
+        return customer
 
 class CategorySerializer(serializers.ModelSerializer):
 
@@ -121,9 +119,8 @@ class CheckoutSerializer(serializers.ModelSerializer):
 
 class CheckoutDetailSerializer(serializers.ModelSerializer):
     items = serializers.SerializerMethodField(read_only=True)
-    status = serializers.SerializerMethodField(read_only=True)
     total = serializers.SerializerMethodField(read_only=True)
-    
+
     class Meta:
         model = Checkout
         fields = '__all__'
@@ -137,9 +134,6 @@ class CheckoutDetailSerializer(serializers.ModelSerializer):
             'quantity': check_item.quantity,
             'price': check_item.price
         } for check_item in obj.checkout_items.all()]
-
-    def get_status(self, obj):
-        return model_to_dict(Status.objects.get(id=obj.status.id))
 
 class TokenObtainPairSerializer(TokenObtainPairSerializer):
 
