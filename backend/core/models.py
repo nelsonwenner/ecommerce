@@ -1,6 +1,6 @@
 from common.models import BaseCustomer, AutoCreateUpdatedMixin
 from payment_gateway.models import PaymentMethod
-from auth_core.models import UserClient
+from auth_core.models import User
 from autoslug import AutoSlugField
 from django.conf import settings
 from django.db import models
@@ -8,8 +8,7 @@ import uuid
 import os
 
 class Customer(BaseCustomer):
-    user = models.OneToOneField(UserClient, on_delete=models.CASCADE, related_name='user_client')
-    phone = models.CharField(max_length=12)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_client')
 
     class Meta:
         verbose_name = 'client'
@@ -31,25 +30,6 @@ class Address(AutoCreateUpdatedMixin):
 
     def __str__(self):
         return self.city
-
-class Status(AutoCreateUpdatedMixin):
-
-    STATUS = (
-        ('Processing Purchase', 'Processing Purchase'),
-        ('Approved Purchase', 'Approved Purchase'),
-        ('Purchase Denied', 'Purchase Denied'),
-        ('Purchase Denied', 'Purchase sent'),
-    )
-    
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    message = models.CharField(max_length=30, choices=STATUS)
-    
-    class Meta:
-        verbose_name = 'status'
-        verbose_name_plural = 'status'
-
-    def __str__(self):
-        return self.message
 
 class Category(AutoCreateUpdatedMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -88,11 +68,16 @@ class Product(AutoCreateUpdatedMixin):
         return self.title
 
 class Checkout(AutoCreateUpdatedMixin):
+    class Status(models.TextChoices):
+        PROCESSING = 'PROCESSING', ('Processing Purchase')
+        APPROVED = 'APPROVED', ('Approved Purchase')
+        DENIED = 'DENIED', ('Purchase Denied')
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='user_client_checkout')
     address = models.ForeignKey(Address, on_delete=models.PROTECT)
     payment_method = models.ForeignKey(PaymentMethod, on_delete=models.PROTECT, verbose_name='payment method')
-    status = models.ForeignKey(Status, on_delete=models.PROTECT, null=True, related_name="status")
+    status = models.CharField(max_length=30, choices=Status.choices, default=Status.PROCESSING)
     installments = models.SmallIntegerField(blank=True, null=True, verbose_name='number of installments')
     bank_slip_url = models.URLField(blank=True, null=True, verbose_name='billet url')
     remote_id = models.CharField(max_length=255, blank=True, null=True, default=None, verbose_name='Remote invoice ID',
@@ -100,7 +85,7 @@ class Checkout(AutoCreateUpdatedMixin):
     
     class Meta:
         verbose_name = 'checkout'
-        
+
     @property
     def total(self):
         sum = 0

@@ -14,9 +14,6 @@ urlpatterns = [
     path('clients', ClientListView.as_view(), name=ClientListView.name),
     path('clients/<str:pk>', ClientDetail.as_view(), name=ClientDetail.name),
 
-    path('status', StatusListView.as_view(), name=StatusListView.name),
-    path('status/<str:pk>', StatusDetail.as_view(), name=StatusDetail.name),
-
     path('categories', CategoryListView.as_view(), name=CategoryListView.name),
     path('categories/<str:pk>', CategoryDetail.as_view(), name=CategoryDetail.name),
 

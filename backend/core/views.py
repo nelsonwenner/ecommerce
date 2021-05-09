@@ -21,7 +21,6 @@ class ApiRoot(APIView):
         data = {
             "clients": reverse(ClientListView.name, request=request),
             "address": reverse(AddressListView.name, request=request),
-            "status": reverse(StatusListView.name, request=request),
             "categories": reverse(CategoryListView.name, request=request),
             "products": reverse(ProductListView.name, request=request),
             "checkouts": reverse(CheckoutListView.name, request=request),
@@ -65,18 +64,6 @@ class AddressDetail(RetrieveUpdateDestroyAPIView):
     serializer_class = AddressSerializer
     permission_classes = [permissions.IsAuthenticated, IsAddressOwnerDetail]
 
-class StatusListView(ListAPIView):
-    name = 'status-list-view'
-    queryset = Status.objects.get_queryset()
-    serializer_class = StatusSerializer
-    permission_classes = [permissions.IsAuthenticated, ReadOnlyPermission]
-
-class StatusDetail(RetrieveAPIView):
-    name = 'status-detail'
-    queryset = Status.objects.get_queryset()
-    serializer_class = StatusDetailSerializer
-    permission_classes = [permissions.IsAuthenticated]
-    
 class CategoryListView(ListAPIView):
     name = 'category-list-view'
     queryset = Category.objects.get_queryset()
