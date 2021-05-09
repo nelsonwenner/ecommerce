@@ -23,10 +23,6 @@ class ProductAdmin(ModelAdmin):
     list_display = ('title', 'price', 'stock')
     search_fields = ('title',)
 
-@admin.register(Status, site=admin_site)
-class StatusAdmin(ModelAdmin):
-    pass
-
 @admin.register(CheckoutItem, site=admin_site)
 class CheckoutItemAdmin(ModelAdmin):
     list_display = ('get_customer', 'get_date')
@@ -59,10 +55,13 @@ class CheckoutAdmin(ModelAdmin):
 
     get_total.short_description = 'total'
 
+class CustomerAddressInline(admin.StackedInline):
+    model = Address
+    extra = 1
+
 @admin.register(Customer, site=admin_site)
 class CustomerAdmin(ModelAdmin):
-    exclude = ['user']
-    list_display = ('name', 'email')
+    inlines = (CustomerAddressInline,)
 
 @admin.register(Address, site=admin_site)
 class AddressAdmin(ModelAdmin):
