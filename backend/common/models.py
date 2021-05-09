@@ -10,13 +10,8 @@ class AutoCreateUpdatedMixin(models.Model):
 
 class BaseCustomer(AutoCreateUpdatedMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    name = models.CharField(max_length=255, verbose_name='name')
-    email = models.CharField(max_length=255, verbose_name='e-mail')
+    phone = models.CharField(max_length=12)
     personal_document = models.CharField(max_length=20, verbose_name='cpf')
-    
+
     class Meta:
         abstract = True
-
-    def __str__(self):
-        return self.name
-
