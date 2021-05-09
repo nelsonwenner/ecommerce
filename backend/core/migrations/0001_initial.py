@@ -63,19 +63,6 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='Status',
-            fields=[
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now_add=True)),
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('message', models.CharField(choices=[('Processing Purchase', 'Processing Purchase'), ('Approved Purchase', 'Approved Purchase'), ('Purchase Denied', 'Purchase Denied'), ('Purchase Denied', 'Purchase sent')], max_length=30)),
-            ],
-            options={
-                'verbose_name': 'status',
-                'verbose_name_plural': 'status',
-            },
-        ),
-        migrations.CreateModel(
             name='Product',
             fields=[
                 ('created_at', models.DateTimeField(auto_now_add=True)),
@@ -98,11 +85,9 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now_add=True)),
                 ('id', models.UUIDField(default=uuid.uuid4, primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=255, verbose_name='name')),
-                ('email', models.CharField(max_length=255, verbose_name='e-mail')),
                 ('personal_document', models.CharField(max_length=20, verbose_name='cpf')),
                 ('phone', models.CharField(max_length=12)),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='user_client', to='auth_core.UserClient')),
+                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='user_client', to='auth_core.User')),
             ],
             options={
                 'verbose_name': 'client',
@@ -134,13 +119,13 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='payment_gateway.PaymentMethod', verbose_name='payment method'),
         ),
         migrations.AddField(
-            model_name='checkout',
-            name='status',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, related_name='status', to='core.Status'),
-        ),
-        migrations.AddField(
             model_name='address',
             name='customer',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user_client_address', to='core.Customer'),
+        ),
+        migrations.AddField(
+            model_name='checkout',
+            name='status',
+            field=models.CharField(choices=[('PROCESSING', 'Processing Purchase'), ('APPROVED', 'Approved Purchase'), ('DENIED', 'Purchase Denied')], default='PROCESSING', max_length=30),
         ),
     ]

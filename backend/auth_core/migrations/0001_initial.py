@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
                 ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')),
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
                 ('username', models.CharField(max_length=30)),
-                ('email', models.EmailField(max_length=254, unique=True)),
+                ('email', models.EmailField(error_messages={'unique': 'A user with that email already exists.'}, max_length=254, unique=True)),
                 ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.Group', verbose_name='groups')),
                 ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.Permission', verbose_name='user permissions')),
             ],
@@ -37,22 +37,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'user auth',
             },
             managers=[
-                ('objects', django.contrib.auth.models.UserManager()),
-            ],
-        ),
-        migrations.CreateModel(
-            name='UserClient',
-            fields=[
-            ],
-            options={
-                'verbose_name': 'client',
-                'proxy': True,
-                'indexes': [],
-                'constraints': [],
-            },
-            bases=('auth_core.user',),
-            managers=[
-                ('objects', auth_core.managers.UserClientManager()),
+                ('objects', auth_core.managers.UserManager()),
             ],
         ),
     ]
