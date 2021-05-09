@@ -6,7 +6,8 @@ if [ ! -f ".env" ]; then
   cp .env.example .env
 fi
 
-dockerize -wait tcp://database:5432 -wait tcp://rabbitmq:15672 -timeout 2700s -wait-retry-interval 10s
+dockerize -wait tcp://postgres:5432 -timeout 2700s -wait-retry-interval 10s
+dockerize -wait tcp://rabbitmq:15672 -timeout 2700s -wait-retry-interval 10s
 
 python manage.py makemigrations
 python manage.py migrate
