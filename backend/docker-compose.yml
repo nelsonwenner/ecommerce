@@ -1,52 +1,59 @@
 version: "3.7"
 
 services:
-  app:
+  django-app:
     build: .
-    container_name: micro-ecommerce-app
+    container_name: django-container
     working_dir: /usr/src/app
-    entrypoint: ./docker/app-entrypoint.sh
     volumes:
       - .:/usr/src/app
     ports:
       - "8000:8000"
+    environment:
+      DJANGO_ENV: development
+      DATABASE_URL: postgresql://root:root@postgres:5432/database
+      RABBITMQ_URI: amqp://admin:admin@rabbitmq:5672
+      APP_DOMAIN: django-app
     depends_on:
-      - database
+      - postgres
       - rabbitmq
+    stdin_open: true
+    tty: true
     networks:
       - default
-  
+    command: >
+      bash -c "docker/app-entrypoint.sh"
+
   worker:
     build: .
-    container_name: micro-ecommerce-worker
+    container_name: worker-container
     restart: on-failure
     entrypoint: ./docker/worker-entrypoint.sh
     volumes:
       - .:/usr/src/app
     depends_on:
-      - app
-      - database
+      - django-app
     networks:
       - default
-  
-  database:
-    container_name: "ecommerce-database"
-    image: library/postgres:9.6-alpine
+
+  postgres:
+    container_name: postgres-container
+    image: postgres:11-alpine
     ports: 
       - "5431:5432"
     volumes: 
       - postgres:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root@123
+      - POSTGRES_PASSWORD=root
       - POSTGRES_DB=database
     restart: always
     networks:
       - default
-    
+
   rabbitmq:
+    container_name: rabbitmq-container
     image: 'rabbitmq:3.8-management-alpine'
-    container_name: ecommerce-rabbitmq
     hostname: rabbitmq
     ports:
       - "15672:15672"
@@ -58,7 +65,7 @@ services:
       - RABBITMQ_DEFAULT_PASS=admin
     networks:
       - default
-  
+
   adminer:
     container_name: adminer-container
     image: adminer
