@@ -18,7 +18,7 @@ class ModelObserver:
         '''
         created received a boolean, False equals update.
         '''
-        if not created and instance.status.message == "Approved Purchase":
+        if not created and instance.status == "APPROVED":
             try:
                 items = instance.checkout_items.all()
                 with transaction.atomic():
