@@ -28,13 +28,21 @@ services:
     build: .
     container_name: worker-container
     restart: on-failure
-    entrypoint: ./docker/worker-entrypoint.sh
     volumes:
       - .:/usr/src/app
+    environment:
+      DJANGO_ENV: development
+      DATABASE_URL: postgresql://root:root@postgres:5432/database
+      RABBITMQ_URI: amqp://admin:admin@rabbitmq:5672
+      APP_DOMAIN: worker
     depends_on:
       - django-app
+    stdin_open: true
+    tty: true
     networks:
       - default
+    command: >
+      bash -c "docker/worker-entrypoint.sh"
 
   postgres:
     container_name: postgres-container
