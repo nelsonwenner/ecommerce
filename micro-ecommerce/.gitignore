@@ -1,8 +1,0 @@
-env/
-/log/*
-.vscode/
-**/__pycache__
-*.sqlite3
-.env
-docker/postgres
-docker/rabbitmq
